@@ -1,0 +1,28 @@
+{
+    "markers": [
+        {
+            "coordinate": {
+                "latitude": 50.8417,
+                "longitude": 12.875
+            },
+            "title": "Capybara",
+            "description": "The largest rodent in the world"
+        },
+        {
+            "coordinate": {
+                "latitude": 50.8421,
+                "longitude": 12.8761
+            },
+            "title": "Koala",
+            "description": "Not a bear"
+        },
+        {
+            "coordinate": {
+                "latitude": 50.9421,
+                "longitude": 12.890
+            },
+            "title": "Kangaroo",
+            "description": "Hops around"
+        }
+    ]
+}
