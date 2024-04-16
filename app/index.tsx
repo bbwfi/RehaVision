@@ -1,18 +1,11 @@
-
-	import { YStack } from "tamagui";
-	import { Container, Main, Title, Subtitle, Button, ButtonText } from '../tamagui.config';
-
+import { YStack } from "tamagui";
+import { Container, Main, Title, Subtitle, Button, ButtonText } from '../tamagui.config';
 import { Stack } from "expo-router";
-
 import { Link } from "expo-router";
 
-export default function Page() {
-  
-
-  
+export default function Page() {  
 
 	return (
-		
 			<Container>
 				<Main>
           <Stack.Screen options={{ title: "Overview" }} />
