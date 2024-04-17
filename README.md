@@ -1,6 +1,6 @@
 # RehaVision
 
-Dieses Projekt ist eine Geocaching-Android-Anwendung, die mit Typescript und Firebase erstellt wurde.
+Dieses Projekt ist eine Geocaching-Android-Anwendung, die mit Typescript und Firebase erstellt wird.
 Es ermöglicht Benutzern, nach Geocaches auf dem SFZ Gelände zu suchen.
 ##
 ### Voraussetzungen
