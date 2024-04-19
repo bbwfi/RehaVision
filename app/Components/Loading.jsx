@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Text, View, Image, Animated, Easing } from 'react-native';
 
-const loadingIcon = require('../loadingIcon.png');
+const loadingIcon = require('../../assets/loadingIcon.png');
 
 function Loading() {
   const spinValue = useRef(new Animated.Value(0)).current;
@@ -30,6 +30,8 @@ function Loading() {
       <Animated.Image
         source={loadingIcon}
         style={{
+          width: 100,
+          height: 100,
           transform: [{ rotate: spin }],
         }}
       />
