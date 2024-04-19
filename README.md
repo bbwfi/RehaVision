@@ -7,7 +7,7 @@ Es ermöglicht Benutzern, nach Geocaches auf dem SFZ Gelände zu suchen.
 - Android Studio: https://developer.android.com/studio (Dieses Projekt erfordert Android Studio für die Emulation, nicht für die Entwicklung)
 - Node.js und npm: https://nodejs.org/en/download
 - Ein Firebase-Projekt: https://console.firebase.google.com/
-- NPX: https://expo.dev
+- Expo: https://expo.dev
 - IDE Nachwahl
 ---
 ### Emulator einrichten:
