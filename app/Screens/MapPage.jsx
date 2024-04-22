@@ -17,7 +17,7 @@ export default function SettingsScreen() {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      let { status } = await Location.requestBackgroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
@@ -32,8 +32,8 @@ export default function SettingsScreen() {
 
 
   const onLocationChange = (location) => {
-    setActualLocation(location.nativeEvent.coordiante);
-    console.log(location.nativeEvent.coordiante);
+    console.log(location.nativeEvent.coordinate);
+    setActualLocation(location.nativeEvent.coordinate);
   };
 
 
@@ -56,13 +56,14 @@ export default function SettingsScreen() {
           customMapStyle={MapStyle}
           showsMyLocationButton={true}
           showsUserLocation={true}
-          onLocationChange={onLocationChange}
+          onUserLocationChange={onLocationChange}
         >
             {actualLocation && (
-              <Circle center={{longitude: actualLocation.longitude, latitude: actualLocation.latitude}} radius={50} strokeColor="#4c669f" fillColor="rgba(75,105,189,0.3)" />
+              <Circle center={{longitude: actualLocation.longitude, latitude: actualLocation.latitude}} radius={50} strokeColor="#ffc107" fillColor="rgba(255,193,7,0.3)" />
             )}
         </MapView>
       )}
+        { actualLocation && <Text style={{ position: "absolute", alignSelf: "center", bottom: 100, color: "#ffffff" }}>U:{actualLocation.longitude} - {actualLocation.latitude} - {actualLocation.speed}</Text>}
 
     </View>
   );
