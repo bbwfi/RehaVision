@@ -1,5 +1,4 @@
-class Riddle
-{
+export class Riddle {
     description: string;
     hint: string;
 
@@ -8,3 +7,5 @@ class Riddle
         this.hint = description;
     }
 }
+
+export default Riddle
