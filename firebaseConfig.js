@@ -1,24 +1,48 @@
-import { initializeApp } from 'firebase/app';
-
-// Optionally import here the services that you want to use
-// import {...} from "firebase/auth";
-// import {...} from "firebase/database";
+import app, { initializeApp } from 'firebase/app';
+import { Auth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-// import {...} from "firebase/functions";
-// import {...} from "firebase/storage";
 
 // Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyAc6kShtPvDJTwqXf4J9lWDGXPSdpD1L6k",
-    authDomain: "rehavision-d8ee5.firebaseapp.com",
-    projectId: "rehavision-d8ee5",
-    storageBucket: "rehavision-d8ee5.appspot.com",
-    messagingSenderId: "1070155202945",
-    appId: "1:1070155202945:web:3af87e65fc3bbddc702880"
-  };
+    apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID
+}
 
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+export class Firebase {
 
+  constructor () {
+    if (!apps.length) {
+      app.initializeApp(firebaseConfig)
+    } 
+
+    Auth.auth().signInAnonymously()
+    .then(() => {
+            console.log('User signed in anonymously')
+        })
+    .catch(error => {
+            if (error.code === 'auth/operation-not-allowed') {
+                console.log('Enable anonymous in your firebase console.')
+            }
+            console.error(error)
+    })
+
+  }
+
+  auth () {
+    return Auth;
+  }
+  
+  database (){
+    //app.database();
+    return getFirestore(app);
+  }
+  
+}
+
+export default Firebase;
 
 // For more information, see the Firebase documentation: https://firebase.google.com/docs/web/setup#access-firebase
