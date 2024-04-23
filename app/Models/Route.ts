@@ -1,10 +1,13 @@
-class Route
+import Beacon from "./Geocache";
+
+export class Route
 {
-    private name: string;
-    private beacon: Beacon;
+    name: string;
+    beacon: Beacon;
 
     public constructor(name: string, beacon: Beacon) {
         this.name = name;
         this.beacon = beacon;
     }
 }
+export default Route;

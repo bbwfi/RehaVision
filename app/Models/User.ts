@@ -1,4 +1,7 @@
-class User
+import Journey from "./Jouney";
+import { Checkpoint } from "./Checkpoint";
+
+export class User
 {
    public nickname: string;
    public journeys: Journey[];
@@ -10,3 +13,4 @@ class User
       this.checkpoints = checkpoints;
    }
 }
+export default User;
