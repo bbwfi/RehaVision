@@ -1,4 +1,4 @@
-import GeoCache from "./Geocache";
+import GeoCache from "./GeoCache";
 
 export class Checkpoint
 {
