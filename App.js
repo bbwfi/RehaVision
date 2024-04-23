@@ -6,7 +6,9 @@ import HomeScreen from './app/Screens/HomeScreen';
 import SettingsScreen from './app/Screens/SettingsScreen';
 import MapPage from './app/Screens/MapPage';
 import React, { useEffect, useRef } from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -57,10 +59,10 @@ function App() {
       }}
       linking={linking}
     >
-      <Tab.Navigator initialRouteName='MapPage' screenOptions={{tabBarActiveTintColor: 'white', tabBarStyle: {backgroundColor: "#ffc107"}, headerStyle: {backgroundColor: "#ffc107", height: "4%"}}}>
-        <Tab.Screen name="Home" component={HomeScreen} options={{tabBarIcon: ({ color }) => <FontAwesome size={38} name="home" color={color} />}} />
-        <Tab.Screen name="MapPage" component={MapPage} options={{tabBarIcon: ({ color }) => <FontAwesome size={38} name="compass" color={color} />}} />
-        <Tab.Screen name="Settings" component={SettingsScreen} options={{tabBarIcon: ({ color }) => <FontAwesome size={38} name="list" color={color} />}} />
+      <Tab.Navigator initialRouteName='MapPage' screenOptions={{tabBarActiveTintColor: 'white',tabBarInactiveTintColor:"black",tabBarShowLabel:false , tabBarStyle: {backgroundColor: "#ffc107"}, headerStyle: {backgroundColor: "#ffc107", height: "4%"}}}>
+        <Tab.Screen name="Home" component={HomeScreen} options={{tabBarIcon: ({ color }) => <MaterialIcons name="sensors" size={40} color={color} />}} />
+        <Tab.Screen name="MapPage" component={MapPage} options={{tabBarIcon: ({ color }) => <MaterialIcons name="public" size={40} color={color} />}} />
+        <Tab.Screen name="Settings" component={SettingsScreen} options={{tabBarIcon: ({ color }) => <MaterialIcons name="leaderboard" size={40} color={color} />}} />
       </Tab.Navigator>
     </NavigationContainer>
   );
