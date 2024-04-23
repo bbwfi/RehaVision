@@ -2,6 +2,16 @@
 
 Dieses Projekt ist eine Geocaching-Android-Anwendung, die mit Typescript und Firebase erstellt wird.
 Es ermöglicht Benutzern, nach Geocaches auf dem SFZ Gelände zu suchen.
+
+Geocaching ist eine Schnitzeljagd mit GPS-Geräten oder Smartphones. In einem bestimmten Gebiet werden sogenannte Caches (Behälter) versteckt, die du mithilfe von Hinweisen und Koordinaten finden musst.
+
+- Spaß und Bewegung: Geocaching kombiniert Sport mit Rätselspaß und fördert gleichzeitig deine Fitness.
+- Teamwork: Suche gemeinsam mit Freunden und Familie nach den Caches und stärke den Zusammenhalt.
+- Erkundung: Entdecke neue Orte und Sehenswürdigkeiten in deiner Umgebung.
+- Frische Luft: Genieße die Natur und bewege dich an der frischen Luft.
+
+
+
 ---
 ### Voraussetzungen
 - Android Studio: https://developer.android.com/studio (Dieses Projekt erfordert Android Studio für die Emulation, nicht für die Entwicklung)

@@ -32,15 +32,5 @@ yarn-error.*
 # local env files
 .env*.local
 
-# env fiele 
-.env
-
 # typescript
 *.tsbuildinfo
-
-# IDEs
-.idea/
-.vscode/
-
-# Firebase
-google-services.json

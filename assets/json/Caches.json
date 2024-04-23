@@ -1,15 +1,17 @@
 {
     "markers": [
         {
+            "id": "C4pyb4r4",
             "coordinate": {
                 "latitude": 50.8417,
                 "longitude": 12.875
             },
             "title": "Capybara",
             "description": "The largest rodent in the world",
-            "found": true
+            "found": false
         },
         {
+            "id": "oP214lxYdkeLp",
             "coordinate": {
                 "latitude": 50.8421,
                 "longitude": 12.8761
@@ -19,6 +21,7 @@
             "found": false
         },
         {
+            "id": "oP213lxYdkeLp",
             "coordinate": {
                 "latitude": 50.9421,
                 "longitude": 12.890
