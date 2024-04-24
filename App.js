@@ -7,11 +7,9 @@ import SettingsScreen from './app/Screens/SettingsScreen';
 import MapPage from './app/Screens/MapPage';
 import React, { useEffect, useRef } from 'react';
 import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
-
-
+import {AuthProvider} from './app/Provider/FirebaseAuthProvider'
 
 const Tab = createBottomTabNavigator();
-
 const prefix = Linking.createURL('/');
 
 const linking = {
@@ -39,32 +37,34 @@ function App() {
   const navigationRef = useRef();
 
   return (
-    <NavigationContainer
-      ref={navigationRef}
-      onReady={() => {
-        routeNameRef.current = getActiveRouteName(navigationRef.current.getRootState());
-      }}
-      onStateChange={() => {
-        const previousRouteName = routeNameRef.current;
-        const currentRouteName = getActiveRouteName(navigationRef.current.getRootState());
-      
-        if (previousRouteName !== currentRouteName) {
-          // The line below uses the expo-linking module
-          const fullDeepLink = Linking.createURL(linking.config.screens[currentRouteName]);
-          console.log(`Switched to ${currentRouteName} tab. Full deep link: ${fullDeepLink}`);
-        }
-      
-        // Save the current route name for later comparison
-        routeNameRef.current = currentRouteName;
-      }}
-      linking={linking}
-    >
-      <Tab.Navigator initialRouteName='MapPage' screenOptions={{tabBarActiveTintColor: 'white',tabBarInactiveTintColor:"black",tabBarShowLabel:false , tabBarStyle: {backgroundColor: "#ffc107"}, headerStyle: {backgroundColor: "#ffc107", height: "4%"}}}>
-        <Tab.Screen name="Home" component={HomeScreen} options={{tabBarIcon: ({ color }) => <MaterialIcons name="sensors" size={40} color={color} />}} />
-        <Tab.Screen name="MapPage" component={MapPage} options={{tabBarIcon: ({ color }) => <MaterialIcons name="public" size={40} color={color} />}} />
-        <Tab.Screen name="Settings" component={SettingsScreen} options={{tabBarIcon: ({ color }) => <MaterialIcons name="leaderboard" size={40} color={color} />}} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={() => {
+          routeNameRef.current = getActiveRouteName(navigationRef.current.getRootState());
+        }}
+        onStateChange={() => {
+          const previousRouteName = routeNameRef.current;
+          const currentRouteName = getActiveRouteName(navigationRef.current.getRootState());
+        
+          if (previousRouteName !== currentRouteName) {
+            // The line below uses the expo-linking module
+            const fullDeepLink = Linking.createURL(linking.config.screens[currentRouteName]);
+            console.log(`Switched to ${currentRouteName} tab. Full deep link: ${fullDeepLink}`);
+          }
+        
+          // Save the current route name for later comparison
+          routeNameRef.current = currentRouteName;
+        }}
+        linking={linking}
+      >
+        <Tab.Navigator initialRouteName='MapPage' screenOptions={{tabBarActiveTintColor: 'white',tabBarInactiveTintColor:"black",tabBarShowLabel:false , tabBarStyle: {backgroundColor: "#ffc107"}, headerStyle: {backgroundColor: "#ffc107", height: "4%"}}}>
+          <Tab.Screen name="Home" component={HomeScreen} options={{tabBarIcon: ({ color }) => <MaterialIcons name="sensors" size={40} color={color} />}} />
+          <Tab.Screen name="MapPage" component={MapPage} options={{tabBarIcon: ({ color }) => <MaterialIcons name="public" size={40} color={color} />}} />
+          <Tab.Screen name="Settings" component={SettingsScreen} options={{tabBarIcon: ({ color }) => <MaterialIcons name="leaderboard" size={40} color={color} />}} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
 
