@@ -10,6 +10,7 @@ import LeaderboardScreen from "./app/Screens/LeaderboardScreen";
 import MapPage from "./app/Screens/MapPage";
 import SettingsScreen from "./app/Screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./app/Context/AppContext";
+import { AuthProvider } from "./app/Provider/FirebaseAuthProvider";
 import icon from "./assets/adaptive-icon_rehavision.png";
 
 const Tab = createBottomTabNavigator();
@@ -150,18 +151,20 @@ function App() {
   };
 
   return (
-    <AppProvider>
-      <NavigationContainer
-        ref={navigationRef}
-        onStateChange={handleStateChange}
-        linking={linking}
-      >
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Main" component={MainNavigator} />
-          <Stack.Screen name="Settings" component={SettingsScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AppProvider>
+    <AuthProvider>
+      <AppProvider>
+        <NavigationContainer
+          ref={navigationRef}
+          onStateChange={handleStateChange}
+          linking={linking}
+        >
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Main" component={MainNavigator} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AppProvider>
+    </AuthProvider>
   );
 }
 
