@@ -1,33 +1,115 @@
-import { StyleSheet, Text } from 'react-native';
-import { NavigationContainer, NavigationContext } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useEffect, useRef } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import { MaterialIcons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
-import HomeScreen from './app/Screens/HomeScreen';
-import SettingsScreen from './app/Screens/SettingsScreen';
-import MapPage from './app/Screens/MapPage';
-import React, { useEffect, useRef } from 'react';
-import {FontAwesome, MaterialIcons} from '@expo/vector-icons';
-import {AuthProvider} from './app/Provider/FirebaseAuthProvider'
+import HomeScreen from "./app/Screens/HomeScreen";
+import LeaderboardScreen from "./app/Screens/LeaderboardScreen";
+import MapPage from "./app/Screens/MapPage";
+import SettingsScreen from "./app/Screens/SettingsScreen";
+import { AppProvider, useAppContext } from "./app/Context/AppContext";
+import icon from "./assets/adaptive-icon_rehavision.png";
 
 const Tab = createBottomTabNavigator();
-const prefix = Linking.createURL('/');
+const Stack = createStackNavigator();
+
+const prefix = Linking.createURL("/");
 
 const linking = {
-  prefixes: [prefix], // use a URL prefix that you expect in your deep links
+  prefixes: [prefix],
   config: {
     screens: {
-      MapPage: 'mappage',
-      Home: 'home',
-      Settings: 'settings',
+      MapPage: "mappage",
+      Home: "home",
+      Leaderboard: "leaderboard",
+      Settings: "settings",
     },
   },
 };
 
+function CustomHeader({ navigation }) {
+  return (
+    <View style={styles.headerContainer}>
+      <View style={styles.headerContent}>
+        <Image source={icon} style={styles.headerIcon} />
+        <Text style={styles.headerText}>RehaVision</Text>
+      </View>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("Settings");
+        }}
+      >
+        <MaterialIcons name="settings" size={30} color="black" />
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+function MainNavigator() {
+  const { debugMode } = useAppContext();
+
+  return (
+    <Tab.Navigator
+      initialRouteName="MapPage"
+      screenOptions={{
+        tabBarActiveTintColor: "white",
+        tabBarInactiveTintColor: "black",
+        tabBarShowLabel: false,
+        tabBarStyle: { backgroundColor: "#ffc107" },
+        headerShown: true,
+      }}
+    >
+      <Tab.Screen
+        name="Home"
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="sensors" size={40} color={color} />
+          ),
+          header: ({ navigation }) => <CustomHeader navigation={navigation} />,
+        }}
+      >
+        {() => <HomeScreen debugMode={debugMode} />}
+      </Tab.Screen>
+      <Tab.Screen
+        name="MapPage"
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="public" size={40} color={color} />
+          ),
+          header: ({ navigation }) => <CustomHeader navigation={navigation} />,
+        }}
+      >
+        {() => <MapPage debugMode={debugMode} />}
+      </Tab.Screen>
+      <Tab.Screen
+        name="Leaderboard"
+        component={LeaderboardScreen}
+        options={{
+          tabBarIcon: ({ color }) => (
+            <MaterialIcons name="leaderboard" size={40} color={color} />
+          ),
+          header: ({ navigation }) => <CustomHeader navigation={navigation} />,
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
+/**
+ * Main component of the application.
+ * @returns {JSX.Element} The rendered component.
+ */
 function App() {
+  /**
+   * Recursively finds the name of the active route in the navigation state.
+   * @param {object} state - The navigation state.
+   * @returns {string} The name of the active route.
+   */
   const getActiveRouteName = (state) => {
     const route = state.routes[state.index];
     if (route.state) {
-      // Dive into nested navigators
       return getActiveRouteName(route.state);
     }
     return route.name;
@@ -36,44 +118,74 @@ function App() {
   const routeNameRef = useRef();
   const navigationRef = useRef();
 
+  useEffect(() => {
+    if (navigationRef.current) {
+      routeNameRef.current = getActiveRouteName(
+        navigationRef.current.getRootState()
+      );
+    }
+  }, []);
+
+  /**
+   * Handles the state change event of the navigation.
+   */
+  const handleStateChange = () => {
+    if (navigationRef.current) {
+      const previousRouteName = routeNameRef.current;
+      const currentRouteName = getActiveRouteName(
+        navigationRef.current.getRootState()
+      );
+
+      if (previousRouteName !== currentRouteName) {
+        const fullDeepLink = Linking.createURL(
+          linking.config.screens[currentRouteName]
+        );
+        console.log(
+          `Switched to ${currentRouteName} tab. Full deep link: ${fullDeepLink}`
+        );
+      }
+
+      routeNameRef.current = currentRouteName;
+    }
+  };
+
   return (
-    <AuthProvider>
+    <AppProvider>
       <NavigationContainer
         ref={navigationRef}
-        onReady={() => {
-          routeNameRef.current = getActiveRouteName(navigationRef.current.getRootState());
-        }}
-        onStateChange={() => {
-          const previousRouteName = routeNameRef.current;
-          const currentRouteName = getActiveRouteName(navigationRef.current.getRootState());
-        
-          if (previousRouteName !== currentRouteName) {
-            // The line below uses the expo-linking module
-            const fullDeepLink = Linking.createURL(linking.config.screens[currentRouteName]);
-            console.log(`Switched to ${currentRouteName} tab. Full deep link: ${fullDeepLink}`);
-          }
-        
-          // Save the current route name for later comparison
-          routeNameRef.current = currentRouteName;
-        }}
+        onStateChange={handleStateChange}
         linking={linking}
       >
-        <Tab.Navigator initialRouteName='MapPage' screenOptions={{tabBarActiveTintColor: 'white',tabBarInactiveTintColor:"black",tabBarShowLabel:false , tabBarStyle: {backgroundColor: "#ffc107"}, headerStyle: {backgroundColor: "#ffc107", height: "4%"}}}>
-          <Tab.Screen name="Home" component={HomeScreen} options={{tabBarIcon: ({ color }) => <MaterialIcons name="sensors" size={40} color={color} />}} />
-          <Tab.Screen name="MapPage" component={MapPage} options={{tabBarIcon: ({ color }) => <MaterialIcons name="public" size={40} color={color} />}} />
-          <Tab.Screen name="Settings" component={SettingsScreen} options={{tabBarIcon: ({ color }) => <MaterialIcons name="leaderboard" size={40} color={color} />}} />
-        </Tab.Navigator>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Main" component={MainNavigator} />
+          <Stack.Screen name="Settings" component={SettingsScreen} />
+        </Stack.Navigator>
       </NavigationContainer>
-    </AuthProvider>
+    </AppProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
+  headerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "center",
+    paddingHorizontal: 16,
+    height: 50,
+    backgroundColor: "#ffc107",
+  },
+  headerContent: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  headerIcon: {
+    width: 40,
+    height: 40,
+  },
+  headerText: {
+    marginLeft: 10,
+    fontSize: 20,
+    fontWeight: "500",
   },
 });
 

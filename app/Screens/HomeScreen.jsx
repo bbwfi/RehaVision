@@ -1,130 +1,128 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  Vibration,
-  Modal,
-  Dimensions,
-} from "react-native";
-import React, { useState } from "react";
-import CachesJSON from "../../assets/json/Caches.json";
-import { CameraView, Camera } from "expo-camera/next";
+import React, { useState, useEffect } from "react";
+import { View, Pressable, Text, Vibration } from "react-native";
+import { Camera } from "expo-camera";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import CacheModal from "../Components/CacheModal";
+import QRScanner from "../Components/QRScanner";
+import CachesJSON from "../../assets/json/Caches.json";
 
+/**
+ * Represents the HomeScreen component.
+ * This component displays a list of caches and provides functionality for scanning QR codes.
+ */
+export default function HomeScreen({debugMode}) {
+  const [isScanning, setIsScanning] = useState(false); // State to track if QR scanning is active
+  const [modalVisible, setModalVisible] = useState(false); // State to control the visibility of the cache details modal
+  const [selectedCache, setSelectedCache] = useState(null); // State to store the selected cache object
+  const [foundCaches, setFoundCaches] = useState([]); // State to store the indices of found caches
 
-export default function HomeScreen() {
-  const [isScanning, setIsScanning] = useState(false); // Fix: Correctly destructure the useState hook
-  const [scanned, setScanned] = useState(false); // Fix: Correctly destructure the useState hook
+  const Caches = CachesJSON.markers; // Array of cache objects
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedCache, setSelectedCache] = useState(null);
-
-  const Caches = CachesJSON.markers;
-  console.log(Caches);
-
-  const getPermissionsAsync = async () => {
-    console.log("Getting permissions");
-    const { status } = await Camera.requestCameraPermissionsAsync();
-    console.log(status);
-  };
-
-  const openQRScanner = () => {
-    // Fix: Add missing 'const' keyword
-    console.log("Opening QR Scanner");
+  useEffect(() => {
     getPermissionsAsync();
-    setIsScanning(true);
+  }, []);
+
+  /**
+   * Requests camera permissions asynchronously.
+   * If permission is not granted, handle permission denied.
+   */
+  const getPermissionsAsync = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      // Handle permission denied
+      console.log("Permission denied");
+    }
   };
 
-  handleBarCodeScanned = ({ type, data }) => {
+  /**
+   * Sets the isScanning state to true, activating the QR scanner.
+   */
+  const openQRScanner = () => {
+    setIsScanning(true);
+    console.log("Opening QR scanner");
+  };
+
+  /**
+   * Handles the scanned barcodes from the QR scanner.
+   * @param {Object} barcode - The scanned barcode object containing type and data.
+   */
+  const handleBarCodeScanned = ({ type, data }) => {
     console.log("Scanned", data);
-    setScanned(true);
     Vibration.vibrate(500);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
 
     if (Caches.find((cache) => cache.id === data)) {
       const index = Caches.findIndex((cache) => cache.id === data);
       console.log("Found cache: ", Caches[index].title);
+      if (foundCaches.includes(index)) {
+        alert("Cache already found!");
+      } else {
+        alert("Cache found!");
+      }
       Caches[index].found = true;
-    }
-
-    setTimeout(() => {
-      // Code to be executed after the wait time
+      setFoundCaches([...foundCaches, index]);
       setIsScanning(false);
-      setScanned(false);
-    }, 2000); // Wait for 2 seconds (2000 milliseconds)
+    }
+  };
+
+  /**
+   * Closes the cache details modal and resets the selectedCache state.
+   */
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedCache(null);
+  };
+
+  /**
+   * Cancels the QR scanning process by setting isScanning state to false.
+   */
+  const cancelScan = () => {
+    setIsScanning(false);
   };
 
   return (
-    <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-      {Caches.map((cache, index) => {
-        const color = cache.found ? "green" : "red";
-        return (
-          <Pressable
-            key={index}
-            onPress={() => {
-              setModalVisible(true);
-              setSelectedCache(cache);
-            }}
-            style={{ backgroundColor: "black", width: "75%" }}
-          >
-            <Text style={{ color }}>{cache.title}</Text>
-          </Pressable>
-        );
-      })}
+    <View style={{ flex: 1, backgroundColor: "#313335" }}>
+      {/* Render the list of caches */}
 
-      {modalVisible && (
-      <View style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height,
-        backgroundColor: "rgba(0,0,0,0.5)",
-      }}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          <View
-            style={styles.centeredView}
-          >
-            <View
-              style={styles.modalView}
-            >
-              <Text
-                style={{ alignSelf: "center", fontSize: 25, fontWeight: "bold" }}
-              >
-                {selectedCache?.title}
-              </Text>
-
-              {/* Add more information about the cache here */}
+      {!isScanning && (
+        <View>
+          {Caches.map((cache, index) => {
+            const color = foundCaches.includes(index) ? "green" : "red";
+            const lastFoundCacheIndex =
+              foundCaches.length > 0 ? Math.max(...foundCaches) : -1;
+            return foundCaches.includes(index) ||
+              index === lastFoundCacheIndex + 1 ? (
               <Pressable
-                onPress={() => setModalVisible(false)}
-                style={{ position: "absolute", alignSelf: "flex-end" }}
+                key={index}
+                onPress={() => {
+                  setModalVisible(true);
+                  setSelectedCache(cache);
+                }}
+                style={{
+                  backgroundColor: "black",
+                  width: "100%",
+                  alignSelf: "center",
+                }}
               >
-                <MaterialIcons
-                  size={32}
-                  name="close"
-                  style={{ color: "black" }}
-                />
+                <Text style={{ color, padding: "2.5%", alignSelf: "center" }}>
+                  {cache.title}
+                </Text>
               </Pressable>
-
-              <Text>{selectedCache?.description}</Text>
-            </View>
-          </View>
-        </Modal>
-      </View>
+            ) : null;
+          })}
+        </View>
       )}
 
+      <CacheModal
+        isVisible={modalVisible}
+        onBackdropPress={closeModal}
+        selectedCache={selectedCache}
+      />
+
+      {/* Render  the QR scanner button */}
       <Pressable
-        onPress={openQRScanner}
-        style={{ position: "absolute", bottom: "5%" }}
+        onPress={() => openQRScanner()}
+        style={{ position: "absolute", bottom: "5%", alignSelf: "center" }}
       >
         <MaterialIcons
           size={42}
@@ -137,58 +135,14 @@ export default function HomeScreen() {
         />
       </Pressable>
 
+      {/* Render the QR scanner component if isScanning state is true */}
       {isScanning && (
-        <CameraView
-          onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}
-        >
-          <Pressable
-            onPress={() => setIsScanning(false)}
-            style={{ position: "absolute", bottom: "5%", alignSelf: "center" }}
-          >
-            <MaterialIcons
-              size={42}
-              name="close"
-              style={{
-                backgroundColor: "#ffc107",
-                padding: "2.5%",
-                borderRadius: 25,
-              }}
-            />
-          </Pressable>
-        </CameraView>
+        <QRScanner
+          onBarCodeScanned={handleBarCodeScanned}
+          onCancelScan={cancelScan}
+          debugMode={debugMode}
+        />
       )}
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    width: '100%',
-    height: '50%',
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-});

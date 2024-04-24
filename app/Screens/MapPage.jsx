@@ -1,28 +1,28 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import * as Location from "expo-location";
-import MapView, {Circle} from "react-native-maps";
+import MapView, { Circle } from "react-native-maps";
 import { useEffect, useState } from "react";
 
-import MapStyle from "../../assets/json/MapStyle.json"
+import MapStyle from "../../assets/json/MapStyle.json";
 
 import Loading from "../Components/Loading";
 
-export default function SettingsScreen() {
+export default function SettingsScreen({debugMode}) {
   const [initialLocation, setInitialLocation] = useState(null);
-  const [actualLocation, setActualLocation] = useState(null); // [latitude, longitude
+  const [actualLocation, setActualLocation] = useState(null); // [latitude, longitude]
   const [errorMsg, setErrorMsg] = useState(null);
-
-
 
   useEffect(() => {
     (async () => {
+      // Request background location permissions
       let { status } = await Location.requestBackgroundPermissionsAsync();
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
         return;
       }
 
+      // Get the current location
       let location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Highest,
       });
@@ -30,19 +30,15 @@ export default function SettingsScreen() {
     })();
   }, []);
 
-
   const onLocationChange = (location) => {
     console.log(location.nativeEvent.coordinate);
     setActualLocation(location.nativeEvent.coordinate);
   };
 
-
-
   return (
     <View style={styles.container}>
       {errorMsg ? <Text>{errorMsg}</Text> : null}
-
-      {!initialLocation && !errorMsg ? <Loading/> : null}
+      {!initialLocation && !errorMsg ? <Loading /> : null}
 
       {initialLocation && (
         <MapView
@@ -58,13 +54,28 @@ export default function SettingsScreen() {
           showsUserLocation={true}
           onUserLocationChange={onLocationChange}
         >
-            {actualLocation && (
-              <Circle center={{longitude: actualLocation.longitude, latitude: actualLocation.latitude}} radius={50} strokeColor="#ffc107" fillColor="rgba(255,193,7,0.3)" />
-            )}
+          {actualLocation && (
+            <Circle
+              center={{
+                longitude: actualLocation.longitude,
+                latitude: actualLocation.latitude,
+              }}
+              radius={50}
+              strokeColor="#ffc107"
+              fillColor="rgba(255,193,7,0.3)"
+            />
+          )}
         </MapView>
       )}
-        { actualLocation && <Text style={{ position: "absolute", alignSelf: "center", bottom: 100, color: "#ffffff" }}>U:{actualLocation.longitude} - {actualLocation.latitude} - {actualLocation.speed}</Text>}
 
+      {/* Debug options */}
+      {debugMode && (
+        <View style={{position:"absolute", top:"5%", }}>
+          <Text style={{color: "white"}}>Error Message: {errorMsg}</Text>
+          <Text style={{color: "white"}}>Initial Location: {JSON.stringify(initialLocation)}</Text>
+          <Text style={{color: "white"}}>Actual Location: {JSON.stringify(actualLocation)}</Text>
+        </View>
+      )}
     </View>
   );
 }
