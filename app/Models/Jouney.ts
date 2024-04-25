@@ -1,4 +1,4 @@
-import GeoCache from "./GeoCache";
+import GeoCache from "./Geocache";
 import Route from "./Route";
 import { User } from "firebase/auth";
 

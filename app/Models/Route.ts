@@ -1,4 +1,4 @@
-import Beacon from "./GeoCache";
+import Beacon from "./Geocache";
 
 export class Route
 {
