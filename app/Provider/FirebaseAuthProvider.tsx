@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Auth, {getAuth, signInAnonymously} from "firebase/auth";
-import app from "../firebaseSetup";
+import FIREBASE_APP from "../firebaseSetup";
 
 
 interface AuthProps  {
@@ -13,7 +13,7 @@ interface AuthUserContextProps {
     signOut: () => Promise<void> | null
 }
 
-const auth = getAuth(app);
+const auth = getAuth(FIREBASE_APP);
 
 signInAnonymously(auth)
 .then(() => {
