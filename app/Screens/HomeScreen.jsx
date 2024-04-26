@@ -102,11 +102,33 @@ export default function HomeScreen({debugMode}) {
                   backgroundColor: "black",
                   width: "100%",
                   alignSelf: "center",
+
                 }}
               >
-                <Text style={{ color, padding: "2.5%", alignSelf: "center" }}>
+              <View style={{flexGrow:1, flexDirection:"row", justifyContent:"space-between"}}>
+                <Text style={{ color, padding: "2.5%", alignSelf: "center", fontSize:35}}>
                   {cache.title}
                 </Text>
+                {foundCaches.includes(index) ? (
+                  <MaterialIcons
+                    name="check-circle"
+                    size={24}
+                    color="green"
+                    style={{ alignSelf: "center" }}
+                  />
+                ) : <MaterialIcons
+                  name="circle"
+                  size={24}
+                  color="red"
+                  style={{ alignSelf: "center" }}
+                />}
+              </View>
+              {debugMode && (
+                  <Text style={{ color: "white", padding:"2.5%", paddingTop:0 }}>
+                    {cache.id}
+                  </Text>
+                )
+                }
               </Pressable>
             ) : null;
           })}

@@ -31,7 +31,6 @@ export default function SettingsScreen({debugMode}) {
   }, []);
 
   const onLocationChange = (location) => {
-    console.log(location.nativeEvent.coordinate);
     setActualLocation(location.nativeEvent.coordinate);
   };
 

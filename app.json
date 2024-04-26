@@ -23,8 +23,11 @@
         "googleMaps": {
           "apiKey": "AIzaSyDNnFpawNI8OhgRP6gnTGq-Yd5Fo2yjOhg"
         }
+      
       },
       "permissions": [
+        "android.permission.BLUETOOTH",
+        "android.permission.BLUETOOTH_ADMIN",
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.ACCESS_BACKGROUND_LOCATION",
