@@ -26,7 +26,7 @@ function SettingsScreen({ navigation }) {
     setDebugMode(!debugMode); // Toggle debugMode state
   };
 
-  handleBeaconScan = (data) => {
+  const handleBeaconScan = (data) => {
     startScanning("8484FC61-31FA-4D20-BD65-FF663B28670F", {
       useForegroundService: true,
     });
@@ -40,7 +40,7 @@ function SettingsScreen({ navigation }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flexDirection: "row", alignItems: "center", padding: 10 }}>
+      <View style={{ flexDirection: "row", alignItems: "center", padding: 10, backgroundColor: "#ffc107" }}>
         <MaterialIcons
           name="arrow-back"
           size={24}
@@ -50,7 +50,7 @@ function SettingsScreen({ navigation }) {
         <Text style={{ marginLeft: 10 }}>Settings</Text>
       </View>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <View>
+        <View style={{ marginBottom: 20 }}>
           <Text>Debug Mode</Text>
           <Switch
             trackColor={{ false: "#767577", true: "#81b0ff" }}
@@ -60,11 +60,14 @@ function SettingsScreen({ navigation }) {
             value={debugMode}
           />
         </View>
-        <View>
+        <View style={{ marginBottom: 20 }}>
           {/* Beacons Finder */}
           <Text>Beacons Finder</Text>
-          <Pressable title="Start Scanning" onPress={handleBeaconScan}>
-            <Text>Start Scanning</Text>
+          <Pressable
+            style={{ padding: 10, backgroundColor: "#2196F3", borderRadius: 5 }}
+            onPress={handleBeaconScan}
+          >
+            <Text style={{ color: "white" }}>Start Scanning</Text>
           </Pressable>
           {beacons
             .sort((a, b) => a.distance - b.distance)
@@ -119,6 +122,9 @@ function SettingsScreen({ navigation }) {
               </View>
             ))}
         </View>
+        <Pressable onPress={() => navigation.navigate('Disclaimer')} style={{ padding: 10 }}>
+          <Text style={{ color: "#2196F3", textDecorationLine: "underline" }}>Disclaimer</Text>
+        </Pressable>
       </View>
     </View>
   );

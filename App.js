@@ -8,6 +8,7 @@ import * as Linking from "expo-linking";
 import HomeScreen from "./app/Screens/HomeScreen";
 import LeaderboardScreen from "./app/Screens/LeaderboardScreen";
 import MapPage from "./app/Screens/MapPage";
+import DisclaimerScreen from "./app/Screens/DisclaimerScreen";
 import SettingsScreen from "./app/Screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./app/Context/AppContext";
 import icon from "./assets/adaptive-icon_rehavision.png";
@@ -25,6 +26,8 @@ const linking = {
       Home: "home",
       Leaderboard: "leaderboard",
       Settings: "settings",
+      Disclaimer: "disclaimer",
+
     },
   },
 };
@@ -159,6 +162,7 @@ function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Main" component={MainNavigator} />
           <Stack.Screen name="Settings" component={SettingsScreen} />
+          <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>
