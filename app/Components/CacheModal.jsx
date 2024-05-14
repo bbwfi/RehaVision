@@ -32,7 +32,7 @@ export default function CacheModal({
           {/* Other cache details */}
           <>
             <Text style={{ color: "white", fontSize: 20 }}>Header</Text>
-            <Text style={{ color: "white" }}>Details</Text>
+            <Text style={{ color: "white" }}>{selectedCache?.riddleText}</Text>
           </>
           <>
             <Text style={{ color: "white", fontSize: 20 }}>Header</Text>

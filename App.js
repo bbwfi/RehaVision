@@ -9,9 +9,11 @@ import HomeScreen from "./app/Screens/HomeScreen";
 import LeaderboardScreen from "./app/Screens/LeaderboardScreen";
 import MapPage from "./app/Screens/MapPage";
 import DisclaimerScreen from "./app/Screens/DisclaimerScreen";
+import PrivacyPolicyScreen from "./app/Screens/PrivacyPolicyScreen";
 import SettingsScreen from "./app/Screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./app/Context/AppContext";
 import icon from "./assets/adaptive-icon_rehavision.png";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -27,6 +29,7 @@ const linking = {
       Leaderboard: "leaderboard",
       Settings: "settings",
       Disclaimer: "disclaimer",
+      PrivacyPolicy: "privacypolicy",
 
     },
   },
@@ -153,19 +156,23 @@ function App() {
   };
 
   return (
-    <AppProvider>
-      <NavigationContainer
-        ref={navigationRef}
-        onStateChange={handleStateChange}
-        linking={linking}
-      >
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Main" component={MainNavigator} />
-          <Stack.Screen name="Settings" component={SettingsScreen} />
-          <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AppProvider>
+    <SafeAreaView style={{ flex: 1 }}>
+      <AppProvider>
+        <NavigationContainer
+          ref={navigationRef}
+          onStateChange={handleStateChange}
+          linking={linking}
+        >
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Main" component={MainNavigator} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
+            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AppProvider>
+    </SafeAreaView>
   );
 }
 

@@ -125,6 +125,9 @@ function SettingsScreen({ navigation }) {
         <Pressable onPress={() => navigation.navigate('Disclaimer')} style={{ padding: 10 }}>
           <Text style={{ color: "#2196F3", textDecorationLine: "underline" }}>Disclaimer</Text>
         </Pressable>
+        <Pressable onPress={() => navigation.navigate('PrivacyPolicy')} style={{ padding: 10 }}>
+          <Text style={{ color: "#2196F3", textDecorationLine: "underline" }}>Datenschutz</Text>
+        </Pressable>
       </View>
     </View>
   );

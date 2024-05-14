@@ -8,6 +8,7 @@
             },
             "title": "Capybara",
             "description": "The largest rodent in the world",
+            "riddleText": "You'll find the cache hidden near a riverbank, where the Capybara likes to roam.",
             "found": false
         },
         {
@@ -18,6 +19,7 @@
             },
             "title": "Koala",
             "description": "Not a bear",
+            "riddleText": " ",
             "found": false
         },
         {
@@ -28,6 +30,7 @@
             },
             "title": "Kangaroo",
             "description": "Hops around",
+            "riddleText": " ",
             "found": false
         }
     ]
