@@ -7,7 +7,7 @@ export default function SettingsScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>SETTIGNSSCREEN</Text>
+      <Text>SETTINGSSCREEN</Text>
     </View>
   );
 }

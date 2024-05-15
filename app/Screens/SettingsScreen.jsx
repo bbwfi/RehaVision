@@ -51,14 +51,16 @@ function SettingsScreen({ navigation }) {
       </View>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <View style={{ marginBottom: 20 }}>
-          <Text>Debug Mode</Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={debugMode ? "#f5dd4b" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={debugMode}
-          />
+        <Pressable onPress={() => navigation.navigate('IntroPage')} style={{ padding: 10 }}>
+          <Text 
+            style={{ 
+              padding: 10, 
+              backgroundColor: "#2196F3", 
+              borderRadius: 5, 
+              color: 'white',
+              fontWeight: 'bold', 
+              fontSize: 35 }}>IntroPage</Text>
+        </Pressable>
         </View>
         <View style={{ marginBottom: 20 }}>
           {/* Beacons Finder */}
@@ -128,6 +130,14 @@ function SettingsScreen({ navigation }) {
         <Pressable onPress={() => navigation.navigate('PrivacyPolicy')} style={{ padding: 10 }}>
           <Text style={{ color: "#2196F3", textDecorationLine: "underline" }}>Datenschutz</Text>
         </Pressable>
+        <Text>Debug Mode</Text>
+          <Switch
+            trackColor={{ false: "#767577", true: "#81b0ff" }}
+            thumbColor={debugMode ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={debugMode}
+          />
       </View>
     </View>
   );
