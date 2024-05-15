@@ -1,8 +1,10 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import MapView, { Circle } from "react-native-maps";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as Location from "expo-location";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { MaterialIcons } from "@expo/vector-icons"; // Import MaterialIcons
 
 import MapStyle from "../../assets/json/MapStyle.json";
 import CacheList from "../../assets/json/Caches.json";
@@ -16,6 +18,8 @@ export default function SettingsScreen({ debugMode }) {
   const [visibleCaches, setVisibleCaches] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
   const [currentCache, setCurrentCache] = useState(null);
+
+  const mapViewRef = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -49,7 +53,6 @@ export default function SettingsScreen({ debugMode }) {
       });
       setVisibleCaches(visibleCaches);
 
-      console.log("Visible caches: ", visibleCaches);
       // Check if user is near a cache
       const nearbyCache = visibleCaches.find(cache =>
         calculateDistance(
@@ -88,15 +91,44 @@ export default function SettingsScreen({ debugMode }) {
     setActualLocation(location.nativeEvent.coordinate);
   };
 
+  const centerMapOnUser = () => {
+    if (actualLocation) {
+      const { latitude, longitude } = actualLocation;
+      mapViewRef.current.animateToRegion({
+        latitude,
+        longitude,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.005,
+        
+      });
+    }
+  };
+  
+
   return (
     <View style={styles.container}>
       {errorMsg ? <Text>{errorMsg}</Text> : null}
       {!initialLocation && !errorMsg ? <Loading /> : null}
 
+      {popupVisible && (
+      <View style={styles.popup}>
+        <View style={{flex: 1, flexDirection:"row"}}>
+          <View>
+            <Text style={styles.popupText}>Cache in der Nähe:</Text>
+            <Text style={styles.popupText}>{currentCache.title}</Text>
+          </View>
+          <Pressable>
+            <MaterialIcons style={{alignSelf:"flex-end"}} name="info-outline" size={24} color="black" />
+          </Pressable>
+        </View>
+      </View>
+    )}
+
       <View style={styles.mapContainer}>
         {initialLocation && (
           <MapView
             style={styles.map}
+            ref={mapViewRef}
             initialRegion={{
               latitude: initialLocation.coords.latitude,
               longitude: initialLocation.coords.longitude,
@@ -104,8 +136,9 @@ export default function SettingsScreen({ debugMode }) {
               longitudeDelta: 0.0421,
             }}
             customMapStyle={MapStyle}
-            showsMyLocationButton={true}
+            showsMyLocationButton={false} // Disable default my location button
             showsUserLocation={true}
+            showsCompass={false}
             onUserLocationChange={onLocationChange}
           >
             {visibleCaches.map((cache) => (
@@ -122,46 +155,44 @@ export default function SettingsScreen({ debugMode }) {
             ))}
           </MapView>
         )}
-        {popupVisible && (
-          <View style={styles.popupContainer}>
-            <Popup cacheName={currentCache.title} onClose={() => setPopupVisible(false)} />
-          </View>
-        )}
+        <Pressable
+          style={styles.myLocationButton}
+          onPress={centerMapOnUser}
+        >
+          <MaterialIcons name="my-location" size={30} color="white" />
+        </Pressable>
       </View>
 
       {debugMode && (
-  <View style={styles.debugContainer}>
-    {errorMsg && <Text style={styles.debugText}>Error Message: {errorMsg}</Text>}
-    {initialLocation && (
-      <Text style={styles.debugText}>
-        Initial Location: {"\n"}
-        Latitude: {initialLocation.coords.latitude.toFixed(6)} {"\n"}
-        Longitude: {initialLocation.coords.longitude.toFixed(6)}
-      </Text>
-    )}
-    {actualLocation && (
-      <Text style={styles.debugText}>
-        Actual Location: {"\n"}
-        Latitude: {actualLocation.latitude.toFixed(6)} {"\n"}
-        Longitude: {actualLocation.longitude.toFixed(6)}
-      </Text>
-    )}
-    {visibleCaches.length > 0 && (
-      <Text style={styles.debugText}>
-        Visible Caches:{"\n"} 
-        Name: {visibleCaches.map(cache => cache.title).join(", ")} {"\n"}
-        Id: {visibleCaches.map(cache => cache.id).join(", ")} {"\n"}
-        Found: {visibleCaches.map(cache => cache.found).join(", ")}
-      </Text>
-    )}
-    {!errorMsg && !initialLocation && !actualLocation && visibleCaches.length === 0 && (
-      <Text style={styles.debugText}>No debug information available.</Text>
-    )}
-  </View>
-)}
-
-
-
+        <View style={styles.debugContainer}>
+          {errorMsg && <Text style={styles.debugText}>Error Message: {errorMsg}</Text>}
+          {initialLocation && (
+            <Text style={styles.debugText}>
+              Initial Location: {"\n"}
+              Latitude: {initialLocation.coords.latitude.toFixed(6)} {"\n"}
+              Longitude: {initialLocation.coords.longitude.toFixed(6)}
+            </Text>
+          )}
+          {actualLocation && (
+            <Text style={styles.debugText}>
+              Actual Location: {"\n"}
+              Latitude: {actualLocation.latitude.toFixed(6)} {"\n"}
+              Longitude: {actualLocation.longitude.toFixed(6)}
+            </Text>
+          )}
+          {visibleCaches.length > 0 && (
+            <Text style={styles.debugText}>
+              Visible Caches:{"\n"} 
+              Name: {visibleCaches.map(cache => cache.title).join(", ")} {"\n"}
+              Id: {visibleCaches.map(cache => cache.id).join(", ")} {"\n"}
+              Found: {visibleCaches.map(cache => cache.found).join(", ")}
+            </Text>
+          )}
+          {!errorMsg && !initialLocation && !actualLocation && visibleCaches.length === 0 && (
+            <Text style={styles.debugText}>No debug information available.</Text>
+          )}
+        </View>
+      )}
     </View>
   );
 }
@@ -176,6 +207,17 @@ const styles = StyleSheet.create({
   mapContainer: {
     flex: 1,
     width: "100%",
+  },
+  myLocationButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   map: {
     flex: 1,
@@ -202,7 +244,25 @@ const styles = StyleSheet.create({
   },
   debugText: {
     marginBottom: 5,
-  }
+  },
+  popup: {
+    position: "absolute",
+    top: 10,
+    left: 10,
+    right: 10,
+    backgroundColor: "#ffc107",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    borderWidth: 2, // Add border width
+    borderColor: "#000", // Add border color
+    zIndex: 2, // Ensure popup stays above map
+  },
   
-  
+  popupText: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });

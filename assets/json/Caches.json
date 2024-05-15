@@ -9,9 +9,7 @@
             "radius": 10,
             "title": "Tutorial Cache",
             "description": "This is a tutorial cache. It is not part of the game.",
-            "riddleText": " ",
-            "found": false,
-            "timestamp": ""
+            "riddleText": " "
         },
         {
             "id": "rehavision_5fc3d2f1a1e9",
@@ -22,9 +20,7 @@
             "radius": 70,
             "title": "Verschollene Amethyst Glocke",
             "description": " Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam ",
-            "riddleText": " RIDDLE: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam? ",
-            "found": false,
-            "timestamp": ""
+            "riddleText": " RIDDLE: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam? "
         },
         {
             "id": "rehavision_5fc3d2f1a1e10",
@@ -35,9 +31,7 @@
             "radius": 30,
             "title": "Gemeinschaftliche Jade Pfeife",
             "description": " Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam ",
-            "riddleText": " RIDDLE: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam? ",
-            "found": false,
-            "timestamp": ""
+            "riddleText": " RIDDLE: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam? "
         },
         {
             "id": "rehavision_5fc3d2f1a1e11",
@@ -48,9 +42,7 @@
             "radius": 50,
             "title": "Hansi's Handvoll Gold",
             "description": " Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam ",
-            "riddleText": " RIDDLE: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam? ",
-            "found": false,
-            "timestamp": ""
+            "riddleText": " RIDDLE: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam? "
         },
         {
             "id": "rehavision_5fc3d2f1a1e12",
@@ -61,9 +53,7 @@
             "radius": 50,
             "title": "Wiedemann's Rubin Zepter",
             "description": " Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam.",
-            "riddleText": " RIDDLE: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam? ",
-            "found": false,
-            "timestamp": ""
+            "riddleText": " RIDDLE: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam? "
         }
     ]
 }
