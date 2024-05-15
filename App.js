@@ -14,6 +14,7 @@ import SettingsScreen from "./app/Screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./app/Context/AppContext";
 import icon from "./assets/adaptive-icon_rehavision.png";
 import { SafeAreaView } from "react-native-safe-area-context";
+import IntroPage from "./app/Screens/IntroPage";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -168,6 +169,7 @@ function App() {
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
             <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+            <Stack.Screen name="IntroPage" component={IntroPage} />
 
           </Stack.Navigator>
         </NavigationContainer>
