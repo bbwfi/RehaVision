@@ -1,8 +1,42 @@
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import Intro1 from "../../assets/Intro 1 World.png";
+import Intro2 from "../../assets/Intro 2 Puzzle.png";
+import Intro3 from "../../assets/Intro 3 Map.png";
+import Intro4 from "../../assets/Intro 4 Treasure.png";
 
 export default function IntroPage() {
+  const [index, setIndex] = useState(0);
+
+  const header = [
+    "Was ist GEOCACHING?",
+    "Das Rätsel",
+    "Die Suche",
+    "Der Schatz",
+  ];
+
+  const icon = [Intro1, Intro2, Intro3, Intro4];
+
+  const textInhalt = [
+    "Geocaching ist eine moderne Schatzsuche, bei der Teilnehmer mithilfe von GPS-Geräten versteckte Behälter finden.",
+    "Der Ort des Schatzes ist hinter einem Rätsel versteckt, löse diese um Ihn zu finden.",
+    "Nachdem du das erste Rätsel gelöst hast, musst du nur noch den Schatz finden. Hier für bekommst du ein Tip von deinem Handy.",
+    "Du hast nun den Schatz gefunden, folge einfach den Anweisungen auf deinem Handy und finde den nächsten.",
+  ];
+
+  const handleNext = () => {
+    if (index < header.length - 1) {
+      setIndex((prevIndex) => (prevIndex + 1) % header.length);
+    }
+  };
+  
+  const handleBack = () => {
+    if (index > 0) {
+      setIndex((prevIndex) => (prevIndex - 1 + header.length) % header.length);
+    }
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -16,11 +50,11 @@ export default function IntroPage() {
             textAlign: "center",
           }}
         >
-          Was ist GEOCACHING ?
+          {header[index]}
         </Text>
         <Image
-          source={Intro1}
-          style={{ width: 240, height: 240, marginBottom: 40, marginLeft: 20}}
+          source={icon[index]}
+          style={{ width: 240, height: 240, marginBottom: 40, marginLeft: 20 }}
         />
         <Text
           style={{
@@ -33,14 +67,29 @@ export default function IntroPage() {
             paddingTop: 20,
           }}
         >
-          Geocaching ist eine moderne Schatzsuche, bei der Teilnehmer mithilfe
-          von GPS-Geräten versteckte Behälter finden.
+          {textInhalt[index]}
         </Text>
-        <View style={{ display: "flex", flexDirection: "row", marginBottom: -20, marginTop: 20, backgroundColor: '#222020'}}>
-          <View style={{ width: 35, height: 35, backgroundColor: "#ffc107", borderRadius: 25, marginLeft: 0 }} />
-          <View style={{ width: 35, height: 35, backgroundColor: "#ffc107", borderRadius: 25, marginLeft: 30 }} />
-          <View style={{ width: 35, height: 35, backgroundColor: "#ffc107", borderRadius: 25, marginLeft: 30 }} />
-          <View style={{ width: 35, height: 35, backgroundColor: "#ffc107", borderRadius: 25, marginLeft: 30 }} />
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginBottom: -20,
+            marginTop: 20,
+            backgroundColor: "#222020",
+          }}
+        >
+          {header.map((_, idx) => (
+            <View
+              key={idx}
+              style={{
+                width: 35,
+                height: 35,
+                backgroundColor: idx === index ? "#ffc107" : "white",
+                borderRadius: 25,
+                marginLeft: idx === 0 ? 0 : 30,
+              }}
+            />
+          ))}
         </View>
       </View>
       <View
@@ -52,10 +101,7 @@ export default function IntroPage() {
           justifyContent: "space-between",
         }}
       >
-        <Pressable
-          onPress={() => Hallo()}
-          style={{ padding: 10, width: "40%" }}
-        >
+        <Pressable onPress={handleBack} style={{ padding: 10, width: "40%" }}>
           <Text
             style={{
               padding: 10,
@@ -70,10 +116,7 @@ export default function IntroPage() {
             Zurück
           </Text>
         </Pressable>
-        <Pressable
-          onPress={() => Hallo()}
-          style={{ padding: 10, width: "40%" }}
-        >
+        <Pressable onPress={handleNext} style={{ padding: 10, width: "40%" }}>
           <Text
             style={{
               padding: 10,
