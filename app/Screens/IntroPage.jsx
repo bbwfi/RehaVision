@@ -1,12 +1,24 @@
-import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import Intro1 from "../../assets/Intro 1 World.png";
 import Intro2 from "../../assets/Intro 2 Puzzle.png";
 import Intro3 from "../../assets/Intro 3 Map.png";
 import Intro4 from "../../assets/Intro 4 Treasure.png";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  Button,
+  Switch,
+  DeviceEventEmitter,
+  Pressable,
+  Image,
+  StyleSheet
+} from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useAppContext } from "../Context/AppContext";
+import Collapsible from "react-native-collapsible";
 
-export default function IntroPage() {
+export default function IntroPage({ navigation }) {
   const [index, setIndex] = useState(0);
 
   const header = [
@@ -30,7 +42,7 @@ export default function IntroPage() {
       setIndex((prevIndex) => (prevIndex + 1) % header.length);
     }
   };
-  
+
   const handleBack = () => {
     if (index > 0) {
       setIndex((prevIndex) => (prevIndex - 1 + header.length) % header.length);
@@ -98,39 +110,60 @@ export default function IntroPage() {
           alignItems: "center",
           padding: 3,
           backgroundColor: "#ffc107",
-          justifyContent: "space-between",
+          justifyContent: index > 0 ? 'space-between' : 'flex-end'
         }}
       >
-        <Pressable onPress={handleBack} style={{ padding: 10, width: "40%" }}>
-          <Text
-            style={{
-              padding: 10,
-              backgroundColor: "#222020",
-              borderRadius: 17,
-              color: "white",
-              fontWeight: "bold",
-              fontSize: 20,
-              textAlign: "center",
-            }}
-          >
-            Zurück
-          </Text>
-        </Pressable>
-        <Pressable onPress={handleNext} style={{ padding: 10, width: "40%" }}>
-          <Text
-            style={{
-              padding: 10,
-              backgroundColor: "#222020",
-              borderRadius: 17,
-              color: "white",
-              fontWeight: "bold",
-              fontSize: 20,
-              textAlign: "center",
-            }}
-          >
-            Weiter
-          </Text>
-        </Pressable>
+        {index > 0 && (
+          <Pressable onPress={handleBack} style={{ padding: 10, width: "40%" }}>
+            <Text
+              style={{
+                padding: 10,
+                backgroundColor: "#222020",
+                borderRadius: 17,
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 20,
+                textAlign: "center",
+              }}
+            >
+              Zurück
+            </Text>
+          </Pressable>
+        )}
+        {index !== 3 && (
+          <Pressable onPress={handleNext} style={{ padding: 10, width: "40%" }}>
+            <Text
+              style={{
+                padding: 10,
+                backgroundColor: "#222020",
+                borderRadius: 17,
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 20,
+                textAlign: "center",
+              }}
+            >
+              Weiter
+            </Text>
+          </Pressable>
+        )}
+        {index == 3 && (
+          <Pressable onPress={() => navigation.navigate('Main')} style={{ padding: 10, width: "40%" }}>
+            <Text
+              style={{
+                padding: 10,
+                backgroundColor: "#222020",
+                borderRadius: 17,
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 20,
+                textAlign: "center",
+              }}
+            >
+              Ende
+            </Text>
+          </Pressable>
+        )}
       </View>
     </View>
   );
