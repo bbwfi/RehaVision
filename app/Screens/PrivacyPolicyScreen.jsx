@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
 
-function PrivacyPolicyScreen() {
+export default function PrivacyPolicyScreen({ navigation }) {
   return (
     <View style={styles.container}>
     <View style={styles.headerBar}>
@@ -475,8 +475,6 @@ function PrivacyPolicyScreen() {
     </View>
   )
 }
-
-export default PrivacyPolicyScreen
 
 const styles = StyleSheet.create({
   container: {

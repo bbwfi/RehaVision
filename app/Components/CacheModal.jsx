@@ -42,11 +42,17 @@ export default function CacheModal({
             <Text style={{ color: "white", fontSize: 20 }}>Header</Text>
             <Text style={{ color: "white" }}>Details</Text>
           </>
+          {/* Display timestamp */}
+          <>
+            <Text style={{ color: "white", fontSize: 20 }}>Found On</Text>
+            <Text style={{ color: "white" }}>{selectedCache?.timestamp}</Text>
+          </>
         </View>
       </View>
     </Modal>
   );
 }
+
 
 const styles = StyleSheet.create({
   modal: {
