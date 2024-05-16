@@ -1,58 +1,69 @@
-// CacheModal.js
-import React from "react";
-import { Text, View, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
+
+import { loadUserData } from "../Functions/userDataManager";
 
 export default function CacheModal({
   isVisible,
   onBackdropPress,
   selectedCache,
+  onClose,
 }) {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const userData = await loadUserData();
+      setUserData(userData);
+    } catch (error) {
+      console.error("Error loading user data:", error);
+    }
+  };
+
+  const selectedCacheUserData = userData?.foundCaches.find(cache => cache.id === selectedCache?.id);
+
+
   return (
     <Modal
       isVisible={isVisible}
       onBackdropPress={onBackdropPress}
-      animationOut={"slideOutDown"}
-      animationOutTiming={500}
+      animationIn={"slideInUp"} // Changed animationIn to slideInUp
+      animationOut={"slideOutDown"} // Changed animationOut to slideOutDown
+      animationInTiming={1000}
+      animationOutTiming={1000}
+      backdropOpacity={0.5} // Reduced backdrop opacity
       style={styles.modal}
     >
       <View style={styles.modalContent}>
+        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+          <Text style={styles.closeButtonText}>Close</Text>
+        </TouchableOpacity>
         <View style={styles.titleContainer}>
-          <Text style={{ fontSize: 40, fontWeight: "600" }}>
-            {selectedCache?.title}
-          </Text>
-          <Text
-            style={{ fontSize: 20, fontStyle: "italic", alignSelf: "center" }}
-          >
-            {selectedCache?.description}
-          </Text>
+          <Text style={styles.title}>{selectedCache?.title}</Text>
+          <Text style={styles.description}>{selectedCache?.description}</Text>
         </View>
         <View style={styles.separator} />
         <View style={styles.bottomContainer}>
-          {/* Other cache details */}
-          <>
-            <Text style={{ color: "white", fontSize: 20 }}>Header</Text>
-            <Text style={{ color: "white" }}>{selectedCache?.riddleText}</Text>
-          </>
-          <>
-            <Text style={{ color: "white", fontSize: 20 }}>Header</Text>
-            <Text style={{ color: "white" }}>Details</Text>
-          </>
-          <>
-            <Text style={{ color: "white", fontSize: 20 }}>Header</Text>
-            <Text style={{ color: "white" }}>Details</Text>
-          </>
-          {/* Display timestamp */}
-          <>
-            <Text style={{ color: "white", fontSize: 20 }}>Found On</Text>
-            <Text style={{ color: "white" }}>{selectedCache?.timestamp}</Text>
-          </>
+          <View style={styles.section}>
+            <Text style={styles.header}>Riddle</Text>
+            <Text style={styles.riddleText}>{selectedCache?.riddleText}</Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.header}>Found On</Text>
+            <Text style={styles.details}>
+              {new Date(selectedCacheUserData?.timestamp).toLocaleString()}
+            </Text>
+          </View>
         </View>
       </View>
     </Modal>
   );
 }
-
 
 const styles = StyleSheet.create({
   modal: {
@@ -60,26 +71,55 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   modalContent: {
-    padding: 0,
-    minHeight: "50%",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderColor: "rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#313335",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+  },
+  closeButton: {
+    alignSelf: "flex-end",
+    padding: 10,
+  },
+  closeButtonText: {
+    fontSize: 16,
+    color: "#ffc107",
   },
   titleContainer: {
-    backgroundColor: "#ffc107",
-    padding: 22,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#ffc107",
+  },
+  description: {
+    fontSize: 16,
+    color: "#f2f2f2",
   },
   separator: {
     height: 1,
     width: "100%",
-    backgroundColor: "#000",
+    backgroundColor: "#ffc107",
+    marginVertical: 20,
   },
   bottomContainer: {
-    backgroundColor: "#313335",
-    padding: 22,
-    flexGrow: 1,
+    paddingBottom: 20,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  header: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 6,
+    color: "#ffc107",
+  },
+  riddleText: {
+    fontSize: 16,
+    color: "#f2f2f2",
+  },
+  details: {
+    fontSize: 16,
+    color: "#f2f2f2",
   },
 });

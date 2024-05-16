@@ -6,10 +6,10 @@
                 "latitude": 50.842656,
                 "longitude": 12.874432
             },
-            "radius": 10,
+            "radius": 300,
             "title": "Tutorial Cache",
             "description": "This is a tutorial cache. It is not part of the game.",
-            "riddleText": " "
+            "riddleText": "Auf dem Pfosten, verborgen und still, Findst du den Weg, wenn du folgst dem Will'. Blick tief hinab, wo die Worte ruh'n, Dort beginnt die Reise, den Schatz zu erspäh'n."
         },
         {
             "id": "rehavision_5fc3d2f1a1e9",
@@ -17,10 +17,10 @@
                 "latitude": 50.842663,
                 "longitude": 12.876853
             },
-            "radius": 70,
+            "radius": 50,
             "title": "Verschollene Amethyst Glocke",
-            "description": " Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam ",
-            "riddleText": " RIDDLE: Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam? "
+            "description": " Kirche",
+            "riddleText": "Am höchsten Punkt ohne Ton, finde dort eine Gold Dublon."
         },
         {
             "id": "rehavision_5fc3d2f1a1e10",

@@ -9,7 +9,9 @@ import { MaterialIcons } from "@expo/vector-icons"; // Import MaterialIcons
 import MapStyle from "../../assets/json/MapStyle.json";
 import CacheList from "../../assets/json/Caches.json";
 import Loading from "../Components/Loading";
-import Popup from "../Components/PopUp";
+
+import { loadUserData } from "../Functions/userDataManager";
+
 
 export default function SettingsScreen({ debugMode }) {
   const [initialLocation, setInitialLocation] = useState(null);
@@ -18,8 +20,10 @@ export default function SettingsScreen({ debugMode }) {
   const [visibleCaches, setVisibleCaches] = useState([]);
   const [popupVisible, setPopupVisible] = useState(false);
   const [currentCache, setCurrentCache] = useState(null);
+  const [foundCaches, setFoundCaches] = useState([]);
 
   const mapViewRef = useRef(null);
+
 
   useEffect(() => {
     (async () => {
@@ -41,7 +45,24 @@ export default function SettingsScreen({ debugMode }) {
   }, []);
 
   useEffect(() => {
+    fetchData(); // Load user data when the component mounts
+  }, []);
+
+  useEffect(() => {
+    // Update visible caches and check for nearby cache
+    updateVisibleCaches();
+  }, [actualLocation, foundCaches]);
+
+  const fetchData = async () => {
+    const userData = await loadUserData();
+    if (userData?.foundCaches) {
+      setFoundCaches(userData.foundCaches);
+    }
+  };
+
+  const updateVisibleCaches = () => {
     if (actualLocation) {
+      // Update visible caches based on actual location
       const visibleCaches = CacheList.markers.filter((cache) => {
         const distance = calculateDistance(
           actualLocation.latitude,
@@ -54,22 +75,35 @@ export default function SettingsScreen({ debugMode }) {
       setVisibleCaches(visibleCaches);
 
       // Check if user is near a cache
-      const nearbyCache = visibleCaches.find(cache =>
-        calculateDistance(
-          actualLocation.latitude,
-          actualLocation.longitude,
-          cache.coordinate.latitude,
-          cache.coordinate.longitude
-        ) <= cache.radius
+      const nearbyCache = visibleCaches.find(
+        (cache) =>
+          calculateDistance(
+            actualLocation.latitude,
+            actualLocation.longitude,
+            cache.coordinate.latitude,
+            cache.coordinate.longitude
+          ) <= cache.radius
       );
       if (nearbyCache) {
-        setCurrentCache(nearbyCache);
-        setPopupVisible(true);
+        const isNextCache = foundCaches.length === 0 || foundCaches.includes(nearbyCache.id - 1);
+        if (nearbyCache.found || isNextCache) {
+          setCurrentCache(nearbyCache);
+          setPopupVisible(true);
+          //console.log("Nearby cache:", nearbyCache);
+        } else {
+          setCurrentCache(null); // Set current cache for the question mark popup
+          setPopupVisible(true); // Set popup visible for the question mark
+          console.log("???")
+        }
       } else {
+        setCurrentCache(null);
         setPopupVisible(false);
       }
+    } else {
+      setPopupVisible(false);
     }
-  }, [actualLocation]);
+  };
+
 
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
     const R = 6371e3;
@@ -99,11 +133,9 @@ export default function SettingsScreen({ debugMode }) {
         longitude,
         latitudeDelta: 0.005,
         longitudeDelta: 0.005,
-        
       });
     }
   };
-  
 
   return (
     <View style={styles.container}>
@@ -111,18 +143,35 @@ export default function SettingsScreen({ debugMode }) {
       {!initialLocation && !errorMsg ? <Loading /> : null}
 
       {popupVisible && (
-      <View style={styles.popup}>
-        <View style={{flex: 1, flexDirection:"row"}}>
-          <View>
-            <Text style={styles.popupText}>Cache in der Nähe:</Text>
-            <Text style={styles.popupText}>{currentCache.title}</Text>
-          </View>
-          <Pressable>
-            <MaterialIcons style={{alignSelf:"flex-end"}} name="info-outline" size={24} color="black" />
-          </Pressable>
-        </View>
-      </View>
+        <View style={styles.popup}>
+  <View style={{ flex: 1, flexDirection: "row" }}>
+    <View>
+      <Text style={styles.popupText}>
+        Cache in der Nähe:
+      </Text>
+      {currentCache && foundCaches.includes(currentCache.id) ? (
+        <Text style={styles.popupText}>
+          {currentCache.title}
+        </Text>
+      ) : (
+        <Text style={styles.popupText}>
+          ???
+        </Text>
+      )}
+    </View>
+    <Pressable>
+      <MaterialIcons
+        style={{ alignSelf: "flex-end" }}
+        name="info-outline"
+        size={24}
+        color="black"
+      />
+    </Pressable>
+  </View>
+</View>
+
     )}
+
 
       <View style={styles.mapContainer}>
         {initialLocation && (
@@ -155,17 +204,16 @@ export default function SettingsScreen({ debugMode }) {
             ))}
           </MapView>
         )}
-        <Pressable
-          style={styles.myLocationButton}
-          onPress={centerMapOnUser}
-        >
+        <Pressable style={styles.myLocationButton} onPress={centerMapOnUser}>
           <MaterialIcons name="my-location" size={30} color="white" />
         </Pressable>
       </View>
 
       {debugMode && (
         <View style={styles.debugContainer}>
-          {errorMsg && <Text style={styles.debugText}>Error Message: {errorMsg}</Text>}
+          {errorMsg && (
+            <Text style={styles.debugText}>Error Message: {errorMsg}</Text>
+          )}
           {initialLocation && (
             <Text style={styles.debugText}>
               Initial Location: {"\n"}
@@ -182,15 +230,21 @@ export default function SettingsScreen({ debugMode }) {
           )}
           {visibleCaches.length > 0 && (
             <Text style={styles.debugText}>
-              Visible Caches:{"\n"} 
-              Name: {visibleCaches.map(cache => cache.title).join(", ")} {"\n"}
-              Id: {visibleCaches.map(cache => cache.id).join(", ")} {"\n"}
-              Found: {visibleCaches.map(cache => cache.found).join(", ")}
+              Visible Caches:{"\n"}
+              Name: {visibleCaches.map((cache) => cache.title).join(", ")}{" "}
+              {"\n"}
+              Id: {visibleCaches.map((cache) => cache.id).join(", ")} {"\n"}
+              Found: {visibleCaches.map((cache) => cache.found).join(", ")}
             </Text>
           )}
-          {!errorMsg && !initialLocation && !actualLocation && visibleCaches.length === 0 && (
-            <Text style={styles.debugText}>No debug information available.</Text>
-          )}
+          {!errorMsg &&
+            !initialLocation &&
+            !actualLocation &&
+            visibleCaches.length === 0 && (
+              <Text style={styles.debugText}>
+                No debug information available.
+              </Text>
+            )}
         </View>
       )}
     </View>
@@ -209,15 +263,15 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   myLocationButton: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 20,
     right: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
     borderRadius: 30,
     width: 60,
     height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   map: {
     flex: 1,
@@ -260,7 +314,7 @@ const styles = StyleSheet.create({
     borderColor: "#000", // Add border color
     zIndex: 2, // Ensure popup stays above map
   },
-  
+
   popupText: {
     fontSize: 16,
     fontWeight: "bold",
