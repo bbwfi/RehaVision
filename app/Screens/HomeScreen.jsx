@@ -87,74 +87,6 @@ export default function HomeScreen({ debugMode }) {
   };
 
   return (
-<<<<<<< Updated upstream
-    <View style={{ flex: 1, backgroundColor: "#222020" }}>
-      {interactionState === "idle" && (
-        <View>
-          {caches.map((cache, index) => {
-            const color = foundCaches.includes(index) ? "green" : "red";
-            const lastFoundCacheIndex = foundCaches.length > 0 ? Math.max(...foundCaches) : -1;
-            const previousCacheFound = foundCaches.includes(index - 1);
-            const allowScan = index === 0 || previousCacheFound;
-
-            return (
-              allowScan && (
-                <Pressable
-                  key={index}
-                  onPress={() => {
-                    setInteractionState("modalVisible");
-                    setActiveCache(cache);
-                  }}
-                  style={{
-                    backgroundColor: "black",
-                    width: "100%",
-                    alignSelf: "center",
-                  }}
-                >
-                  <View
-                    style={{
-                      flexGrow: 1,
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <Text
-                      style={{
-                        color,
-                        padding: "2.5%",
-                        alignSelf: "center",
-                        fontSize: 35,
-                      }}
-                    >
-                      {cache.title}
-                    </Text>
-                    {foundCaches.includes(index) ? (
-                      <MaterialIcons
-                        name="check-circle"
-                        size={24}
-                        color="green"
-                        style={{ alignSelf: "center" }}
-                      />
-                    ) : (
-                      <MaterialIcons
-                        name="circle"
-                        size={24}
-                        color="red"
-                        style={{ alignSelf: "center" }}
-                      />
-                    )}
-                  </View>
-                  {debugMode && (
-                    <Text style={{ color: "white", padding: "2.5%", paddingTop: 0 }}>
-                      {cache.id}
-                    </Text>
-                  )}
-                </Pressable>
-              )
-            );
-          })}
-          {foundCaches.length === caches.length && (
-=======
     <View style={{ flex: 1, backgroundColor: "#313335" }}>
       {caches.map((cache, index) => {
         const isFound = foundCaches.some((foundCache) => foundCache.id === cache.id);
@@ -169,7 +101,6 @@ export default function HomeScreen({ debugMode }) {
         const showCache = index === 0 || index <= lastFoundCacheIndex + 1;
         return (
           showCache && (
->>>>>>> Stashed changes
             <Pressable
               key={cache.id}
               onPress={() => {

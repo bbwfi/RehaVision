@@ -31,10 +31,7 @@ const linking = {
       Settings: "settings",
       Disclaimer: "disclaimer",
       PrivacyPolicy: "privacypolicy",
-<<<<<<< Updated upstream
       IntroPage: "intro",
-=======
->>>>>>> Stashed changes
     },
   },
 };
@@ -172,15 +169,7 @@ function App() {
             <Stack.Screen name="Main" component={MainNavigator} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
-<<<<<<< Updated upstream
             <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
-=======
-            <Stack.Screen
-              name="PrivacyPolicy"
-              component={PrivacyPolicyScreen}
-            />
-            <Stack.Screen name="IntroPage" component={IntroPage} />
->>>>>>> Stashed changes
           </Stack.Navigator>
         </NavigationContainer>
       </AppProvider>

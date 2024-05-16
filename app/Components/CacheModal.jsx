@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+
 import Modal from "react-native-modal";
 
 import { loadUserData } from "../Functions/userDataManager";
@@ -26,6 +27,7 @@ export default function CacheModal({
   };
 
   const selectedCacheUserData = userData?.foundCaches.find(cache => cache.id === selectedCache?.id);
+  console.log("Selected cache user data:", selectedCacheUserData);
 
 
   return (
@@ -34,8 +36,8 @@ export default function CacheModal({
       onBackdropPress={onBackdropPress}
       animationIn={"slideInUp"} // Changed animationIn to slideInUp
       animationOut={"slideOutDown"} // Changed animationOut to slideOutDown
-      animationInTiming={1000}
-      animationOutTiming={1000}
+      animationInTiming={500}
+      animationOutTiming={500}
       backdropOpacity={0.5} // Reduced backdrop opacity
       style={styles.modal}
     >
@@ -46,6 +48,12 @@ export default function CacheModal({
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{selectedCache?.title}</Text>
           <Text style={styles.description}>{selectedCache?.description}</Text>
+
+
+
+
+
+
         </View>
         <View style={styles.separator} />
         <View style={styles.bottomContainer}>
@@ -59,11 +67,20 @@ export default function CacheModal({
               {new Date(selectedCacheUserData?.timestamp).toLocaleString()}
             </Text>
           </View>
+
+
+
+
+
+
+
+
         </View>
       </View>
     </Modal>
   );
 }
+
 
 const styles = StyleSheet.create({
   modal: {
