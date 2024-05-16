@@ -15,13 +15,7 @@ export default function SettingsScreen({ navigation }) {
   const getRowStyle = (position) => {
     switch (position) {
       case "1st":
-        return styles.firstRow;
-      case "2nd":
-      case "3rd":
-        return styles.secondThirdRow;
-      case "4th":
-      case "5th":
-        return styles.fourthFifthRow;
+        return [styles.row, styles.firstRow];
       default:
         return styles.row;
     }
@@ -67,21 +61,13 @@ const styles = StyleSheet.create({
   leaderboard: {
     width: "90%",
     alignItems: "center",
-    marginTop: "70%",
+    marginTop: "100%",
   },
   row: {
     flexDirection: "row",
     alignItems: "center",
     marginVertical: 10,
-  },
-  firstRow: {
-    height: 100,
-  },
-  secondThirdRow: {
     height: 80,
-  },
-  fourthFifthRow: {
-    height: 60,
   },
   positionContainer: {
     backgroundColor: "#ffcc00",
@@ -97,6 +83,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   infoContainer: {
+    borderColor: "#ffcc00",
+    borderWidth: 4,
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
@@ -105,10 +93,10 @@ const styles = StyleSheet.create({
   },
   crown: {
     position: "absolute",
-    top: -25,
-    left: -12,
-    width: 40,
-    height: 40,
+    top: -59,
+    left: -25,
+    width: 80,
+    height: 80,
     resizeMode: "contain",
   },
   nameText: {
