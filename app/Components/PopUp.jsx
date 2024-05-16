@@ -15,10 +15,8 @@ const styles = {
   container: {
     backgroundColor: "#fff",
     padding: 10,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ccc",
     elevation: 2,
+    width: "100%",
   },
   cacheName: {
     fontWeight: "bold",
