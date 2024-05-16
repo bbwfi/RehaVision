@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import Intro1 from "../../assets/Intro 1 World.png";
 import Intro2 from "../../assets/Intro 2 Puzzle.png";
 import Intro3 from "../../assets/Intro 3 Map.png";
-import Intro4 from "../../assets/Intro 4 Treasure.png";
+import Intro4 from "../../assets/Intro 4 Ausrufezeichen.png";
 import React, { useContext, useEffect, useState } from "react";
 import {
   View,
@@ -25,16 +25,16 @@ export default function IntroPage({ navigation }) {
     "Was ist GEOCACHING?",
     "Das Rätsel",
     "Die Suche",
-    "Der Schatz",
+    "HINWEIS",
   ];
 
   const icon = [Intro1, Intro2, Intro3, Intro4];
 
   const textInhalt = [
     "Geocaching ist eine moderne Schatzsuche, bei der Teilnehmer mithilfe von GPS-Geräten versteckte Behälter finden.",
-    "Der Ort des Schatzes ist hinter einem Rätsel versteckt, löse diese um Ihn zu finden.",
-    "Nachdem du das erste Rätsel gelöst hast, musst du nur noch den Schatz finden. Hier für bekommst du ein Tip von deinem Handy.",
-    "Du hast nun den Schatz gefunden, folge einfach den Anweisungen auf deinem Handy und finde den nächsten.",
+    "Der Ort des Schatzes ist hinter einem Rätsel versteckt, löse diese um ihn zu finden.",
+    "Nachdem du das erste Rätsel gelöst hast, musst du nur noch den Schatz finden. Hierfür bekommst du ein Tipp von deinem Handy.",
+    "Das Betreten von Gebäuden ist im Rahmen dieser Aktivität untersagt. Teilen Sie den exakten Standort der Caches anderen Teilnehmern nicht mit.",
   ];
 
   const handleNext = () => {
@@ -110,9 +110,26 @@ export default function IntroPage({ navigation }) {
           alignItems: "center",
           padding: 3,
           backgroundColor: "#ffc107",
-          justifyContent: index > 0 ? 'space-between' : 'flex-end'
+          justifyContent: 'space-between'
         }}
       >
+      {index == 0 && (
+          <Pressable onPress={() => navigation.navigate('Main')} style={{ padding: 10, width: "40%" }}>
+            <Text
+              style={{
+                padding: 10,
+                backgroundColor: "#222020",
+                borderRadius: 17,
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 20,
+                textAlign: "center",
+              }}
+            >
+              Ende
+            </Text>
+          </Pressable>
+        )}
         {index > 0 && (
           <Pressable onPress={handleBack} style={{ padding: 10, width: "40%" }}>
             <Text

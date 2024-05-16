@@ -31,7 +31,7 @@ const linking = {
       Settings: "settings",
       Disclaimer: "disclaimer",
       PrivacyPolicy: "privacypolicy",
-
+      IntroPage: "intro",
     },
   },
 };
@@ -165,12 +165,11 @@ function App() {
           linking={linking}
         >
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="IntroPage" component={IntroPage} />
             <Stack.Screen name="Main" component={MainNavigator} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
             <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
             <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
-            <Stack.Screen name="IntroPage" component={IntroPage} />
-
           </Stack.Navigator>
         </NavigationContainer>
       </AppProvider>

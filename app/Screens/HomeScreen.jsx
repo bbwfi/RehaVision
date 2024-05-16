@@ -82,7 +82,7 @@ export default function HomeScreen({ debugMode }) {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#313335" }}>
+    <View style={{ flex: 1, backgroundColor: "#222020" }}>
       {interactionState === "idle" && (
         <View>
           {caches.map((cache, index) => {

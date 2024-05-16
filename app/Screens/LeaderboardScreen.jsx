@@ -54,9 +54,9 @@ export default function SettingsScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#333",
+    backgroundColor: "#222020",
   },
-  backgroundImage: {
+  backgroundImage: { // mach das später oben fixiert
     marginTop: "-103%",
     flex: 1,
     justifyContent: "center",
