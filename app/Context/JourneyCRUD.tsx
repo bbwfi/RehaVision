@@ -5,53 +5,58 @@ import { addDoc, getDocs, doc, collection, updateDoc, deleteDoc } from 'firebase
 
 
     // seter
-    const [GeoCacheList, setGeoChacheList] = useState([]);
+    const [JourneyList, setGeoChacheList] = useState([]);
     
-    //new GeoCacheStates
-    const [newGeoCacheName, setNewMovieName] = useState("")
-    const [newGeoCacheDesc, setNewMovieDesc] = useState("")    
-    const [newGeoCacheLong, setNewMovieLong] = useState(0)
-    const [newGeoCacheLat, setNewMovieLat]   = useState(0)
+    //new JourneyStates - for the Create function 
+    /** 
+    const [newJourneyUser, setNewMovieUser] = useState()
+    const [newJourneyRoute, setNewMovieRoute] = useState()    
+    const [newJourneyCache, setNewMovieCache] = useState()
+    const [newJourneyDuration, setNewMovieDuration] = useState()
+    */
+
+    // References to the Journeys data for Accessbility
+    const JourneyCollectionRef = collection(database, "GeoChaches");
 
 
-    // References to the geocaches data for Accessbility
-    const geocacheCollectionRef = collection(database, "GeoChaches");
+//#region JourneyCRUD
+function JourneyCRUD() {
 
+/* WIP - needs customiced Create Funktion
 
-//#region GeoCacheCRUD
-function GeoCacheCRUD() {
-
-    // Create Function For GeoCaches
-    const CreateGeoCache = async () => {
+    // Create Function For Journeys
+   const CreateJourney = async () => {
         try {
-            await addDoc(geocacheCollectionRef, {
-                name: newGeoCacheName,
-                latidute: newGeoCacheLat, 
-                longitude: newGeoCacheLong, 
-                description: newGeoCacheDesc,
+            await addDoc(JourneyCollectionRef, {
+                user: newJourneyUser,
+                currentcache: newJourneyCache, 
+                duration: newJourneyDuration, 
+                route: newJourneyRoute,
             });
         } catch (err) {
             console.error(err)
         }    
     }
+    
+*/
 
-    // Update funktion for Geocaches
-    const updateGeoCache = async (id) => {
-        const GeoCacheDoc = doc(database,"GeoCaches", id)
-        await updateDoc(GeoCacheDoc, {});
+    // Update funktion for Journeys
+    const updateJourney = async (id) => {
+        const JourneyDoc = doc(database,"Journeys", id)
+        await updateDoc(JourneyDoc, {});
     };
 
-    // Delete funktion for Geocaches
-    const deleteGeoCache = async (id) => {
-        const GeoCacheDoc = doc(database,"GeoCaches", id)
-        await deleteDoc(GeoCacheDoc);
+    // Delete funktion for Journeys
+    const deleteJourney = async (id) => {
+        const JourneyDoc = doc(database,"Journeys", id)
+        await deleteDoc(JourneyDoc);
     };
 
-    // Read Funktion for Geocaches
+    // Read Funktion for Journeys
     useEffect(() => {
-            const getGeoCacheList = async () => {
+            const getJourneyList = async () => {
             try {
-                const data = await getDocs(geocacheCollectionRef);
+                const data = await getDocs(JourneyCollectionRef);
                 const filteredData = data.docs.map((doc) => ({...doc.data(),id: doc.id}));
                 console.log(filteredData);
             } catch (err) {
@@ -59,7 +64,7 @@ function GeoCacheCRUD() {
             }
         };
             
-        getGeoCacheList();
+        getJourneyList();
     }, []);
 
 //#endregion
