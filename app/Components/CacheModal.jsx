@@ -4,6 +4,7 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 
 import { loadUserData } from "../Functions/userDataManager";
+import { StatusBar } from "expo-status-bar";
 
 export default function CacheModal({
   isVisible,
@@ -12,10 +13,18 @@ export default function CacheModal({
   onClose,
 }) {
   const [userData, setUserData] = useState(null);
+  const [selectedCacheUserData, setSelectedCacheUserData] = useState(null);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [isVisible]);
+
+  useEffect(() => {
+    if (userData && userData.foundCaches && selectedCache) {
+      const foundCache = userData.foundCaches.find(cache => cache.id === selectedCache.id);
+      setSelectedCacheUserData(foundCache);
+    }
+  }, [userData, selectedCache]);
 
   const fetchData = async () => {
     try {
@@ -26,11 +35,14 @@ export default function CacheModal({
     }
   };
 
-  const selectedCacheUserData = userData?.foundCaches.find(cache => cache.id === selectedCache?.id);
   console.log("Selected cache user data:", selectedCacheUserData);
 
 
   return (
+    <>
+    {isVisible && (
+    <StatusBar style="dark" backgroundColor="#313335" />
+    )}
     <Modal
       isVisible={isVisible}
       onBackdropPress={onBackdropPress}
@@ -48,12 +60,6 @@ export default function CacheModal({
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{selectedCache?.title}</Text>
           <Text style={styles.description}>{selectedCache?.description}</Text>
-
-
-
-
-
-
         </View>
         <View style={styles.separator} />
         <View style={styles.bottomContainer}>
@@ -78,6 +84,7 @@ export default function CacheModal({
         </View>
       </View>
     </Modal>
+    </>
   );
 }
 

@@ -10,7 +10,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useAppContext } from "../Context/AppContext";
 import Collapsible from "react-native-collapsible";
-import { loadUserData } from "../Functions/userDataManager";
+import { loadUserData, saveUserData } from "../Functions/userDataManager";
 
 import {
   startRadar,
@@ -31,6 +31,11 @@ function SettingsScreen({ navigation }) {
 
   const toggleSwitch = () => {
     setDebugMode(!debugMode); // Toggle debugMode state
+  };
+
+  const resetUserData = async () => {
+    await saveUserData(null); // Clear user data
+    setUserData(null); // Clear user data from state
   };
 
   const handleBeaconScan = (data) => {
@@ -158,11 +163,16 @@ function SettingsScreen({ navigation }) {
   <Text>Version 1.0.0</Text>
   {debugMode && (
 
+
     <View>
+      <Pressable onPress={resetUserData}>
+        <Text>Clear User Data</Text>
+      </Pressable>
       <Text>User Data:</Text>
       <Text>
         {userData ? JSON.stringify(userData) : "No user data found"}
       </Text>
+
     </View>
 )}
 </View>

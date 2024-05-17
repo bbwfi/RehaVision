@@ -17,9 +17,26 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useAppContext } from "../Context/AppContext";
 import Collapsible from "react-native-collapsible";
+import { loadUserData, saveUserData } from "../Functions/userDataManager";
 
 export default function IntroPage({ navigation }) {
   const [index, setIndex] = useState(0);
+  const [ userData, setUserData ] = useState(null);
+
+  useEffect(() => {
+    fetchData();
+    checkTutorialCompletion();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const userData = await loadUserData();
+      setUserData(userData);
+    } catch (error) {
+      console.error("Error loading user data:", error);
+    }
+  };
+
 
   const header = [
     "Was ist GEOCACHING?",
@@ -36,6 +53,28 @@ export default function IntroPage({ navigation }) {
     "Nachdem du das erste Rätsel gelöst hast, musst du nur noch den Schatz finden. Hierfür bekommst du ein Tipp von deinem Handy.",
     "Das Betreten von Gebäuden ist im Rahmen dieser Aktivität untersagt. Teilen Sie den exakten Standort der Caches anderen Teilnehmern nicht mit.",
   ];
+
+  const checkTutorialCompletion = async () => {
+    console.log("Checking tutorial completion...");
+    console.log("User data:", userData);
+    try {
+      if (userData && userData.tutorialCompleted) {
+        navigation.navigate("Main");
+      }
+    } catch (error) {
+      console.error("Error checking tutorial completion:", error);
+    }
+  }
+  
+
+  const handleFinish = async () => {
+    try {
+      await saveUserData({ tutorialCompleted: true });
+      navigation.navigate("Main");
+    } catch (error) {
+      console.error("Error saving tutorial completion:", error);
+    }
+  }
 
   const handleNext = () => {
     if (index < header.length - 1) {
@@ -114,7 +153,7 @@ export default function IntroPage({ navigation }) {
         }}
       >
       {index == 0 && (
-          <Pressable onPress={() => navigation.navigate('Main')} style={{ padding: 10, width: "40%" }}>
+          <Pressable onPress={handleFinish} style={{ padding: 10, width: "40%" }}>
             <Text
               style={{
                 padding: 10,
@@ -165,7 +204,7 @@ export default function IntroPage({ navigation }) {
           </Pressable>
         )}
         {index == 3 && (
-          <Pressable onPress={() => navigation.navigate('Main')} style={{ padding: 10, width: "40%" }}>
+          <Pressable onPress={handleFinish} style={{ padding: 10, width: "40%" }}>
             <Text
               style={{
                 padding: 10,

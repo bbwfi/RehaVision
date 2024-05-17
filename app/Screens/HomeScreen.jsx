@@ -22,7 +22,21 @@ export default function HomeScreen({ debugMode }) {
   }, []);
 
   useEffect(() => {
-    saveUserData({ foundCaches });
+    const saveData = async () => {
+      // Load existing user data
+      const existingUserData = await loadUserData();
+  
+      // Merge existing data with new data
+      const newUserData = {
+        ...existingUserData,
+        foundCaches,
+      };
+  
+      // Save merged data
+      await saveUserData(newUserData);
+    };
+  
+    saveData();
   }, [foundCaches]);
 
   const getPermissionsAsync = async () => {
@@ -203,7 +217,7 @@ export default function HomeScreen({ debugMode }) {
         />
       )}
 
-      {isModalVisible && <StatusBar style="light" backgroundColor="#313335" />}
+
     </View>
   );
 }
