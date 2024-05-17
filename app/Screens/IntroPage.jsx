@@ -51,7 +51,7 @@ export default function IntroPage({ navigation }) {
     "Geocaching ist eine moderne Schatzsuche, bei der Teilnehmer mithilfe von GPS-Geräten versteckte Behälter finden.",
     "Der Ort des Schatzes ist hinter einem Rätsel versteckt, löse diese um ihn zu finden.",
     "Nachdem du das erste Rätsel gelöst hast, musst du nur noch den Schatz finden. Hierfür bekommst du einen Tipp von deinem Handy.",
-    "Das Betreten von Gebäuden ist im Rahmen dieser Aktivität untersagt. Teilen Sie den exakten Standort der Caches anderen Teilnehmern nicht mit.",
+    "Das Betreten von Gebäuden ist im Rahmen dieser Aktivität untersagt. Teilen Sie den exakten Standort der Caches anderen Teilnehmern bitte nicht mit.",
   ];
 
   const checkTutorialCompletion = async () => {
