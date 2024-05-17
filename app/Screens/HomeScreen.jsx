@@ -1,170 +1,240 @@
 import React, { useState, useEffect } from "react";
-import { View, Pressable, Text, Vibration } from "react-native";
+import { View, Pressable, Text, Vibration, StatusBar } from "react-native";
 import { Camera } from "expo-camera";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import CacheModal from "../Components/CacheModal";
 import QRScanner from "../Components/QRScanner";
 import CachesJSON from "../../assets/json/Caches.json";
+import { loadUserData, saveUserData } from "../Functions/userDataManager";
 
-/**
- * Represents the HomeScreen component.
- * This component displays a list of caches and provides functionality for scanning QR codes.
- */
-export default function HomeScreen({debugMode}) {
-  const [isScanning, setIsScanning] = useState(false); // State to track if QR scanning is active
-  const [modalVisible, setModalVisible] = useState(false); // State to control the visibility of the cache details modal
-  const [selectedCache, setSelectedCache] = useState(null); // State to store the selected cache object
-  const [foundCaches, setFoundCaches] = useState([]); // State to store the indices of found caches
+export default function HomeScreen({ debugMode }) {
+  const [interactionState, setInteractionState] = useState("idle");
+  const [activeCache, setActiveCache] = useState(null);
+  const [foundCaches, setFoundCaches] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const Caches = CachesJSON.markers; // Array of cache objects
+  const caches = CachesJSON.markers;
 
   useEffect(() => {
     getPermissionsAsync();
+    fetchData();
   }, []);
 
-  /**
-   * Requests camera permissions asynchronously.
-   * If permission is not granted, handle permission denied.
-   */
+  useEffect(() => {
+    const saveData = async () => {
+      // Load existing user data
+      const existingUserData = await loadUserData();
+  
+      // Merge existing data with new data
+      const newUserData = {
+        ...existingUserData,
+        foundCaches,
+      };
+  
+      // Save merged data
+      await saveUserData(newUserData);
+    };
+  
+    saveData();
+  }, [foundCaches]);
+
   const getPermissionsAsync = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
     if (status !== "granted") {
-      // Handle permission denied
       console.log("Permission denied");
     }
   };
 
-  /**
-   * Sets the isScanning state to true, activating the QR scanner.
-   */
-  const openQRScanner = () => {
-    setIsScanning(true);
-    console.log("Opening QR scanner");
-  };
-
-  /**
-   * Handles the scanned barcodes from the QR scanner.
-   * @param {Object} barcode - The scanned barcode object containing type and data.
-   */
-  const handleBarCodeScanned = ({ type, data }) => {
-    console.log("Scanned", data);
-    Vibration.vibrate(500);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-
-    if (Caches.find((cache) => cache.id === data)) {
-      const index = Caches.findIndex((cache) => cache.id === data);
-      console.log("Found cache: ", Caches[index].title);
-      if (foundCaches.includes(index)) {
-        alert("Cache already found!");
-      } else {
-        alert("Cache found!");
-      }
-      Caches[index].found = true;
-      setFoundCaches([...foundCaches, index]);
-      setIsScanning(false);
+  const fetchData = async () => {
+    const userData = await loadUserData();
+    console.log("User data:", userData);
+    if (userData?.foundCaches) {
+      setFoundCaches(userData.foundCaches);
     }
   };
 
-  /**
-   * Closes the cache details modal and resets the selectedCache state.
-   */
-  const closeModal = () => {
-    setModalVisible(false);
-    setSelectedCache(null);
+  const openQRScanner = () => {
+    setInteractionState("scanning");
+    console.log("Opening QR scanner");
   };
 
-  /**
-   * Cancels the QR scanning process by setting isScanning state to false.
-   */
+  const handleBarCodeScanned = ({ type, data }) => {
+    Vibration.vibrate(500);
+
+    const scannedCacheIndex = caches.findIndex((cache) => cache.id === data);
+
+    if (scannedCacheIndex === -1) {
+      alert("Invalid cache! Please scan a valid cache.");
+      return;
+    }
+
+    const nextCacheIndex = foundCaches.length;
+    if (scannedCacheIndex !== nextCacheIndex) {
+      alert("Please scan the next cache!");
+      return;
+    }
+
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+
+    const foundCache = caches[scannedCacheIndex];
+    console.log("Found cache:", foundCache);
+    setFoundCaches([
+      ...foundCaches,
+      { id: caches[scannedCacheIndex].id, timestamp: Date.now() },
+    ]);
+    setInteractionState("idle");
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+    setActiveCache(null);
+  };
+
+  const resetProgress = () => {
+    setFoundCaches([]);
+    closeModal();
+  };
+
   const cancelScan = () => {
-    setIsScanning(false);
+    setInteractionState("idle");
   };
 
   return (
     <View style={{ flex: 1, backgroundColor: "#313335" }}>
-      {/* Render the list of caches */}
 
-      {!isScanning && (
-        <View>
-          {Caches.map((cache, index) => {
-            const color = foundCaches.includes(index) ? "green" : "red";
-            const lastFoundCacheIndex =
-              foundCaches.length > 0 ? Math.max(...foundCaches) : -1;
-            return foundCaches.includes(index) ||
-              index === lastFoundCacheIndex + 1 ? (
-              <Pressable
-                key={index}
-                onPress={() => {
-                  setModalVisible(true);
-                  setSelectedCache(cache);
-                }}
+      {/* Cache List */}
+      {caches.map((cache, index) => {
+        const isFound = foundCaches.some(
+          (foundCache) => foundCache.id === cache.id
+        );
+        const color = isFound ? "green" : "red";
+        let lastFoundCacheIndex = -1;
+        for (let i = caches.length - 1; i >= 0; i--) {
+          if (
+            foundCaches.some((foundCache) => foundCache.id === caches[i].id)
+          ) {
+            lastFoundCacheIndex = i;
+            break;
+          }
+        }
+        const showCache = index === 0 || index <= lastFoundCacheIndex + 1;
+        return (
+          showCache && (
+            <Pressable
+              key={cache.id}
+              onPress={() => {
+                setIsModalVisible(true);
+                setActiveCache(cache);
+              }}
+              style={{
+                backgroundColor: "white",
+                width: "95%",
+                alignSelf: "center",
+                borderRadius: 10,
+                margin: "2.5%",
+              }}
+            >
+              <View
                 style={{
-                  backgroundColor: "black",
-                  width: "100%",
-                  alignSelf: "center",
-
+                  flexGrow: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                 }}
               >
-              <View style={{flexGrow:1, flexDirection:"row", justifyContent:"space-between"}}>
-                <Text style={{ color, padding: "2.5%", alignSelf: "center", fontSize:35}}>
-                  {cache.title}
-                </Text>
-                {foundCaches.includes(index) ? (
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={{
+                      backgroundColor: "#ffcc00",
+                      padding: 10,
+                      borderTopLeftRadius: 10,
+                      borderBottomLeftRadius: 10,
+                    }}
+                  >
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>{index + 1}</Text>
+                  </View>
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      color: "black",
+                      padding: 10,
+                      fontSize: 20,
+                    }}
+                  >
+                    {cache.title}
+                  </Text>
+                </View>
+                {isFound ? (
                   <MaterialIcons
                     name="check-circle"
-                    size={24}
+                    size={30}
                     color="green"
-                    style={{ alignSelf: "center" }}
+                    style={{ alignSelf: "center", marginRight: 10 }}
                   />
-                ) : <MaterialIcons
-                  name="circle"
-                  size={24}
-                  color="red"
-                  style={{ alignSelf: "center" }}
-                />}
+                ) : (
+                  <MaterialIcons
+                    name="circle"
+                    size={30}
+                    color="red"
+                    style={{ alignSelf: "center", marginRight: 10 }}
+                  />
+                )}
               </View>
               {debugMode && (
-                  <Text style={{ color: "white", padding:"2.5%", paddingTop:0 }}>
-                    {cache.id}
-                  </Text>
-                )
-                }
-              </Pressable>
-            ) : null;
-          })}
-        </View>
-      )}
+                <Text style={{ color: "green", padding: "2.5%", paddingTop: 0 }}>
+                  {cache.id}
+                </Text>
+              )}
+            </Pressable>
+          )
+        );
+      })}
 
       <CacheModal
-        isVisible={modalVisible}
+        isVisible={isModalVisible}
         onBackdropPress={closeModal}
-        selectedCache={selectedCache}
+        selectedCache={activeCache}
+        onClose={closeModal}
       />
 
-      {/* Render  the QR scanner button */}
       <Pressable
-        onPress={() => openQRScanner()}
+        onPress={openQRScanner}
         style={{ position: "absolute", bottom: "5%", alignSelf: "center" }}
       >
         <MaterialIcons
           size={42}
           name="qr-code-2"
           style={{
-            backgroundColor: "#ffc107",
+            backgroundColor: "#ffcc00",
             padding: "2.5%",
             borderRadius: 25,
           }}
         />
       </Pressable>
 
-      {/* Render the QR scanner component if isScanning state is true */}
-      {isScanning && (
+      <Pressable
+        onPress={resetProgress}
+        style={{ position: "absolute", bottom: "5%", right: "5%" }}
+      >
+        <MaterialIcons
+          size={20}
+          name="refresh"
+          style={{
+            backgroundColor: "#ffcc00",
+            padding: "2.5%",
+            borderRadius: 25,
+          }}
+        />
+      </Pressable>
+
+      {interactionState === "scanning" && (
         <QRScanner
           onBarCodeScanned={handleBarCodeScanned}
           onCancelScan={cancelScan}
           debugMode={debugMode}
         />
       )}
+
+
     </View>
   );
 }

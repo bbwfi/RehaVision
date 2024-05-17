@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -8,9 +8,14 @@ import * as Linking from "expo-linking";
 import HomeScreen from "./app/Screens/HomeScreen";
 import LeaderboardScreen from "./app/Screens/LeaderboardScreen";
 import MapPage from "./app/Screens/MapPage";
+import DisclaimerScreen from "./app/Screens/DisclaimerScreen";
+import PrivacyPolicyScreen from "./app/Screens/PrivacyPolicyScreen";
 import SettingsScreen from "./app/Screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./app/Context/AppContext";
 import icon from "./assets/adaptive-icon_rehavision.png";
+import { SafeAreaView } from "react-native-safe-area-context";
+import IntroPage from "./app/Screens/IntroPage";
+import { loadUserData } from "./app/Functions/userDataManager";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -25,6 +30,9 @@ const linking = {
       Home: "home",
       Leaderboard: "leaderboard",
       Settings: "settings",
+      Disclaimer: "disclaimer",
+      PrivacyPolicy: "privacypolicy",
+      IntroPage: "intro",
     },
   },
 };
@@ -102,6 +110,12 @@ function MainNavigator() {
  * @returns {JSX.Element} The rendered component.
  */
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [initialRoute, setInitialRoute] = useState(null);
+
+  const routeNameRef = useRef();
+  const navigationRef = useRef();
+
   /**
    * Recursively finds the name of the active route in the navigation state.
    * @param {object} state - The navigation state.
@@ -115,8 +129,22 @@ function App() {
     return route.name;
   };
 
-  const routeNameRef = useRef();
-  const navigationRef = useRef();
+  useEffect(() => {
+    const loadAndNavigate = async () => {
+      const userData = await loadUserData();
+      console.log("User data:", userData);
+
+      if (userData?.tutorialCompleted) {
+        setInitialRoute("Main");
+      } else {
+        setInitialRoute("IntroPage");
+      }
+
+      setIsLoading(false);
+    };
+
+    loadAndNavigate();
+  }, []);
 
   useEffect(() => {
     if (navigationRef.current) {
@@ -125,6 +153,14 @@ function App() {
       );
     }
   }, []);
+
+  if (isLoading || initialRoute === null) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    ); // Replace with your actual loading screen component
+  }
 
   /**
    * Handles the state change event of the navigation.
@@ -150,18 +186,23 @@ function App() {
   };
 
   return (
-    <AppProvider>
-      <NavigationContainer
-        ref={navigationRef}
-        onStateChange={handleStateChange}
-        linking={linking}
-      >
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Main" component={MainNavigator} />
-          <Stack.Screen name="Settings" component={SettingsScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AppProvider>
+    <SafeAreaView style={{ flex: 1 }}>
+      <AppProvider>
+        <NavigationContainer
+          ref={navigationRef}
+          onStateChange={handleStateChange}
+          linking={linking}
+        >
+          <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initialRoute}>
+            <Stack.Screen name="IntroPage" component={IntroPage} />
+            <Stack.Screen name="Main" component={MainNavigator} />
+            <Stack.Screen name="Settings" component={SettingsScreen} />
+            <Stack.Screen name="Disclaimer" component={DisclaimerScreen} />
+            <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AppProvider>
+    </SafeAreaView>
   );
 }
 

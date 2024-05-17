@@ -405,15 +405,7 @@ E-Mail-Adresse:
   Pflichten erforderlich sein (z. B. für die Nutzung unseres Onlineangebotes
   relevante technische und organisatorische Informationen) und<span
     class="dsg-license-content-blurred de dsg-ttip-activate"
-  >
-    - Dieser Textbereich muss mit einer Premium Lizenz freischaltet werden. -
-    premiumtext premiumtext premiumtext premiumtext premiumtext premiumtext
-    premiumtext premiumtext premiumtext premiumtext premiumtext premiumtext
-    premiumtext premiumtext premiumtext premiumtext premiumtext premiumtext
-    premiumtext premiumtext premiumtext premiumtext premiumtext premiumtext
-    premiumtext premiumtext premiumtext premiumtext premiumtext premiumtext
-    premiumtext premiumtext premiumtext
-  </span>
+  
 </p>
 Inhalte:
 <p>
