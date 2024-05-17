@@ -101,7 +101,6 @@ export default function HomeScreen({ debugMode }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#313335" }}>
-      <StatusBar hidden />
 
       {/* Cache List */}
       {caches.map((cache, index) => {

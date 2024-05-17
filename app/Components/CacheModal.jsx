@@ -70,17 +70,9 @@ export default function CacheModal({
           <View style={styles.section}>
             <Text style={styles.header}>Found On</Text>
             <Text style={styles.details}>
-              {new Date(selectedCacheUserData?.timestamp).toLocaleString()}
+              {selectedCacheUserData? new Date(selectedCacheUserData?.timestamp).toLocaleString() : "Noch nicht gefunden"}
             </Text>
           </View>
-
-
-
-
-
-
-
-
         </View>
       </View>
     </Modal>
