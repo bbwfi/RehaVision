@@ -43,3 +43,34 @@ npx expo start
 ? /? displays most commands of expo
 a /a starts/installs the program on Android, only when Emulated Device is launched
 ```
+
+### Was macht der Code
+## App.js
+- Main component
+- Rendered andere components
+- Verbindet verschiedene Screens via Deeplink
+## App.json
+- Speichert Variablen. Bsp. Locations von Caches
+- Handelt Permissions
+- Icons abspeichern
+## MapPage
+- Zeigt die Karte an
+- Umkreis von Caches und Standort
+- Zeigt Namen der Caches an
+## HomeScreen (CachePage)
+- Zeigt verschiedene Caches
+- Qr Code Scanner
+- Details der Caches (Rätsel, Tips, etc)
+## Leaderboard
+- Zeigt Bestenliste von Spielern nach Zeit
+- Soll Datenbank basiert sein
+## Settingsscreen
+Toggles für
+- IntroPage
+- Diclaimer Screen
+- Datenschutz Screen
+- Debug Mode
+- Beacons Finder
+## IntroPage
+- Zeigt Intro an
+- Wird nach dem ersten abschließen nicht mehr automatisch geöffnet
