@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, Pressable, Text, Vibration } from "react-native";
+import { View, Pressable, Text, Vibration, StatusBar } from "react-native";
 import { Camera } from "expo-camera";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import CacheModal from "../Components/CacheModal";
 import QRScanner from "../Components/QRScanner";
 import CachesJSON from "../../assets/json/Caches.json";
 import { loadUserData, saveUserData } from "../Functions/userDataManager";
-import { StatusBar } from "expo-status-bar";
 
 export default function HomeScreen({ debugMode }) {
   const [interactionState, setInteractionState] = useState("idle");
@@ -102,12 +101,19 @@ export default function HomeScreen({ debugMode }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#313335" }}>
+      <StatusBar hidden />
+
+      {/* Cache List */}
       {caches.map((cache, index) => {
-        const isFound = foundCaches.some((foundCache) => foundCache.id === cache.id);
+        const isFound = foundCaches.some(
+          (foundCache) => foundCache.id === cache.id
+        );
         const color = isFound ? "green" : "red";
         let lastFoundCacheIndex = -1;
         for (let i = caches.length - 1; i >= 0; i--) {
-          if (foundCaches.some((foundCache) => foundCache.id === caches[i].id)) {
+          if (
+            foundCaches.some((foundCache) => foundCache.id === caches[i].id)
+          ) {
             lastFoundCacheIndex = i;
             break;
           }
@@ -122,9 +128,11 @@ export default function HomeScreen({ debugMode }) {
                 setActiveCache(cache);
               }}
               style={{
-                backgroundColor: "black",
-                width: "100%",
+                backgroundColor: "white",
+                width: "95%",
                 alignSelf: "center",
+                borderRadius: 10,
+                margin: "2.5%",
               }}
             >
               <View
@@ -134,36 +142,46 @@ export default function HomeScreen({ debugMode }) {
                   justifyContent: "space-between",
                 }}
               >
-                <Text
-                  style={{
-                    color,
-                    padding: "2.5%",
-                    alignSelf: "center",
-                    fontSize: 35,
-                  }}
-                >
-                  {cache.title}
-                </Text>
+                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                  <View
+                    style={{
+                      backgroundColor: "#ffcc00",
+                      padding: 10,
+                      borderTopLeftRadius: 10,
+                      borderBottomLeftRadius: 10,
+                    }}
+                  >
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>{index + 1}</Text>
+                  </View>
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      color: "black",
+                      padding: 10,
+                      fontSize: 20,
+                    }}
+                  >
+                    {cache.title}
+                  </Text>
+                </View>
                 {isFound ? (
                   <MaterialIcons
                     name="check-circle"
-                    size={24}
+                    size={30}
                     color="green"
-                    style={{ alignSelf: "center" }}
+                    style={{ alignSelf: "center", marginRight: 10 }}
                   />
                 ) : (
                   <MaterialIcons
                     name="circle"
-                    size={24}
+                    size={30}
                     color="red"
-                    style={{ alignSelf: "center" }}
+                    style={{ alignSelf: "center", marginRight: 10 }}
                   />
                 )}
               </View>
               {debugMode && (
-                <Text
-                  style={{ color: "white", padding: "2.5%", paddingTop: 0 }}
-                >
+                <Text style={{ color: "green", padding: "2.5%", paddingTop: 0 }}>
                   {cache.id}
                 </Text>
               )}
@@ -187,7 +205,7 @@ export default function HomeScreen({ debugMode }) {
           size={42}
           name="qr-code-2"
           style={{
-            backgroundColor: "#ffc107",
+            backgroundColor: "#ffcc00",
             padding: "2.5%",
             borderRadius: 25,
           }}
@@ -202,7 +220,7 @@ export default function HomeScreen({ debugMode }) {
           size={20}
           name="refresh"
           style={{
-            backgroundColor: "#ffc107",
+            backgroundColor: "#ffcc00",
             padding: "2.5%",
             borderRadius: 25,
           }}
