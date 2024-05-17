@@ -4,7 +4,7 @@ export class Riddle {
 
     constructor(description: string, hint: string) {
         this.description = description;
-        this.hint = description;
+        this.hint = hint;
     }
 }
 

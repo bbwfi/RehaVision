@@ -52,3 +52,105 @@ The following definitions shall have the same meaning regardless of whether they
 <ul>
 <li>By email: kontakt@bbw-fi.de</li>
 </ul>
+
+<br>
+
+---
+
+---
+
+<br>
+
+# Deutsch Haftungsausschluss
+*Zuletzt aktualisiert am 25. April 2024*
+
+
+## Interpretation und Definitionen
+
+### Interpretation
+
+Die Wörter, deren Anfangsbuchstabe großgeschrieben ist, haben unter den folgenden Bedingungen definierte Bedeutungen. Die folgenden Definitionen haben unabhängig davon, ob sie im Singular oder im Plural erscheinen, die gleiche Bedeutung.
+
+### Definitionen
+
+Zwecks dieses Haftungsausschlusses:
+
+- **Unternehmen** (im Folgenden als "das Unternehmen", "Wir", "Uns" oder "Unser" in diesem Haftungsausschluss bezeichnet) bezieht sich auf SFZ Förderzentrum gGmbH, 8c Flemmingstraße, Chemnitz 09116.
+
+- **Dienst** bezieht sich auf die Anwendung.
+
+- **Sie** bezeichnet die Person, die auf den Dienst zugreift, oder das Unternehmen oder eine andere juristische Person, in deren Namen eine solche Person auf den Dienst zugreift oder ihn nutzt, falls zutreffend.
+
+- **Anwendung** bezeichnet das vom Unternehmen bereitgestellte Softwareprogramm, das von Ihnen auf einem elektronischen Gerät mit dem Namen RehaVision heruntergeladen wurde.
+
+<br>
+
+## Haftungsausschluss
+
+Die Informationen, die auf dem Dienst enthalten sind, dienen nur zu allgemeinen Informationszwecken.
+
+Das Unternehmen übernimmt keine Verantwortung für Fehler oder Auslassungen in den Inhalten des Dienstes.
+
+In keinem Fall haftet das Unternehmen für besondere, direkte, indirekte, Folge- oder zufällige Schäden oder für irgendwelche Schäden, ob in einer vertraglichen Handlung, Fahrlässigkeit oder anderweitig, die sich aus der Nutzung des Dienstes oder der Inhalte des Dienstes ergeben oder damit im Zusammenhang stehen. Das Unternehmen behält sich das Recht vor, jederzeit ohne vorherige Ankündigung Ergänzungen, Löschungen oder Änderungen der Inhalte auf dem Dienst vorzunehmen. Dieser Haftungsausschluss wurde mit Hilfe des Haftungsausschluss-Generators erstellt.
+
+Das Unternehmen garantiert nicht, dass der Dienst frei von Viren oder anderen schädlichen Komponenten ist.
+
+<br>
+
+## Haftungsausschluss für externe Links
+
+Der Dienst kann Links zu externen Websites enthalten, die nicht vom Unternehmen bereitgestellt oder gewartet werden oder in irgendeiner Weise mit dem Unternehmen verbunden sind.
+
+Bitte beachten Sie, dass das Unternehmen nicht für die Genauigkeit, Relevanz, Aktualität oder Vollständigkeit der Informationen auf diesen externen Websites garantiert.
+
+<br>
+
+## Haftungsausschluss für Fehler und Auslassungen
+
+Die vom Dienst bereitgestellten Informationen dienen nur zur allgemeinen Orientierung zu Interessensfragen. Selbst wenn das Unternehmen alle Vorsichtsmaßnahmen trifft, um sicherzustellen, dass der Inhalt des Dienstes sowohl aktuell als auch korrekt ist, können Fehler auftreten. Zudem können aufgrund der sich ändernden Natur von Gesetzen, Regeln und Vorschriften Verzögerungen, Auslassungen oder Ungenauigkeiten in den auf dem Dienst enthaltenen Informationen auftreten.
+
+Das Unternehmen ist nicht verantwortlich für Fehler oder Auslassungen oder für die Ergebnisse, die sich aus der Verwendung dieser Informationen ergeben.
+
+<br>
+
+## Haftungsausschluss für faire Nutzung
+
+Das Unternehmen kann urheberrechtlich geschütztes Material verwenden, für das der Urheberrechtsinhaber nicht immer ausdrücklich autorisiert wurde. Das Unternehmen stellt solches Material für Kritik, Kommentare, Nachrichtenberichterstattung, Lehre, Stipendium oder Forschung zur Verfügung.
+
+Das Unternehmen glaubt, dass dies eine "faire Nutzung" eines solchen urheberrechtlich geschützten Materials gemäß Abschnitt 107 des US-Urheberrechts darstellt.
+
+Wenn Sie urheberrechtlich geschütztes Material aus dem Dienst für Ihre eigenen Zwecke verwenden möchten, die über die faire Nutzung hinausgehen, müssen Sie die Erlaubnis des Urheberrechtsinhabers einholen.
+
+<br>
+
+## Haftungsausschluss für geäußerte Ansichten
+
+Der Dienst kann Ansichten und Meinungen enthalten, die denen der Autoren entsprechen und nicht unbedingt die offizielle Politik oder Position eines anderen Autors, einer Agentur, Organisation, eines Arbeitgebers oder Unternehmens, einschließlich des Unternehmens, widerspiegeln.
+
+Kommentare, die von Benutzern veröffentlicht werden, sind ihre alleinige Verantwortung, und die Benutzer übernehmen die volle Verantwortung, Haftung und Schuld für jegliche Verleumdung oder Klage, die sich aus etwas ergibt, das in einem Kommentar geschrieben wurde oder als direktes Ergebnis von etwas geschrieben wurde. Das Unternehmen haftet nicht für Kommentare, die von Benutzern veröffentlicht werden, und behält sich das Recht vor, jeden Kommentar aus beliebigem Grund zu löschen.
+
+<br>
+
+## Haftungsausschluss für keine Verantwortung
+
+Die Informationen auf dem Dienst werden unter der Voraussetzung bereitgestellt, dass das Unternehmen hierbei nicht rechtlich, buchhalterisch, steuerlich oder anderweitig professionell beratend tätig ist. Als solches sollte es nicht als Ersatz für eine Beratung durch professionelle Buchhalter, Steuerberater, Rechtsanwälte oder andere kompetente Berater verwendet werden.
+
+In keinem Fall haften das Unternehmen oder seine Lieferanten für besondere, zufällige, indirekte oder Folgeschäden, die sich aus Ihrem Zugriff oder Ihrer Nutzung oder Unfähigkeit zum Zugriff oder zur Nutzung des Dienstes ergeben.
+
+<br>
+
+## "Benutzung auf eigene Gefahr" Haftungsausschluss
+
+Alle Informationen im Dienst werden "wie besehen" zur Verfügung gestellt, ohne Garantie für Vollständigkeit, Richtigkeit, Rechtzeitigkeit oder für die Ergebnisse, die sich aus der Verwendung dieser Informationen ergeben, und ohne Gewährleistung jeglicher Art, ausdrücklich oder stillschweigend, einschließlich, aber nicht beschränkt auf Garantien für Leistungsfähigkeit, Vermarktbarkeit und Eignung für einen bestimmten Zweck.
+
+Das Unternehmen haftet Ihnen oder anderen Personen nicht für Entscheidungen, die auf den vom Dienst bereitgestellten Informationen beruhen, oder für etwaige
+
+ daraus resultierende, besondere oder ähnliche Schäden, selbst wenn auf die Möglichkeit solcher Schäden hingewiesen wurde.
+
+## Kontaktieren Sie uns
+
+Wenn Sie Fragen zu diesem Haftungsausschluss haben, können Sie uns kontaktieren:
+
+*Per E-Mail:* [kontakt@bbw-fi.de](mailto:kontakt@bbw-fi.de)
+
+---

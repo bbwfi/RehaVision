@@ -13,6 +13,7 @@
     "@react-native-async-storage/async-storage": "1.21.0",
     "@react-navigation/drawer": "^6.6.15",
     "@react-navigation/stack": "^6.3.29",
+    "@types/react-leaflet": "^3.0.0",
     "connect": "^3.7.0",
     "crypt": "^0.0.2",
     "expo": "^50.0.17",

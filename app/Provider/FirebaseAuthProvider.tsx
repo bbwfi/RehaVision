@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Auth, {getAuth, signInAnonymously} from "firebase/auth";
-import app from "../firebaseSetup";
+import {app} from "../Config/firebaseConfig";
 
 
 interface AuthProps  {
