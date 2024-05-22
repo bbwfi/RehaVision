@@ -28,7 +28,6 @@ function SettingsScreen({ navigation }) {
     fetchData(); // Load user data when the component mounts
   }, []);
 
-
   const toggleSwitch = () => {
     setDebugMode(!debugMode); // Toggle debugMode state
   };
@@ -54,32 +53,43 @@ function SettingsScreen({ navigation }) {
     const userData = await loadUserData();
     if (userData) {
       setUserData(userData);
-    }};
-
+    }
+  };
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flexDirection: "row", alignItems: "center", padding: 10, backgroundColor: "#ffc107" }}>
-        <MaterialIcons
-          name="arrow-back"
-          size={24}
-          color="black"
-          onPress={() => navigation.goBack()}
-        />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          padding: 10,
+          backgroundColor: "#ffc107",
+        }}
+      >
+        <Pressable onPress={() => navigation.goBack()} style={{ padding: 10 }}>
+          <MaterialIcons name="arrow-back" size={24} color="black" />
+        </Pressable>
         <Text style={{ marginLeft: 10 }}>Settings</Text>
       </View>
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <View style={{ marginBottom: 20 }}>
-        <Pressable onPress={() => navigation.navigate('IntroPage')} style={{ padding: 10 }}>
-          <Text 
-            style={{ 
-              padding: 10, 
-              backgroundColor: "#2196F3", 
-              borderRadius: 5, 
-              color: 'white',
-              fontWeight: 'bold', 
-              fontSize: 35 }}>IntroPage</Text>
-        </Pressable>
+          <Pressable
+            onPress={() => navigation.navigate("IntroPage")}
+            style={{ padding: 10 }}
+          >
+            <Text
+              style={{
+                padding: 10,
+                backgroundColor: "#2196F3",
+                borderRadius: 5,
+                color: "white",
+                fontWeight: "bold",
+                fontSize: 35,
+              }}
+            >
+              IntroPage
+            </Text>
+          </Pressable>
         </View>
         <View style={{ marginBottom: 20 }}>
           {/* Beacons Finder */}
@@ -143,43 +153,46 @@ function SettingsScreen({ navigation }) {
               </View>
             ))}
         </View>
-        <Pressable onPress={() => navigation.navigate('Disclaimer')} style={{ padding: 10 }}>
-          <Text style={{ color: "#2196F3", textDecorationLine: "underline" }}>Disclaimer</Text>
+        <Pressable
+          onPress={() => navigation.navigate("Disclaimer")}
+          style={{ padding: 10 }}
+        >
+          <Text style={{ color: "#2196F3", textDecorationLine: "underline" }}>
+            Disclaimer
+          </Text>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('PrivacyPolicy')} style={{ padding: 10 }}>
-          <Text style={{ color: "#2196F3", textDecorationLine: "underline" }}>Datenschutz</Text>
+        <Pressable
+          onPress={() => navigation.navigate("PrivacyPolicy")}
+          style={{ padding: 10 }}
+        >
+          <Text style={{ color: "#2196F3", textDecorationLine: "underline" }}>
+            Datenschutz
+          </Text>
         </Pressable>
         <Text>Debug Mode</Text>
-          <Switch
-            trackColor={{ false: "#767577", true: "#81b0ff" }}
-            thumbColor={debugMode ? "#f5dd4b" : "#f4f3f4"}
-            ios_backgroundColor="#3e3e3e"
-            onValueChange={toggleSwitch}
-            value={debugMode}
-          />
+        <Switch
+          trackColor={{ false: "#767577", true: "#81b0ff" }}
+          thumbColor={debugMode ? "#f5dd4b" : "#f4f3f4"}
+          ios_backgroundColor="#3e3e3e"
+          onValueChange={toggleSwitch}
+          value={debugMode}
+        />
       </View>
 
       <View>
-  <Text>Version 1.0.0</Text>
-  {debugMode && (
-
-
-    <View>
-      <Pressable onPress={resetUserData}>
-        <Text>Clear User Data</Text>
-      </Pressable>
-      <Text>User Data:</Text>
-      <Text>
-        {userData ? JSON.stringify(userData) : "No user data found"}
-      </Text>
-
-    </View>
-)}
-</View>
-
-
-
-
+        <Text>Version 1.0.0</Text>
+        {debugMode && (
+          <View>
+            <Pressable onPress={resetUserData}>
+              <Text>Clear User Data</Text>
+            </Pressable>
+            <Text>User Data:</Text>
+            <Text>
+              {userData ? JSON.stringify(userData) : "No user data found"}
+            </Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 }

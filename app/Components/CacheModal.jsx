@@ -40,9 +40,6 @@ export default function CacheModal({
 
   return (
     <>
-    {isVisible && (
-    <StatusBar style="dark" backgroundColor="#313335" />
-    )}
     <Modal
       isVisible={isVisible}
       onBackdropPress={onBackdropPress}
