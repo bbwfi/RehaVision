@@ -8,19 +8,18 @@ import { addDoc, getDocs, doc, collection, updateDoc, deleteDoc } from 'firebase
     const [JourneyList, setGeoChacheList] = useState([]);
     
     //new JourneyStates - for the Create function 
-    /** 
+ 
     const [newJourneyUser, setNewMovieUser] = useState()
     const [newJourneyRoute, setNewMovieRoute] = useState()    
     const [newJourneyCache, setNewMovieCache] = useState()
     const [newJourneyDuration, setNewMovieDuration] = useState()
-    */
-
+    
     // References to the Journeys data for Accessbility
     const JourneyCollectionRef = collection(database, "GeoChaches");
 
 
 //#region JourneyCRUD
-function JourneyCRUD() {
+export function JourneyCRUD() {
 
 /* WIP - needs customiced Create Funktion
 

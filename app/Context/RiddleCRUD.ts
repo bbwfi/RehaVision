@@ -18,7 +18,7 @@ import { addDoc, getDocs, doc, collection, updateDoc, deleteDoc } from 'firebase
 
 
 //#region RiddleCRUD
-function RiddleCRUD() {
+export function RiddleCRUD() {
 
     // Create Function For Riddles
     const CreateRiddle = async () => {

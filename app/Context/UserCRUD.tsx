@@ -17,7 +17,7 @@ import { addDoc, getDocs, doc, collection, updateDoc, deleteDoc } from 'firebase
 
 
 //#region UserCRUD
-function UserCRUD() {
+export function UserCRUD() {
 
     // Create Function For Users
     const CreateUser = async () => {

@@ -19,7 +19,7 @@ import { addDoc, getDocs, doc, collection, updateDoc, deleteDoc } from 'firebase
 
 
 //#region GeoCacheCRUD
-function GeoCacheCRUD() {
+export function GeoCacheCRUD() {
 
     // Create Function For GeoCaches
     const CreateGeoCache = async () => {
