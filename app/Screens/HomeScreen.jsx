@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Pressable, Text, Vibration, StatusBar } from "react-native";
+import {
+  View,
+  Pressable,
+  Text,
+  Vibration,
+  StatusBar,
+  Alert,
+} from "react-native";
 import { Camera } from "expo-camera";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import CacheModal from "../Components/CacheModal";
@@ -24,17 +31,17 @@ export default function HomeScreen({ debugMode }) {
     const saveData = async () => {
       // Load existing user data
       const existingUserData = await loadUserData();
-  
+
       // Merge existing data with new data
       const newUserData = {
         ...existingUserData,
         foundCaches,
       };
-  
+
       // Save merged data
       await saveUserData(newUserData);
     };
-  
+
     saveData();
   }, [foundCaches]);
 
@@ -91,8 +98,24 @@ export default function HomeScreen({ debugMode }) {
   };
 
   const resetProgress = () => {
-    setFoundCaches([]);
-    closeModal();
+    Alert.alert(
+      "Reset Progress",
+      "Doing this will reset your whole progress. Are you sure?",
+      [
+        {
+          text: "No",
+          onPress: () => console.log("Cancel Pressed"),
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            setFoundCaches([]);
+            closeModal();
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   const cancelScan = () => {
@@ -101,7 +124,6 @@ export default function HomeScreen({ debugMode }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: "#313335" }}>
-
       {/* Cache List */}
       {caches.map((cache, index) => {
         const isFound = foundCaches.some(
@@ -150,7 +172,9 @@ export default function HomeScreen({ debugMode }) {
                       borderBottomLeftRadius: 10,
                     }}
                   >
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>{index + 1}</Text>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                      {index + 1}
+                    </Text>
                   </View>
                   <Text
                     style={{
@@ -180,7 +204,9 @@ export default function HomeScreen({ debugMode }) {
                 )}
               </View>
               {debugMode && (
-                <Text style={{ color: "green", padding: "2.5%", paddingTop: 0 }}>
+                <Text
+                  style={{ color: "green", padding: "2.5%", paddingTop: 0 }}
+                >
                   {cache.id}
                 </Text>
               )}
@@ -211,20 +237,22 @@ export default function HomeScreen({ debugMode }) {
         />
       </Pressable>
 
-      <Pressable
-        onPress={resetProgress}
-        style={{ position: "absolute", bottom: "5%", right: "5%" }}
-      >
-        <MaterialIcons
-          size={20}
-          name="refresh"
-          style={{
-            backgroundColor: "#ffcc00",
-            padding: "2.5%",
-            borderRadius: 25,
-          }}
-        />
-      </Pressable>
+      {(foundCaches.length === caches.length || debugMode) && (
+        <Pressable
+          onPress={resetProgress}
+          style={{ position: "absolute", bottom: "5%", right: "5%" }}
+        >
+          <MaterialIcons
+            size={20}
+            name="refresh"
+            style={{
+              backgroundColor: "#ffcc00",
+              padding: "2.5%",
+              borderRadius: 25,
+            }}
+          />
+        </Pressable>
+      )}
 
       {interactionState === "scanning" && (
         <QRScanner
@@ -233,8 +261,6 @@ export default function HomeScreen({ debugMode }) {
           debugMode={debugMode}
         />
       )}
-
-
     </View>
   );
 }

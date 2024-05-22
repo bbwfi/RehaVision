@@ -6,12 +6,9 @@ export default function DisclaimerScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.headerBar}>
-        <MaterialIcons
-          name="arrow-back"
-          size={24}
-          color="black"
-          onPress={() => navigation.goBack()}
-        />
+      <Pressable onPress={() => navigation.goBack()} style={{ padding: 10 }}>
+          <MaterialIcons name="arrow-back" size={24} color="black" />
+        </Pressable>
         <Text style={{ marginLeft: 10 }}>Disclaimer</Text>
       </View>
       <ScrollView style={{ padding: 10} }>
