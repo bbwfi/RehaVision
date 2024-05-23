@@ -4,7 +4,7 @@ import {
   Pressable,
   Text,
   Vibration,
-  StatusBar,
+  Animated ,
   Alert,
 } from "react-native";
 import { Camera } from "expo-camera";
@@ -13,12 +13,16 @@ import CacheModal from "../Components/CacheModal";
 import QRScanner from "../Components/QRScanner";
 import CachesJSON from "../../assets/json/Caches.json";
 import { loadUserData, saveUserData } from "../Functions/userDataManager";
+import Toast from "../Components/Toast";
 
 export default function HomeScreen({ debugMode }) {
   const [interactionState, setInteractionState] = useState("idle");
   const [activeCache, setActiveCache] = useState(null);
   const [foundCaches, setFoundCaches] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const caches = CachesJSON.markers;
 
@@ -44,6 +48,9 @@ export default function HomeScreen({ debugMode }) {
 
     saveData();
   }, [foundCaches]);
+
+// Custom toast component with timeout
+
 
   const getPermissionsAsync = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
@@ -81,7 +88,10 @@ export default function HomeScreen({ debugMode }) {
       return;
     }
 
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    setToastMessage(
+      `Bar code with type ${type} and data ${data} has been scanned!`
+    );
+    setToastVisible(true);
 
     const foundCache = caches[scannedCacheIndex];
     console.log("Found cache:", foundCache);
@@ -261,6 +271,10 @@ export default function HomeScreen({ debugMode }) {
           debugMode={debugMode}
         />
       )}
+
+
+<Toast visible={toastVisible} message={toastMessage} duration={2000} />
+
     </View>
   );
 }

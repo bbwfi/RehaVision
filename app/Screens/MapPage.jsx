@@ -30,7 +30,7 @@ export default function MapPage({ debugMode }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const mapViewRef = useRef(null);
-  const caches = CachesJSON.markers || []; // Ensure caches is an array
+  const caches = CachesJSON.markers;
 
   // Request location permissions and fetch initial location
   useEffect(() => {
@@ -55,15 +55,15 @@ export default function MapPage({ debugMode }) {
   useEffect(() => {
     loadUserData().then((data) => {
       if (data !== null) {
-        setFoundCaches(data.foundCaches || []); // Ensure foundCaches is an array
+        setFoundCaches(data.foundCaches);
       }
     });
   }, []);
 
   // Set the next cache based on found caches
   useEffect(() => {
-    if (caches.length > 0) {
-      const foundCacheIds = (foundCaches || []).map((cache) => cache.id);
+    if (foundCaches && caches) {
+      const foundCacheIds = foundCaches.map((cache) => cache.id);
       const nextCache = caches.find((cache) => !foundCacheIds.includes(cache.id));
       setNextCache(nextCache);
     }
@@ -99,8 +99,8 @@ export default function MapPage({ debugMode }) {
 
   // Update visible caches based on the actual location
   const updateVisibleCaches = () => {
-    if (caches.length > 0 && actualLocation) {
-      const foundCacheIds = (foundCaches || []).map((cache) => cache.id);
+    if (caches && actualLocation) {
+      const foundCacheIds = foundCaches.map((cache) => cache.id);
       const visibleCaches = caches.filter((cache) => {
         const distance = calculateDistance(
           actualLocation.latitude,
@@ -198,7 +198,7 @@ export default function MapPage({ debugMode }) {
               setActualLocation(location.nativeEvent.coordinate)
             }
           >
-            {(visibleCaches || []).map((cache) => (
+            {visibleCaches.map((cache) => (
               <Circle
                 key={cache.id}
                 center={cache.coordinate}

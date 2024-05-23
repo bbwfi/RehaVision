@@ -7,6 +7,7 @@ export default function QRScanner({ onBarCodeScanned, onCancelScan, debugMode })
   const [scanned, setScanned] = useState(false);
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRatio, setCameraRatio] = useState('4:3');
+  const [successScan, setSuccessScan] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -17,6 +18,7 @@ export default function QRScanner({ onBarCodeScanned, onCancelScan, debugMode })
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
+    setSuccessScan(true);
     onBarCodeScanned({ type, data });
   };
 
@@ -34,6 +36,15 @@ export default function QRScanner({ onBarCodeScanned, onCancelScan, debugMode })
       setCameraRatio('4:3');
     }
   }, []);
+
+  useEffect(() => {
+    // Reset successScan state after 1 second
+    const timeout = setTimeout(() => {
+      setSuccessScan(false);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [successScan]);
 
   if (hasPermission === null) {
     return <View />;
@@ -55,7 +66,7 @@ export default function QRScanner({ onBarCodeScanned, onCancelScan, debugMode })
         <View style={styles.topOverlay} />
         <View style={styles.middleRow}>
           <View style={styles.sideOverlay} />
-          <View style={styles.scanningBox}>
+          <View style={[styles.scanningBox, successScan && styles.successScan]}>
             <View style={[styles.corner, styles.topLeft]} />
             <View style={[styles.corner, styles.topRight]} />
             <View style={[styles.corner, styles.bottomLeft]} />
@@ -118,6 +129,11 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
+    borderColor: 'red', // Default border color
+    borderWidth: 2,
+  },
+  successScan: {
+    borderColor: 'green', // Change border color on success
   },
   bottomOverlay: {
     flex: 1,
