@@ -30,7 +30,7 @@ export default function MapPage({ debugMode }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const mapViewRef = useRef(null);
-  const caches = CachesJSON.markers;
+  const caches = CachesJSON.markers || []; // Ensure caches is an array
 
   // Request location permissions and fetch initial location
   useEffect(() => {
@@ -55,16 +55,18 @@ export default function MapPage({ debugMode }) {
   useEffect(() => {
     loadUserData().then((data) => {
       if (data !== null) {
-        setFoundCaches(data.foundCaches);
+        setFoundCaches(data.foundCaches || []); // Ensure foundCaches is an array
       }
     });
   }, []);
 
   // Set the next cache based on found caches
   useEffect(() => {
-    const foundCacheIds = foundCaches.map((cache) => cache.id);
-    const nextCache = caches.find((cache) => !foundCacheIds.includes(cache.id));
-    setNextCache(nextCache);
+    if (caches.length > 0) {
+      const foundCacheIds = (foundCaches || []).map((cache) => cache.id);
+      const nextCache = caches.find((cache) => !foundCacheIds.includes(cache.id));
+      setNextCache(nextCache);
+    }
   }, [foundCaches]);
 
   // Update visible caches and popup visibility based on location
@@ -85,7 +87,7 @@ export default function MapPage({ debugMode }) {
     const φ1 = (lat1 * Math.PI) / 180;
     const φ2 = (lat2 * Math.PI) / 180;
     const Δφ = ((lat2 - lat1) * Math.PI) / 180;
-    const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+    const Δλ = ((lon1 - lon2) * Math.PI) / 180;
 
     const a =
       Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
@@ -97,21 +99,23 @@ export default function MapPage({ debugMode }) {
 
   // Update visible caches based on the actual location
   const updateVisibleCaches = () => {
-    const foundCacheIds = foundCaches.map((cache) => cache.id);
-    const visibleCaches = caches.filter((cache) => {
-      const distance = calculateDistance(
-        actualLocation.latitude,
-        actualLocation.longitude,
-        cache.coordinate.latitude,
-        cache.coordinate.longitude
-      );
-      if (distance <= cache.radius) {
-        setCurrentCache(cache);
-        setPopupVisible(true);
-      }
-      return distance <= cache.radius;
-    });
-    setVisibleCaches(visibleCaches);
+    if (caches.length > 0 && actualLocation) {
+      const foundCacheIds = (foundCaches || []).map((cache) => cache.id);
+      const visibleCaches = caches.filter((cache) => {
+        const distance = calculateDistance(
+          actualLocation.latitude,
+          actualLocation.longitude,
+          cache.coordinate.latitude,
+          cache.coordinate.longitude
+        );
+        if (distance <= cache.radius) {
+          setCurrentCache(cache);
+          setPopupVisible(true);
+        }
+        return distance <= cache.radius;
+      });
+      setVisibleCaches(visibleCaches);
+    }
   };
 
   // Center the map on the user's location
@@ -194,7 +198,7 @@ export default function MapPage({ debugMode }) {
               setActualLocation(location.nativeEvent.coordinate)
             }
           >
-            {visibleCaches.map((cache) => (
+            {(visibleCaches || []).map((cache) => (
               <Circle
                 key={cache.id}
                 center={cache.coordinate}
@@ -338,4 +342,3 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
-
