@@ -41,6 +41,9 @@ export default function SettingsScreen({ navigation }) {
           ))}
         </View>
       </ImageBackground>
+      <View style={styles.overlay}>
+        <Text style={styles.overlayText}>TO BE ADDED</Text>
+      </View>
     </View>
   );
 }
@@ -50,8 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#222020",
   },
-  backgroundImage: { // mach das später oben fixiert
-    marginTop: "-103%",
+  backgroundImage: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -106,5 +108,19 @@ const styles = StyleSheet.create({
   scoreText: {
     fontSize: 14,
   },
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0,0,0,0.9)', // semi-transparent background
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlayText: {
+    fontSize: 70,
+    color: 'red',
+    fontWeight: 'bold',
+  },
 });
-
