@@ -7,7 +7,7 @@ export class GeoCache
     name: string;
     description: string;
     riddle: Riddle;
-    beacon?: Beacon;
+    beacon: Beacon;
  
     public constructor(longitude: number, latitude: number, name: string, description: string, riddle: Riddle) {
         this.longitude = longitude;

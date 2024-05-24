@@ -4,7 +4,7 @@ import { User } from "firebase/auth";
 
 export class Journey
 {
-    //user: User; - needed?
+    user: User;
     route: Route;
     currentCache: GeoCache;
     duration?: number;
@@ -12,7 +12,7 @@ export class Journey
     constructor(route: Route, currentCache: GeoCache, user: User) {
         this.route = route;
         this.currentCache = currentCache;
-        //this.user = user; - needed?
+        this.user = user;
     }
 }
 

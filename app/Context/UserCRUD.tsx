@@ -1,5 +1,4 @@
 import React, { useState, useEffect} from 'react';
-import { FirebaseAuthContext } from './FirebaseAuth';
 import { database } from '../Config/firebaseConfig';
 import { addDoc, getDocs, doc, collection, updateDoc, deleteDoc } from 'firebase/firestore';
 
@@ -17,7 +16,7 @@ import { addDoc, getDocs, doc, collection, updateDoc, deleteDoc } from 'firebase
 
 
 //#region UserCRUD
-export function UserCRUD() {
+function UserCRUD() {
 
     // Create Function For Users
     const CreateUser = async () => {
@@ -62,7 +61,7 @@ export function UserCRUD() {
     
 /*
 return (
-    <div className="AppCRUD">
+    <div className="UserCRUD">
     <FirebaseAuthContext/>
         <div>
             {UserList.map((User) => (

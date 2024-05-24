@@ -1,5 +1,4 @@
 import React, { useState, useEffect} from 'react';
-import { FirebaseAuthContext } from './FirebaseAuth';
 import { database } from '../Config/firebaseConfig';
 import { addDoc, getDocs, doc, collection, updateDoc, deleteDoc } from 'firebase/firestore';
 
@@ -21,24 +20,23 @@ import { addDoc, getDocs, doc, collection, updateDoc, deleteDoc } from 'firebase
 //#region JourneyCRUD
 export function JourneyCRUD() {
 
-/* WIP - needs customiced Create Funktion
+
+ //WIP - needs customiced Create Funktion
 
     // Create Function For Journeys
    const CreateJourney = async () => {
         try {
             await addDoc(JourneyCollectionRef, {
                 user: newJourneyUser,
+                route: newJourneyRoute,
                 currentcache: newJourneyCache, 
                 duration: newJourneyDuration, 
-                route: newJourneyRoute,
             });
         } catch (err) {
             console.error(err)
         }    
     }
     
-*/
-
     // Update funktion for Journeys
     const updateJourney = async (id) => {
         const JourneyDoc = doc(database,"Journeys", id)
