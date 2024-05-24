@@ -7,12 +7,9 @@ export default function PrivacyPolicyScreen({ navigation }) {
   return (
     <View style={styles.container}>
     <View style={styles.headerBar}>
-      <MaterialIcons
-        name="arrow-back"
-        size={24}
-        color="black"
-        onPress={() => navigation.goBack()}
-      />
+    <Pressable onPress={() => navigation.goBack()} style={{ padding: 10 }}>
+          <MaterialIcons name="arrow-back" size={24} color="black" />
+        </Pressable>
       <Text style={{ marginLeft: 10 }}>Datenschutz</Text>
     </View>
     <ScrollView style={{ padding: 10 }}>

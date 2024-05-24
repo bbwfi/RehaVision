@@ -1,3 +1,11 @@
+/*  _____    ____
+  /      \  |  o | 
+ |    B   |/ ___\| 
+ |_________/     
+ |_|_| |_|_| 
+*/
+
+
 import React, { useEffect, useRef, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";

@@ -5,8 +5,16 @@ import * as FileSystem from "expo-file-system";
 const userDataFileUrl = `${FileSystem.documentDirectory}userData.json`;
 
 // Function to load user data from the file system
+// Function to load user data from the file system
 export const loadUserData = async () => {
   try {
+    // Check if the file exists
+    const fileInfo = await FileSystem.getInfoAsync(userDataFileUrl);
+    if (!fileInfo.exists) {
+      // If the file does not exist, return a default value
+      return {};
+    }
+
     // Read the user data from the file system
     const userDataString = await FileSystem.readAsStringAsync(userDataFileUrl);
     

@@ -26,7 +26,7 @@ function Loading() {
   });
 
   return (
-    <View style={{ alignItems: 'center' }}>
+    <View style={{ alignItems: 'center', justifyContent:"center", height:"100%", backgroundColor:"#313335", width:"100%" }}>
       <Animated.Image
         source={loadingIcon}
         style={{
