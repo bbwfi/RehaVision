@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "TESTAPP",
-    "slug": "TESTAPP",
-    "scheme": "testapp",
+    "name": "RehaVision",
+    "slug": "RehaVision",
+    "scheme": "rehavision",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon_rehavision.png",
