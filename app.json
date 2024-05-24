@@ -39,7 +39,7 @@
         "foregroundImage": "./assets/adaptive-icon_rehavision.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.sfzbbw.testapp"
+      "package": "de.bbwfi.rehavision"
     },
     "web": {
       "favicon": "./assets/favicon.png"
