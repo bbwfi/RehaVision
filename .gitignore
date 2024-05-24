@@ -39,3 +39,7 @@ yarn-error.*
 # IDEs
 .vscode/
 .idea/
+
+# Builds
+*.apk
+*.aab
