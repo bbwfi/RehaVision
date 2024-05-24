@@ -10,6 +10,8 @@ import MapView, { Circle } from "react-native-maps";
 import { useEffect, useState, useRef } from "react";
 import * as Location from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons"; // or any other icon library
+
 
 import MapStyle from "../../assets/json/MapStyle.json";
 import CachesJSON from "../../assets/json/Caches.json";
@@ -99,7 +101,7 @@ export default function MapPage({ debugMode }) {
 
   // Update visible caches based on the actual location
   const updateVisibleCaches = () => {
-    if (caches && actualLocation) {
+    if (caches && actualLocation && foundCaches) {
       const foundCacheIds = foundCaches.map((cache) => cache.id);
       const visibleCaches = caches.filter((cache) => {
         const distance = calculateDistance(
@@ -135,49 +137,39 @@ export default function MapPage({ debugMode }) {
     <View style={styles.container}>
       {errorMsg && <Text>{errorMsg}</Text>}
       {!initialLocation && !errorMsg && <Loading />}
-
       {popupVisible && (
-        <View style={styles.popup}>
-          <Text style={[styles.popupTitle, { color: "#FFFFFF" }]}>
-            Cache Nearby
-          </Text>
-          <Text style={[styles.popupText, { color: "#FFFFFF" }]}>
-            {currentCache
-              ? foundCaches.some((cache) => cache.id === currentCache.id) ||
-                currentCache === nextCache
-                ? currentCache.title
-                : "???"
-              : "???"}
-          </Text>
-          {currentCache &&
-            !foundCaches.some((cache) => cache.id === currentCache.id) &&
-            currentCache === nextCache && (
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => {
-                    setIsModalVisible(true);
-                    console.log(currentCache.id);
-                  }}
-                >
-                  <Text style={[styles.buttonText, { color: "#333333" }]}>
-                    Info
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => {
-                    // Navigate to the CacheModal screen
-                  }}
-                >
-                  <Text style={[styles.buttonText, { color: "#333333" }]}>
-                    Tipp
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            )}
-        </View>
-      )}
+  <View style={styles.popup}>
+    <Text style={[styles.popupTitle, { color: "#FFFFFF" }]}>
+      Cache Nearby
+    </Text>
+    <View style={styles.cacheInfoContainer}>
+      <Text style={[styles.popupText, { color: "#FFFFFF" }]}>
+        {currentCache
+          ? foundCaches.some((cache) => cache.id === currentCache.id) ||
+            currentCache === nextCache
+            ? currentCache.title
+            : "???"
+          : "???"}
+      </Text>
+      {currentCache &&
+        !foundCaches.some((cache) => cache.id === currentCache.id) &&
+        currentCache === nextCache && (
+          <TouchableOpacity
+            style={styles.infoButton}
+            onPress={() => {
+              setIsModalVisible(true);
+              console.log(currentCache.id);
+            }}
+          >
+            <Ionicons name="information-circle-outline" size={24} color="#333333" />
+          </TouchableOpacity>
+        )}
+    </View>
+  </View>
+)}
+
+
+
 
       <View style={styles.mapContainer}>
         {initialLocation && (
@@ -325,20 +317,33 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     marginTop: 15,
-    justifyContent: "space-between", // evenly space buttons
-    width: "100%", // make the container stretch across the popup
+    justifyContent: "flex-end", // Align items to the end of the container
+    width: "100%",
+    paddingRight: 20, // Add some padding to the right side to separate the button from the text
   },
   button: {
     backgroundColor: "#ffc107",
-    paddingVertical: 10,
-    paddingHorizontal: 15,
+    padding: 10, // Adjust the padding around the button
     borderRadius: 5,
     justifyContent: "center",
     alignItems: "center",
-    // remove marginLeft to allow evenly spaced buttons
   },
   buttonText: {
     fontSize: 14,
     fontWeight: "bold",
+  },
+  cacheInfoContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  infoButton: {
+    backgroundColor: "#ffc107",
+    padding: 10,
+    borderRadius: 5,
+    marginLeft: 10, // Add space between the button and the text
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

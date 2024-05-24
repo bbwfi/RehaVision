@@ -3,7 +3,7 @@ import React, { createContext, useState, useContext } from "react";
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [debugMode, setDebugMode] = useState(true); // Initial debugMode value
+  const [debugMode, setDebugMode] = useState(false); // Initial debugMode value
 
   return (
     <AppContext.Provider value={{ debugMode, setDebugMode }}>

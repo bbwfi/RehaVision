@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
-
 import Modal from "react-native-modal";
-
 import { loadUserData } from "../Functions/userDataManager";
 import { StatusBar } from "expo-status-bar";
 
@@ -14,9 +12,14 @@ export default function CacheModal({
 }) {
   const [userData, setUserData] = useState(null);
   const [selectedCacheUserData, setSelectedCacheUserData] = useState(null);
+  const [showTip, setShowTip] = useState(false); // New state for showing tip
 
   useEffect(() => {
-    fetchData();
+    if (isVisible) {
+      fetchData();
+    } else {
+      setShowTip(false); // Reset showTip when modal is closed
+    }
   }, [isVisible]);
 
   useEffect(() => {
@@ -35,48 +38,53 @@ export default function CacheModal({
     }
   };
 
-  console.log("Selected cache user data:", selectedCacheUserData);
-
+  const toggleTip = () => {
+    setShowTip(!showTip);
+  };
 
   return (
     <>
-    <Modal
-      isVisible={isVisible}
-      onBackdropPress={onBackdropPress}
-      animationIn={"slideInUp"} // Changed animationIn to slideInUp
-      animationOut={"slideOutDown"} // Changed animationOut to slideOutDown
-      animationInTiming={500}
-      animationOutTiming={500}
-      backdropOpacity={0.5} // Reduced backdrop opacity
-      style={styles.modal}
-    >
-      <View style={styles.modalContent}>
-        <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-          <Text style={styles.closeButtonText}>Close</Text>
-        </TouchableOpacity>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{selectedCache?.title}</Text>
-          <Text style={styles.description}>{selectedCache?.description}</Text>
-        </View>
-        <View style={styles.separator} />
-        <View style={styles.bottomContainer}>
-          <View style={styles.section}>
-            <Text style={styles.header}>Riddle</Text>
-            <Text style={styles.riddleText}>{selectedCache?.riddleText}</Text>
+      <Modal
+        isVisible={isVisible}
+        onBackdropPress={onBackdropPress}
+        animationIn={"slideInUp"}
+        animationOut={"slideOutDown"}
+        animationInTiming={500}
+        animationOutTiming={500}
+        backdropOpacity={0.5}
+        style={styles.modal}
+      >
+        <View style={styles.modalContent}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{selectedCache?.title}</Text>
+            <Text style={styles.description}>{selectedCache?.description}</Text>
           </View>
-          <View style={styles.section}>
-            <Text style={styles.header}>Found On</Text>
-            <Text style={styles.details}>
-              {selectedCacheUserData? new Date(selectedCacheUserData?.timestamp).toLocaleString() : "Noch nicht gefunden"}
-            </Text>
+          <View style={styles.separator} />
+          <View style={styles.bottomContainer}>
+            <View style={styles.section}>
+              <Text style={[styles.header, styles.riddleHeader]}>Rätsel</Text>
+              <Text style={styles.riddleText}>{selectedCache?.riddleText}</Text>
+            </View>
+            <View style={styles.section}>
+              <Text style={styles.header}>Gefunden</Text>
+              <Text style={styles.details}>
+                {selectedCacheUserData ? new Date(selectedCacheUserData?.timestamp).toLocaleString() : "Noch nicht gefunden"}
+              </Text>
+            </View>
+            <View style={styles.section}>
+              <Text style={styles.header}>Tipp</Text>
+              <TouchableOpacity onPress={toggleTip}>
+                <Text style={[styles.spoilerText, showTip && styles.revealedText]}>
+                  {showTip ? selectedCache?.tip : "Show Tip"}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
     </>
   );
 }
-
 
 const styles = StyleSheet.create({
   modal: {
@@ -95,28 +103,29 @@ const styles = StyleSheet.create({
   },
   closeButtonText: {
     fontSize: 16,
-    color: "#ffc107",
+    color: "#FFFFFF",
+    fontWeight: "bold",
   },
   titleContainer: {
-    marginBottom: 20,
+    marginBottom: 10,
   },
   title: {
     fontSize: 24,
+    color: "#FFFFFF",
     fontWeight: "bold",
-    color: "#ffc107",
   },
   description: {
-    fontSize: 16,
-    color: "#f2f2f2",
+    fontSize: 14,
+    color: "#CCCCCC",
   },
   separator: {
     height: 1,
     width: "100%",
-    backgroundColor: "#ffc107",
-    marginVertical: 20,
+    backgroundColor: "#FFFFFF",
+    marginVertical: 10,
   },
   bottomContainer: {
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
   section: {
     marginBottom: 20,
@@ -125,14 +134,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 6,
-    color: "#ffc107",
+    color: "#FFFFFF",
+  },
+  riddleHeader: {
+    fontSize: 22,
+    color: "#ffc107", // Adjust color for riddle header
   },
   riddleText: {
-    fontSize: 16,
-    color: "#f2f2f2",
+    fontSize: 20, // Increase font size for riddle text
+    color: "#FFFFFF",
+    marginBottom: 10, // Add more margin for better separation
   },
   details: {
     fontSize: 16,
-    color: "#f2f2f2",
+    color: "#FFFFFF",
+  },
+  spoilerText: {
+    fontSize: 16,
+    color: "#ffc107",
+    textDecorationLine: "underline",
+  },
+  revealedText: {
+    textDecorationLine: "none",
+    color: "#FFFFFF",
   },
 });

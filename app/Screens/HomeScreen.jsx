@@ -23,6 +23,8 @@ export default function HomeScreen({ debugMode }) {
 
   const [toastVisible, setToastVisible] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
+  const [toastKey, setToastKey] = useState(0);
 
   const caches = CachesJSON.markers;
 
@@ -67,6 +69,11 @@ export default function HomeScreen({ debugMode }) {
     }
   };
 
+  const showToast = () => {
+    setToastVisible(true);
+    setToastKey(toastKey + 1);
+  };
+
   const openQRScanner = () => {
     setInteractionState("scanning");
     console.log("Opening QR scanner");
@@ -78,20 +85,27 @@ export default function HomeScreen({ debugMode }) {
     const scannedCacheIndex = caches.findIndex((cache) => cache.id === data);
 
     if (scannedCacheIndex === -1) {
-      alert("Invalid cache! Please scan a valid cache.");
+      setToastMessage("Dieser QR Code ist nicht von unserem Spiel!")
+      setToastType("error")
+      setInteractionState("idle");
+      showToast();
       return;
     }
 
     const nextCacheIndex = foundCaches.length;
     if (scannedCacheIndex !== nextCacheIndex) {
-      alert("Please scan the next cache!");
+      setToastMessage("Bitte Scanne den nächsten Cache")
+      setToastType("warning")
+      setInteractionState("idle");
+      showToast();
       return;
     }
 
     setToastMessage(
-      `Bar code with type ${type} and data ${data} has been scanned!`
+      `QR-Code wurde erfolgreich gescannt. Viel Glück mit dem nächsten Cache!`
     );
-    setToastVisible(true);
+    setToastType("success")
+    showToast();
 
     const foundCache = caches[scannedCacheIndex];
     console.log("Found cache:", foundCache);
@@ -109,15 +123,15 @@ export default function HomeScreen({ debugMode }) {
 
   const resetProgress = () => {
     Alert.alert(
-      "Reset Progress",
-      "Doing this will reset your whole progress. Are you sure?",
+      "Spielstand zurücksetzen",
+      "Möchtest du wirklich deinen Spielstand zurücksetzen?",
       [
         {
-          text: "No",
+          text: "Nein",
           onPress: () => console.log("Cancel Pressed"),
         },
         {
-          text: "Yes",
+          text: "Ja",
           onPress: () => {
             setFoundCaches([]);
             closeModal();
@@ -273,7 +287,7 @@ export default function HomeScreen({ debugMode }) {
       )}
 
 
-<Toast visible={toastVisible} message={toastMessage} duration={2000} />
+    <Toast key={toastKey} visible={toastVisible} message={toastMessage} duration={2000} type={toastType} />
 
     </View>
   );
