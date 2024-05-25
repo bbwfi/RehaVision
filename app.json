@@ -3,7 +3,8 @@
     "name": "RehaVision",
     "slug": "RehaVision",
     "scheme": "rehavision",
-    "version": "1.0.0",
+    "version": "1.0.1",
+    "owner": "bbw-fi",
     "orientation": "portrait",
     "icon": "./assets/icon_rehavision.png",
     "userInterfaceStyle": "light",
@@ -16,14 +17,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
+        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+      }
     },
     "android": {
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyDNnFpawNI8OhgRP6gnTGq-Yd5Fo2yjOhg"
         }
-      
       },
       "permissions": [
         "android.permission.BLUETOOTH",
@@ -56,9 +60,16 @@
         "expo-location",
         {
           "locationPermission": "Allow $(PRODUCT_NAME) to access your location"
-          
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "c53d0210-fa7a-4804-b0f1-511b7cba3e65"
+      }
+    }
   }
 }

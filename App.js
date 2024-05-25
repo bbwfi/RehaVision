@@ -5,9 +5,8 @@
  |_|_| |_|_| 
 */
 
-
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image, ActivityIndicator } from "react-native";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -20,10 +19,10 @@ import DisclaimerScreen from "./app/Screens/DisclaimerScreen";
 import PrivacyPolicyScreen from "./app/Screens/PrivacyPolicyScreen";
 import SettingsScreen from "./app/Screens/SettingsScreen";
 import { AppProvider, useAppContext } from "./app/Context/AppContext";
-import icon from "./assets/adaptive-icon_rehavision.png";
 import { SafeAreaView } from "react-native-safe-area-context";
 import IntroPage from "./app/Screens/IntroPage";
 import { loadUserData } from "./app/Functions/userDataManager";
+import { CustomHeader } from './app/Components/CustomHeader';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -45,23 +44,6 @@ const linking = {
   },
 };
 
-function CustomHeader({ navigation }) {
-  return (
-    <View style={styles.headerContainer}>
-      <View style={styles.headerContent}>
-        <Image source={icon} style={styles.headerIcon} />
-        <Text style={styles.headerText}>RehaVision</Text>
-      </View>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Settings");
-        }}
-      >
-        <MaterialIcons name="settings" size={30} color="black" />
-      </TouchableOpacity>
-    </View>
-  );
-}
 
 function MainNavigator() {
   const { debugMode } = useAppContext();
@@ -213,29 +195,5 @@ function App() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingHorizontal: 16,
-    height: 50,
-    backgroundColor: "#ffc107",
-  },
-  headerContent: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  headerIcon: {
-    width: 40,
-    height: 40,
-  },
-  headerText: {
-    marginLeft: 10,
-    fontSize: 20,
-    fontWeight: "500",
-  },
-});
 
 export default App;
