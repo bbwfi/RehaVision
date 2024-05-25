@@ -52,7 +52,6 @@ export function HomeScreen({ debugMode }) {
 
 // Custom toast component with timeout
 
-
   const getPermissionsAsync = async () => {
     const { status } = await Camera.requestCameraPermissionsAsync();
     if (status !== "granted") {

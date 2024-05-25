@@ -15,6 +15,7 @@ export function CustomHeader({ navigation }) {
           onPress={() => {
             navigation.navigate("Settings");
           }}
+          accessibilityLabel="Einstellungen"
         >
           <MaterialIcons name="settings" size={30} color="black" />
         </TouchableOpacity>

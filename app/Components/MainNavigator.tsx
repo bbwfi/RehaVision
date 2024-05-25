@@ -10,7 +10,6 @@ import { MapPage } from "../Screens/MapPage";
 import { LeaderboardScreen } from "../Screens/LeaderboardScreen";
 
 
-
 export function MainNavigator() {
     const Tab = createBottomTabNavigator();
     const { debugMode } = useAppContext();
@@ -21,7 +20,7 @@ export function MainNavigator() {
         screenOptions={{
           tabBarActiveTintColor: "white",
           tabBarInactiveTintColor: "black",
-          tabBarShowLabel: false,
+          tabBarShowLabel: true,
           tabBarStyle: { backgroundColor: "#ffc107" },
           headerShown: true,
         }}
@@ -38,7 +37,7 @@ export function MainNavigator() {
           {() => <HomeScreen debugMode={debugMode} />}
         </Tab.Screen>
         <Tab.Screen
-          name="MapPage"
+          name="Karte"
           options={{
             tabBarIcon: ({ color }) => (
               <MaterialIcons name="public" size={40} color={color} />

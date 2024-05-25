@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, Animated, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Animated, StyleSheet, TouchableOpacity, AccessibilityInfo } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Toast = ({ visible, message, duration = 3000, type, position = 'bottom', onHide }) => {
@@ -71,8 +71,11 @@ const Toast = ({ visible, message, duration = 3000, type, position = 'bottom', o
     }
   };
 
-  return (
-    showToast && (
+  const TostView = () => {
+
+    AccessibilityInfo.announceForAccessibility(message);
+
+    return (
       <Animated.View
         style={[
           styles.container,
@@ -81,14 +84,19 @@ const Toast = ({ visible, message, duration = 3000, type, position = 'bottom', o
           { opacity: fadeAnim },
         ]}
       >
-        <TouchableOpacity activeOpacity={0.8} onPress={hideToast}>
+        <TouchableOpacity activeOpacity={0.8} onPress={hideToast} accessibilityLabel={message}>
           <View style={styles.toastContainer}>
             <MaterialIcons name={getIconName()} size={20} color="white" style={styles.icon} />
             <Text style={styles.toastText}>{message}</Text>
           </View>
         </TouchableOpacity>
       </Animated.View>
-    )
+    );
+  }
+
+
+  return (
+    showToast && <TostView />
   );
 };
 
