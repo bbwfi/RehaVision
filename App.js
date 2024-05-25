@@ -3,28 +3,26 @@
  |    B   |/ ___\| 
  |_________/     
  |_|_| |_|_| 
-*/
+ */
 
 import React, { useEffect, useRef, useState } from "react";
-import { StyleSheet, View, ActivityIndicator } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { MaterialIcons } from "@expo/vector-icons";
 import * as Linking from "expo-linking";
-import HomeScreen from "./app/Screens/HomeScreen";
-import LeaderboardScreen from "./app/Screens/LeaderboardScreen";
-import MapPage from "./app/Screens/MapPage";
+
+import { AppProvider } from "./app/Context/AppContext";
+import { loadUserData } from "./app/Functions/userDataManager";
+import { MainNavigator } from './app/Components/MainNavigator';
+
+import LoadingScreen from "./app/Screens/LoadingScreen";
+import IntroPage from "./app/Screens/IntroPage";
 import DisclaimerScreen from "./app/Screens/DisclaimerScreen";
 import PrivacyPolicyScreen from "./app/Screens/PrivacyPolicyScreen";
 import SettingsScreen from "./app/Screens/SettingsScreen";
-import { AppProvider, useAppContext } from "./app/Context/AppContext";
-import { SafeAreaView } from "react-native-safe-area-context";
-import IntroPage from "./app/Screens/IntroPage";
-import { loadUserData } from "./app/Functions/userDataManager";
-import { CustomHeader } from './app/Components/CustomHeader';
 
-const Tab = createBottomTabNavigator();
+
 const Stack = createStackNavigator();
 
 const prefix = Linking.createURL("/");
@@ -44,56 +42,6 @@ const linking = {
   },
 };
 
-
-function MainNavigator() {
-  const { debugMode } = useAppContext();
-
-  return (
-    <Tab.Navigator
-      initialRouteName="MapPage"
-      screenOptions={{
-        tabBarActiveTintColor: "white",
-        tabBarInactiveTintColor: "black",
-        tabBarShowLabel: false,
-        tabBarStyle: { backgroundColor: "#ffc107" },
-        headerShown: true,
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="sensors" size={40} color={color} />
-          ),
-          header: ({ navigation }) => <CustomHeader navigation={navigation} />,
-        }}
-      >
-        {() => <HomeScreen debugMode={debugMode} />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="MapPage"
-        options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="public" size={40} color={color} />
-          ),
-          header: ({ navigation }) => <CustomHeader navigation={navigation} />,
-        }}
-      >
-        {() => <MapPage debugMode={debugMode} />}
-      </Tab.Screen>
-      <Tab.Screen
-        name="Leaderboard"
-        component={LeaderboardScreen}
-        options={{
-          tabBarIcon: ({ color }) => (
-            <MaterialIcons name="leaderboard" size={40} color={color} />
-          ),
-          header: ({ navigation }) => <CustomHeader navigation={navigation} />,
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
 
 /**
  * Main component of the application.
@@ -144,24 +92,17 @@ function App() {
     }
   }, []);
 
-  if (isLoading || initialRoute === null) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    ); // Replace with your actual loading screen component
-  }
-
+  
   /**
    * Handles the state change event of the navigation.
-   */
-  const handleStateChange = () => {
-    if (navigationRef.current) {
-      const previousRouteName = routeNameRef.current;
-      const currentRouteName = getActiveRouteName(
-        navigationRef.current.getRootState()
+  */
+ const handleStateChange = () => {
+   if (navigationRef.current) {
+     const previousRouteName = routeNameRef.current;
+     const currentRouteName = getActiveRouteName(
+       navigationRef.current.getRootState()
       );
-
+      
       if (previousRouteName !== currentRouteName) {
         const fullDeepLink = Linking.createURL(
           linking.config.screens[currentRouteName]
@@ -170,11 +111,15 @@ function App() {
           `Switched to ${currentRouteName} tab. Full deep link: ${fullDeepLink}`
         );
       }
-
+      
       routeNameRef.current = currentRouteName;
     }
   };
 
+  if (isLoading || initialRoute === null) {
+    return <LoadingScreen/>; // Replace with your actual loading screen component
+  }
+  
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <AppProvider>

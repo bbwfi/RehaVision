@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
 import Crown from "../../assets/Crown.png";
 import Fancy from "../../assets/Fancy.png";
 
-export default function SettingsScreen({ navigation }) {
+export function LeaderboardScreen({ navigation }) {
   const leaderboardData = [
     { position: "1st", name: "PlaceHolder", score: "NaN" },
     { position: "2nd", name: "PlaceHolder", score: "NaN" },
@@ -124,3 +124,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+export default LeaderboardScreen;

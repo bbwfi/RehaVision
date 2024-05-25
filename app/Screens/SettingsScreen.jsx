@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  Button,
   Switch,
   DeviceEventEmitter,
   Pressable,
@@ -12,13 +11,9 @@ import { useAppContext } from "../Context/AppContext";
 import Collapsible from "react-native-collapsible";
 import { loadUserData, saveUserData } from "../Functions/userDataManager";
 
-import {
-  startRadar,
-  startScanning,
-  stopScanning,
-} from "react-native-beacon-radar";
+import { startScanning } from "react-native-beacon-radar";
 
-function SettingsScreen({ navigation }) {
+export function SettingsScreen({ navigation }) {
   const { debugMode, setDebugMode } = useAppContext();
   const [beacons, setBeacons] = useState([]);
   const [activeBeaconIndex, setActiveBeaconIndex] = useState(null);

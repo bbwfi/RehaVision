@@ -20,7 +20,7 @@ import CacheModal from "../Components/CacheModal";
 
 import { loadUserData } from "../Functions/userDataManager";
 
-export default function MapPage({ debugMode }) {
+export function MapPage({ debugMode }) {
   const [initialLocation, setInitialLocation] = useState(null);
   const [actualLocation, setActualLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -347,3 +347,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
+
+export default MapPage;

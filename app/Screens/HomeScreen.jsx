@@ -4,7 +4,6 @@ import {
   Pressable,
   Text,
   Vibration,
-  Animated ,
   Alert,
 } from "react-native";
 import { Camera } from "expo-camera";
@@ -15,7 +14,7 @@ import CachesJSON from "../../assets/json/Caches.json";
 import { loadUserData, saveUserData } from "../Functions/userDataManager";
 import Toast from "../Components/Toast";
 
-export default function HomeScreen({ debugMode }) {
+export function HomeScreen({ debugMode }) {
   const [interactionState, setInteractionState] = useState("idle");
   const [activeCache, setActiveCache] = useState(null);
   const [foundCaches, setFoundCaches] = useState([]);
@@ -292,3 +291,5 @@ export default function HomeScreen({ debugMode }) {
     </View>
   );
 }
+
+export default HomeScreen;
