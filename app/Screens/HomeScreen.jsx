@@ -247,6 +247,7 @@ export function HomeScreen({ debugMode }) {
       <Pressable
         onPress={openQRScanner}
         style={{ position: "absolute", bottom: "5%", alignSelf: "center" }}
+        accessibilityLabel="QR-Code scannen"
       >
         <MaterialIcons
           size={42}
@@ -263,6 +264,7 @@ export function HomeScreen({ debugMode }) {
         <Pressable
           onPress={resetProgress}
           style={{ position: "absolute", bottom: "5%", right: "5%" }}
+          accessibilityLabel="Spielstand zurücksetzen"
         >
           <MaterialIcons
             size={20}
