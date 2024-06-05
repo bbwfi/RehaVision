@@ -5,14 +5,15 @@ import {
   Text,
   Vibration,
   Alert,
+  StyleSheet
 } from "react-native";
-import { Camera } from "expo-camera";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import CacheModal from "../Components/CacheModal";
 import QRScanner from "../Components/QRScanner";
 import CachesJSON from "../../assets/json/Caches.json";
 import { loadUserData, saveUserData } from "../Functions/userDataManager";
 import Toast from "../Components/Toast";
+import { getCameraPermissionsAsync } from "../Functions/permissions";
 
 export function HomeScreen({ debugMode }) {
   const [interactionState, setInteractionState] = useState("idle");
@@ -28,7 +29,6 @@ export function HomeScreen({ debugMode }) {
   const caches = CachesJSON.markers;
 
   useEffect(() => {
-    getPermissionsAsync();
     fetchData();
   }, []);
 
@@ -52,13 +52,6 @@ export function HomeScreen({ debugMode }) {
 
 // Custom toast component with timeout
 
-  const getPermissionsAsync = async () => {
-    const { status } = await Camera.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      console.log("Permission denied");
-    }
-  };
-
   const fetchData = async () => {
     const userData = await loadUserData();
     console.log("User data:", userData);
@@ -72,7 +65,8 @@ export function HomeScreen({ debugMode }) {
     setToastKey(toastKey + 1);
   };
 
-  const openQRScanner = () => {
+  const openQRScanner = async () => {
+    await getCameraPermissionsAsync();
     setInteractionState("scanning");
     console.log("Opening QR scanner");
   };
@@ -170,31 +164,19 @@ export function HomeScreen({ debugMode }) {
                 setIsModalVisible(true);
                 setActiveCache(cache);
               }}
-              style={{
-                backgroundColor: "white",
-                width: "95%",
-                alignSelf: "center",
-                borderRadius: 10,
-                margin: "2.5%",
-              }}
+              style={styles.cacheButton}
             >
-              <View
-                style={{
-                  flexGrow: 1,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
+              <View style={styles.cacheButtonView}>
                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                   <View
                     style={{
                       backgroundColor: "#ffcc00",
-                      padding: 10,
+                      padding: 15,
                       borderTopLeftRadius: 10,
                       borderBottomLeftRadius: 10,
                     }}
                   >
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                    <Text style={{ fontSize: 24, fontWeight: "bold" }}>
                       {index + 1}
                     </Text>
                   </View>
@@ -267,7 +249,7 @@ export function HomeScreen({ debugMode }) {
           accessibilityLabel="Spielstand zurücksetzen"
         >
           <MaterialIcons
-            size={20}
+            size={36}
             name="refresh"
             style={{
               backgroundColor: "#ffcc00",
@@ -291,6 +273,22 @@ export function HomeScreen({ debugMode }) {
 
     </View>
   );
+
 }
+
+const styles = StyleSheet.create({
+  cacheButton: {
+    backgroundColor: "white",
+    width: "95%",
+    alignSelf: "center",
+    borderRadius: 10,
+    margin: "2.5%",
+  },
+  cacheButtonView: {
+    flexGrow: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  }
+});
 
 export default HomeScreen;

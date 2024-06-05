@@ -119,18 +119,18 @@ export function SettingsScreen({ navigation }) {
       <View style={styles.centeredView}>
         <Pressable
           onPress={() => navigation.navigate("Disclaimer")}
-          style={styles.linkBox}
+          style={styles.button}
         >
-          <Text style={styles.linkBoxText}>
-            Disclaimer
+          <Text style={styles.buttonText}>
+            Disclaimer anzeigen
           </Text>
         </Pressable>
         <Pressable
           onPress={() => navigation.navigate("PrivacyPolicy")}
-          style={styles.linkBox}
+          style={styles.button}
         >
-          <Text style={styles.linkBoxText}>
-            Datenschutz
+          <Text style={styles.buttonText}>
+            Datenschutz anzeigen
           </Text>
         </Pressable>
       </View>
@@ -140,14 +140,14 @@ export function SettingsScreen({ navigation }) {
   return (
     <View style={{ flex: 1, backgroundColor: "#313335" }}>
       <View style={styles.navViewContainer}>
-        <Pressable onPress={() => navigation.goBack()} style={{ flex:1, flexDirection: "row" }}>
-          <MaterialIcons name="arrow-back" size={24} color="black" />
-          <Text style={styles.navViewText} >Einstellungen</Text>
+        <Pressable onPress={() => navigation.goBack()} style={styles.navViewIconButton}>
+          <MaterialIcons name="arrow-back" size={36} color="black" />
+          <Text style={styles.navViewText}>Einstellungen</Text>
         </Pressable>
       </View>    
       <ScrollView style={{ flex: 1, backgroundColor:"#313335" }}>
           <View style={styles.centeredView}>
-            <Text style={styles.hedding}>Version 1.0.1</Text>
+            <Text style={styles.hedding}>Version 1.0.3</Text>
           </View>
 
           <PolicyInfoView />
@@ -220,11 +220,16 @@ const styles = {
       backgroundColor: "#ffc107",
       marginBottom: 10,
   },
+  navViewIconButton: {
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+  },
   navViewText: {
       marginLeft: 10,
       color: "black",
       fontWeight: "500",
-      fontSize: 18,
+      fontSize: 20,
   },
 };
 

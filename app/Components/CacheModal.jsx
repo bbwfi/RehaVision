@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import Modal from "react-native-modal";
 import { loadUserData } from "../Functions/userDataManager";
-import { StatusBar } from "expo-status-bar";
 
 export default function CacheModal({
   isVisible,
@@ -72,10 +71,9 @@ export default function CacheModal({
               </Text>
             </View>
             <View style={styles.section}>
-              <Text style={styles.header}>Tipp</Text>
-              <TouchableOpacity onPress={toggleTip}>
-                <Text style={[styles.spoilerText, showTip && styles.revealedText]}>
-                  {showTip ? selectedCache?.tip : "Show Tip"}
+              <TouchableOpacity onPress={toggleTip} style={styles.button}>
+                <Text style={[styles.buttonText]}>
+                  {showTip ? selectedCache?.tip : "Tip anzeigen"}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -150,7 +148,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   spoilerText: {
-    fontSize: 16,
+    fontSize: 20,
     color: "#ffc107",
     textDecorationLine: "underline",
   },
@@ -158,4 +156,11 @@ const styles = StyleSheet.create({
     textDecorationLine: "none",
     color: "#FFFFFF",
   },
+  button: { padding: 10, backgroundColor: "#ffc107", borderRadius: 10, marginBottom: 20 },
+  buttonText: {
+    color: "black",
+    fontWeight: "bold",
+    fontSize: 18,
+    textAlign: "center",
+  }
 });
