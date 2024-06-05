@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import {
   Pressable,
   StyleSheet,
@@ -11,7 +10,6 @@ import { useEffect, useState, useRef } from "react";
 import * as Location from "expo-location";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons"; // or any other icon library
-
 
 import MapStyle from "../../assets/json/MapStyle.json";
 import CachesJSON from "../../assets/json/Caches.json";
@@ -36,6 +34,7 @@ export function MapPage({ debugMode }) {
 
   // Request location permissions and fetch initial location
   useEffect(() => {
+
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -46,11 +45,13 @@ export function MapPage({ debugMode }) {
         const location = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Highest,
         });
-        setInitialLocation(location);
+        setInitialLocation(location)
       } catch (error) {
         setErrorMsg("Error fetching location: " + error.message);
       }
+
     })();
+
   }, []);
 
   // Load user data and set found caches
@@ -167,9 +168,6 @@ export function MapPage({ debugMode }) {
     </View>
   </View>
 )}
-
-
-
 
       <View style={styles.mapContainer}>
         {initialLocation && (

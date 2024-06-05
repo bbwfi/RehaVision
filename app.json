@@ -3,7 +3,7 @@
     "name": "RehaVision",
     "slug": "RehaVision",
     "scheme": "rehavision",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "owner": "bbw-fi",
     "orientation": "portrait",
     "icon": "./assets/icon_rehavision.png",
@@ -19,11 +19,13 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access camera.",
-        "NSMicrophoneUsageDescription": "Allow $(PRODUCT_NAME) to access your microphone"
+        "NSCameraUsageDescription": "Erlaube $(PRODUCT_NAME) deine Kamera zu nutzen, um den QR-Code zu Scannen.",
+        "NSMicrophoneUsageDescription": "Erlaube $(PRODUCT_NAME) deinen Standort im Hintergrund abzurufen, um dir hinweise beim erreichen einer Location zu geben."
       }
     },
     "android": {
+      "versionCode": 3,
+      "package": "de.bbwfi.rehavision",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyDNnFpawNI8OhgRP6gnTGq-Yd5Fo2yjOhg"
@@ -31,10 +33,9 @@
       },
       "permissions": [
         "android.permission.BLUETOOTH",
-        "android.permission.BLUETOOTH_ADMIN",
+        "android.permission.BLUETOOTH_SCAN",
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.ACCESS_BACKGROUND_LOCATION",
         "android.permission.FOREGROUND_SERVICE",
         "android.permission.FOREGROUND_SERVICE_LOCATION",
         "android.permission.CAMERA"
@@ -42,8 +43,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon_rehavision.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "de.bbwfi.rehavision"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -53,13 +53,13 @@
       [
         "expo-barcode-scanner",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+          "cameraPermission": "Erlaube $(PRODUCT_NAME) deine Kamera zu nutzen, um den QR-Code zu Scannen."
         }
       ],
       [
         "expo-location",
         {
-          "locationPermission": "Allow $(PRODUCT_NAME) to access your location"
+          "locationPermission": "Erlaube $(PRODUCT_NAME) deinen Standort zu verwenden, um dir hinweise beim erreichen einer Location zu geben."
         }
       ]
     ],
