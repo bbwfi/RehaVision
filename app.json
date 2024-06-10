@@ -24,7 +24,7 @@
       }
     },
     "android": {
-      "versionCode": 3,
+      "versionCode": 4,
       "package": "de.bbwfi.rehavision",
       "config": {
         "googleMaps": {

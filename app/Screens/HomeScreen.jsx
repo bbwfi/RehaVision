@@ -8,12 +8,12 @@ import {
   StyleSheet
 } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import CacheModal from "../Components/CacheModal";
 import QRScanner from "../Components/QRScanner";
 import CachesJSON from "../../assets/json/Caches.json";
 import { loadUserData, saveUserData } from "../Functions/userDataManager";
 import Toast from "../Components/Toast";
 import { getCameraPermissionsAsync } from "../Functions/permissions";
+import { NewCacheModal } from "../Components/NewCacheModal";
 
 export function HomeScreen({ debugMode }) {
   const [interactionState, setInteractionState] = useState("idle");
@@ -139,7 +139,9 @@ export function HomeScreen({ debugMode }) {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#313335" }}>
+    <View 
+      accessibilityRole="list"
+      style={{ flex: 1, backgroundColor: "#313335" }}>
       {/* Cache List */}
       {caches.map((cache, index) => {
         const isFound = foundCaches.some(
@@ -147,6 +149,7 @@ export function HomeScreen({ debugMode }) {
         );
         const color = isFound ? "green" : "red";
         let lastFoundCacheIndex = -1;
+
         for (let i = caches.length - 1; i >= 0; i--) {
           if (
             foundCaches.some((foundCache) => foundCache.id === caches[i].id)
@@ -155,10 +158,12 @@ export function HomeScreen({ debugMode }) {
             break;
           }
         }
+
         const showCache = index === 0 || index <= lastFoundCacheIndex + 1;
         return (
           showCache && (
             <Pressable
+              accessibilityRole="button"
               key={cache.id}
               onPress={() => {
                 setIsModalVisible(true);
@@ -188,7 +193,7 @@ export function HomeScreen({ debugMode }) {
                       fontSize: 20,
                     }}
                   >
-                    {cache.title}
+                    {cache.name}
                   </Text>
                 </View>
                 {isFound ? (
@@ -219,14 +224,23 @@ export function HomeScreen({ debugMode }) {
         );
       })}
 
-      <CacheModal
+      <NewCacheModal
+        visible={isModalVisible} 
+        setVisible={setIsModalVisible} 
+        cache={activeCache} 
+      />
+
+{/*       <CacheModal
+        accessibilityLabel="GeoCache Details"
         isVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
         onBackdropPress={closeModal}
         selectedCache={activeCache}
         onClose={closeModal}
       />
-
+ */}
       <Pressable
+        accessibilityRole="button"
         onPress={openQRScanner}
         style={{ position: "absolute", bottom: "5%", alignSelf: "center" }}
         accessibilityLabel="QR-Code scannen"

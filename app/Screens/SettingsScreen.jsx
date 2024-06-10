@@ -14,7 +14,6 @@ import Collapsible from "react-native-collapsible";
 import { useAppContext } from "../Context/AppContext";
 import { loadUserData, saveUserData } from "../Functions/userDataManager";
 
-
 export function SettingsScreen({ navigation }) {
   const { debugMode, setDebugMode } = useAppContext();
   const [beacons, setBeacons] = useState([]);
@@ -57,20 +56,17 @@ export function SettingsScreen({ navigation }) {
     return (
       <View style={styles.centeredView}>
         <Text style={styles.hedding}>Beacons Finder</Text>
-        <Pressable
-          style={styles.button}
-          onPress={handleBeaconScan}
-        >
+        <Pressable 
+          accessibilityRole="button"
+          style={styles.button} onPress={handleBeaconScan}>
           <Text style={styles.buttonText}>Nach Beacons scannen</Text>
         </Pressable>
         {beacons
           .sort((a, b) => a.distance - b.distance)
           .map((beacon, index) => (
-            <View
-              key={index}
-              style={styles.box}
-            >
+            <View key={index} style={styles.box}>
               <Pressable
+                accessibilityRole="button"
                 onPress={() =>
                   setActiveBeaconIndex(
                     index === activeBeaconIndex ? null : index
@@ -118,20 +114,18 @@ export function SettingsScreen({ navigation }) {
     return (
       <View style={styles.centeredView}>
         <Pressable
+          accessibilityRole="button"
           onPress={() => navigation.navigate("Disclaimer")}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>
-            Disclaimer anzeigen
-          </Text>
+          <Text style={styles.buttonText}>Disclaimer anzeigen</Text>
         </Pressable>
         <Pressable
+          accessibilityRole="button"
           onPress={() => navigation.navigate("PrivacyPolicy")}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>
-            Datenschutz anzeigen
-          </Text>
+          <Text style={styles.buttonText}>Datenschutz anzeigen</Text>
         </Pressable>
       </View>
     );
@@ -140,61 +134,71 @@ export function SettingsScreen({ navigation }) {
   return (
     <View style={{ flex: 1, backgroundColor: "#313335" }}>
       <View style={styles.navViewContainer}>
-        <Pressable onPress={() => navigation.goBack()} style={styles.navViewIconButton}>
+        <Pressable
+          accessibilityRole="button"
+          onPress={() => navigation.goBack()}
+          style={styles.navViewIconButton}
+        >
           <MaterialIcons name="arrow-back" size={36} color="black" />
           <Text style={styles.navViewText}>Einstellungen</Text>
         </Pressable>
-      </View>    
-      <ScrollView style={{ flex: 1, backgroundColor:"#313335" }}>
-          <View style={styles.centeredView}>
-            <Text style={styles.hedding}>Version 1.0.3</Text>
-          </View>
+      </View>
+      <ScrollView style={{ flex: 1, backgroundColor: "#313335" }}>
+        <View style={styles.centeredView}>
+          <Text style={styles.hedding}>Version 1.0.3</Text>
+        </View>
 
-          <PolicyInfoView />
+        <PolicyInfoView />
 
+        <View style={styles.centeredView}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => navigation.navigate("IntroPage")}
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>Intro erneut starten</Text>
+          </Pressable>
+
+          <Text style={styles.hedding}>Debug Mode</Text>
+          <Switch
+            accessibilityRole="switch"
+            accessibilityLabel="Debug Mode Switch"
+            trackColor={{ false: "#767577", true: "#ffc107" }}
+            thumbColor={debugMode ? "#f5dd4b" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={toggleSwitch}
+            value={debugMode}
+            accessibilityLabelled="Debug Mode"
+          />
+        </View>
+
+        {debugMode && <BeaconScanner />}
+
+        {debugMode && (
           <View style={styles.centeredView}>
-            <Pressable
-              onPress={() => navigation.navigate("IntroPage")}
-              style={styles.button}
-              >
-              <Text
-                style={styles.buttonText}
-                >
-                Intro erneut starten
-              </Text>
+            <Pressable 
+              accessibilityRole="button"
+              onPress={resetUserData} style={styles.button}>
+              <Text style={styles.buttonText}>Clear User Data</Text>
             </Pressable>
-
-            <Text style={styles.hedding}>Debug Mode</Text>
-            <Switch
-              trackColor={{ false: "#767577", true: "#ffc107" }}
-              thumbColor={debugMode ? "#f5dd4b" : "#f4f3f4"}
-              ios_backgroundColor="#3e3e3e"
-              onValueChange={toggleSwitch}
-              value={debugMode}
-              accessibilityLabelled="Debug Mode"
-              />
+            <Text style={styles.hedding}>User Data:</Text>
+            <Text style={{ color: "white", marginBottom: 10 }}>
+              {userData ? JSON.stringify(userData) : "Keine Daten vorhanden"}
+            </Text>
           </View>
-          
-          {debugMode && <BeaconScanner />}
-
-          {debugMode && (
-              <View style={styles.centeredView}>
-                <Pressable onPress={resetUserData} style={styles.button}>
-                  <Text style={styles.buttonText}>Clear User Data</Text>
-                </Pressable>
-                <Text style={styles.hedding}>User Data:</Text>
-                <Text style={{ color: "white", marginBottom: 10 }}>
-                  {userData ? JSON.stringify(userData) : "Keine Daten vorhanden"}
-                </Text>
-              </View>
-            )}
+        )}
       </ScrollView>
     </View>
   );
 }
 
 const styles = {
-  button: { padding: 10, backgroundColor: "#ffc107", borderRadius: 10, marginBottom: 20 },
+  button: {
+    padding: 10,
+    backgroundColor: "#ffc107",
+    borderRadius: 10,
+    marginBottom: 20,
+  },
   buttonText: {
     color: "black",
     fontWeight: "bold",
@@ -202,9 +206,18 @@ const styles = {
     textAlign: "center",
   },
   centeredView: { flex: 1, alignItems: "center", justifyContent: "center" },
-  hedding: { color: "white", fontWeight: "bold", fontSize: 24, marginBottom: 20 },
+  hedding: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 24,
+    marginBottom: 20,
+  },
   linkBox: { padding: 10, marginBottom: 10 },
-  linkBoxText: { color: "#ffc107", textDecorationLine: "underline", fontSize: 18 },
+  linkBoxText: {
+    color: "#ffc107",
+    textDecorationLine: "underline",
+    fontSize: 18,
+  },
   box: {
     borderWidth: 1,
     borderColor: "#ffc107",
@@ -213,23 +226,23 @@ const styles = {
     marginBottom: 20,
   },
   navViewContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      paddingHorizontal: 16,
-      height: 50,
-      backgroundColor: "#ffc107",
-      marginBottom: 10,
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 16,
+    height: 50,
+    backgroundColor: "#ffc107",
+    marginBottom: 10,
   },
   navViewIconButton: {
-      flex: 1,
-      flexDirection: "row",
-      alignItems: "center",
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
   },
   navViewText: {
-      marginLeft: 10,
-      color: "black",
-      fontWeight: "500",
-      fontSize: 20,
+    marginLeft: 10,
+    color: "black",
+    fontWeight: "500",
+    fontSize: 20,
   },
 };
 

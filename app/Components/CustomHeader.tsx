@@ -12,6 +12,7 @@ export function CustomHeader({ navigation }) {
           <Text style={styles.headerText}>RehaVision</Text>
         </View>
         <TouchableOpacity
+          accessibilityRole="button"
           onPress={() => {
             navigation.navigate("Settings");
           }}

@@ -7,10 +7,12 @@
                 "longitude": 12.874432
             },
             "radius": 50,
-            "title": "Tutorial Cache",
-            "tip":"Handmade Laden Schild (Haus 18)" ,
-            "description": "This is a tutorial cache. It is not part of the game.",
-            "riddleText": "An dem Pfosten, verborgen und still, Findst du den Weg, wenn du folgst dem Will'. Blick tief hinab, wo die Worte ruh'n, Dort beginnt die Reise, den Schatz zu erspäh'n."
+            "name": "Tutorial Cache",
+            "riddle": {
+                "description": "An dem Pfosten, verborgen und still, Findst du den Weg, wenn du folgst dem Will'. Blick tief hinab, wo die Worte ruh'n, Dort beginnt die Reise, den Schatz zu erspäh'n.",
+                "hint":"Handmade Laden Schild vor Haus 18"
+            },
+            "description": "Dies ist ein Tutorial cache. Hier kannst du lernen, wie du mit der App umgehst. Viel Spaß beim Suchen!"
         },
         {
             "id": "rehavision_5fc3d2f1a1e9",
@@ -19,10 +21,12 @@
                 "longitude": 12.876853
             },
             "radius": 50,
-            "title": "Verschollene Amethyst Glocke",
-            "description": "In einem versteckten Hohlraum einer alten Baumwurzel liegt eine vergessene Amethystglocke, umgeben von glitzernden Moospolstern. Ihr Klang verspricht Wohlstand und Abenteuer.",
-            "tip":"Alte Kirche Ost Eingang" ,
-            "riddleText": "Am höchsten Punkt ohne Ton, finde dort eine Gold Dublon."
+            "name": "Verschollene Amethyst Glocke",
+            "riddle": {
+                "description": "Am höchsten Punkt ohne Ton, finde dort eine Gold Dublon.",
+                "hint":"Alte Kirche Ost Eingang"
+            },
+            "description": "In einem versteckten Hohlraum einer alten Baumwurzel liegt eine vergessene Amethystglocke, umgeben von glitzernden Moospolstern. Ihr Klang verspricht Wohlstand und Abenteuer."
         },
         {
             "id": "rehavision_5fc3d2f1a1e10",
@@ -31,10 +35,12 @@
                 "longitude": 12.877588
             },
             "radius": 50,
-            "title": "Gemeinschaftliche Jade Pfeife",
-            "tip":"Zwischen denn Internats Häuser" ,
-            "description": "Versteckt unter einem dichten Blätterdach liegt eine kunstvoll geschnitzte Jade-Pfeife, von der ein sanfter Rauch aufsteigt. Ihr Besitz verspricht Glück und Harmonie.",
-            "riddleText": "In Gemeinschaft beisammen, da lodert es gut, Rauch steigt empor aus der uralten Glut."
+            "name": "Gemeinschaftliche Jade Pfeife",
+            "riddle": {
+                "hint":"Zwischen denn Internats Häuser" ,
+                "description": "In Gemeinschaft beisammen, da lodert es gut, Rauch steigt empor aus der uralten Glut."
+            },
+            "description": "Versteckt unter einem dichten Blätterdach liegt eine kunstvoll geschnitzte Jade-Pfeife, von der ein sanfter Rauch aufsteigt. Ihr Besitz verspricht Glück und Harmonie."
         },
         {
             "id": "rehavision_5fc3d2f1a1e11",
@@ -43,10 +49,12 @@
                 "longitude": 12.876622
             },
             "radius": 50,
-            "title": "Hansi's Handvoll Gold",
-            "tip":"Vor dem Altersheim auf der Wiese" ,
-            "description": "Vergraben unter einem Teppich aus Wildblumen liegt eine kleine Truhe aus poliertem Eichenholz, gefüllt mit glänzenden Goldmünzen. Ihr Fund verspricht Reichtum und Wohlstand.",
-            "riddleText": "Am Wegesrand, wo das Alter thront, Hinter drei Bänken, wo der Pfad sich lohnt. Zum roten Konstrukt, dem Schatz entgegen, Besonderes Gold, so wertvoll gelegen."
+            "name": "Hansi's Handvoll Gold",
+            "riddle": {
+                "hint":"Vor dem Altersheim auf der Wiese",
+                "description": "Am Wegesrand, wo das Alter thront, Hinter drei Bänken, wo der Pfad sich lohnt. Zum roten Konstrukt, dem Schatz entgegen, Besonderes Gold, so wertvoll gelegen."
+            },
+            "description": "Vergraben unter einem Teppich aus Wildblumen liegt eine kleine Truhe aus poliertem Eichenholz, gefüllt mit glänzenden Goldmünzen. Ihr Fund verspricht Reichtum und Wohlstand."
         },
         {
             "id": "rehavision_5fc3d2f1a1e12",
@@ -55,10 +63,12 @@
                 "longitude": 12.872880
             },
             "radius": 50,
-            "title": "Wiedemann's Rubin Zepter",
-            "tip":"Vor der Schule Richtung Taubenturm" ,
-            "description": "Versteckt in einer verborgenen Nische eines alten Turms liegt ein kunstvoll gearbeitetes Rubinzepter, umgeben von vergilbten Schriftrollen. Sein Fund verspricht Macht und Erkenntnis.",
-            "riddleText": "Wo sie lernen, in der Schule weit und breit, Liegt das Zepter, verloren in Vergangenheit. Im Turm der Festung, wo der Schatten fällt, Verbirgt die Kapitänin, was ihr gefällt."
+            "name": "Wiedemann's Rubin Zepter",
+            "riddle": {
+                "hint":"Vor der Schule Richtung Taubenturm",
+                "description": "Wo sie lernen, in der Schule weit und breit, Liegt das Zepter, verloren in Vergangenheit. Im Turm der Festung, wo der Schatten fällt, Verbirgt die Kapitänin, was ihr gefällt."
+            },
+            "description": "Versteckt in einer verborgenen Nische eines alten Turms liegt ein kunstvoll gearbeitetes Rubinzepter, umgeben von vergilbten Schriftrollen. Sein Fund verspricht Macht und Erkenntnis."
         }
     ]
 }

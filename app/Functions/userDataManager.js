@@ -22,7 +22,7 @@ export const loadUserData = async () => {
     const userData = JSON.parse(userDataString);
 
     // Log the loaded user data
-    console.log("User data loaded:", userData);
+    //console.log("User data loaded:", userData);
 
     // Return the loaded user data
     return userData;

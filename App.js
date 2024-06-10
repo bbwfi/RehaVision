@@ -21,9 +21,7 @@ import DisclaimerScreen from "./app/Screens/DisclaimerScreen";
 import PrivacyPolicyScreen from "./app/Screens/PrivacyPolicyScreen";
 import SettingsScreen from "./app/Screens/SettingsScreen";
 
-
 const Stack = createStackNavigator();
-
 const prefix = Linking.createURL("/");
 
 const linking = {
@@ -49,7 +47,7 @@ const linking = {
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [initialRoute, setInitialRoute] = useState(null);
-
+  
   const routeNameRef = useRef();
   const navigationRef = useRef();
 
@@ -69,7 +67,6 @@ function App() {
   useEffect(() => {
     const loadAndNavigate = async () => {
       const userData = await loadUserData();
-      console.log("User data:", userData);
 
       if (userData?.tutorialCompleted) {
         setInitialRoute("Main");
@@ -90,7 +87,6 @@ function App() {
       );
     }
   }, []);
-
   
   /**
    * Handles the state change event of the navigation.
@@ -116,9 +112,9 @@ function App() {
   };
 
   if (isLoading || initialRoute === null) {
-    return <LoadingScreen/>; // Replace with your actual loading screen component
-  }
-  
+    return <LoadingScreen/>; 
+  }  
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <AppProvider>

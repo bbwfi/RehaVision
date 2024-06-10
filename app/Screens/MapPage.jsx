@@ -14,7 +14,7 @@ import { Ionicons } from "@expo/vector-icons"; // or any other icon library
 import MapStyle from "../../assets/json/MapStyle.json";
 import CachesJSON from "../../assets/json/Caches.json";
 import Loading from "../Components/Loading";
-import CacheModal from "../Components/CacheModal";
+import NewCacheModal from "../Components/NewCacheModal";
 
 import { loadUserData } from "../Functions/userDataManager";
 
@@ -134,41 +134,50 @@ export function MapPage({ debugMode }) {
     }
   };
 
+  const Popup = () => {
+    return (
+      <View style={styles.popup}>
+        <Text style={[styles.popupTitle, { color: "#FFFFFF" }]}>
+          Cache Nearby
+        </Text>
+        <View style={styles.cacheInfoContainer}>
+          <Text style={[styles.popupText, { color: "#FFFFFF" }]}>
+            {currentCache
+              ? foundCaches.some((cache) => cache.id === currentCache.id) ||
+                currentCache === nextCache
+                ? currentCache.title
+                : "???"
+              : "???"}
+          </Text>
+          {currentCache &&
+            !foundCaches.some((cache) => cache.id === currentCache.id) &&
+            currentCache === nextCache && (
+              <TouchableOpacity
+                style={styles.infoButton}
+                onPress={() => {
+                  setIsModalVisible(true);
+                  console.log(currentCache.id);
+                }}
+              >
+                <Ionicons name="information-circle-outline" size={24} color="#333333" />
+              </TouchableOpacity>
+            )}
+        </View>
+      </View>
+    )}
+
+
   return (
     <View style={styles.container}>
+      { isModalVisible && <NewCacheModal
+        visible={isModalVisible} 
+        setVisible={setIsModalVisible} 
+        cache={currentCache} 
+      />}
       {errorMsg && <Text>{errorMsg}</Text>}
       {!initialLocation && !errorMsg && <Loading />}
-      {popupVisible && (
-  <View style={styles.popup}>
-    <Text style={[styles.popupTitle, { color: "#FFFFFF" }]}>
-      Cache Nearby
-    </Text>
-    <View style={styles.cacheInfoContainer}>
-      <Text style={[styles.popupText, { color: "#FFFFFF" }]}>
-        {currentCache
-          ? foundCaches.some((cache) => cache.id === currentCache.id) ||
-            currentCache === nextCache
-            ? currentCache.title
-            : "???"
-          : "???"}
-      </Text>
-      {currentCache &&
-        !foundCaches.some((cache) => cache.id === currentCache.id) &&
-        currentCache === nextCache && (
-          <TouchableOpacity
-            style={styles.infoButton}
-            onPress={() => {
-              setIsModalVisible(true);
-              console.log(currentCache.id);
-            }}
-          >
-            <Ionicons name="information-circle-outline" size={24} color="#333333" />
-          </TouchableOpacity>
-        )}
-    </View>
-  </View>
-)}
-
+      {popupVisible && <Popup/>}
+      
       <View style={styles.mapContainer}>
         {initialLocation && (
           <MapView
@@ -203,13 +212,6 @@ export function MapPage({ debugMode }) {
           <MaterialIcons name="my-location" size={30} color="white" />
         </Pressable>
       </View>
-
-      <CacheModal
-        isVisible={isModalVisible}
-        onBackdropPress={closeModal}
-        selectedCache={currentCache}
-        onClose={closeModal}
-      />
 
       {debugMode && (
         <View style={styles.debugContainer}>

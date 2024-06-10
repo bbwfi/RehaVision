@@ -78,11 +78,12 @@ export default function QRScanner({ onBarCodeScanned, onCancelScan, debugMode })
       </View>
 
       <Pressable
+        accessibilityRole='button'
         onPress={() => onCancelScan()}
         style={styles.cancelButton}
       >
         <MaterialIcons
-          size={42}
+          size={50}
           name="close"
           style={styles.closeIcon}
         />
