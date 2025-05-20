@@ -1,74 +1,74 @@
 {
-    "markers": [
+    "markers": [ 
         {
             "id": "rehavision_5fc3d2f1a1e8",
             "coordinate": {
-                "latitude": 50.842656,
-                "longitude": 12.874432
+                "latitude": 50.841971,
+                "longitude": 12.874776
             },
             "radius": 50,
-            "name": "Tutorial Cache",
+            "name": "Brüder aus Stein ",
             "riddle": {
-                "description": "An dem Pfosten, verborgen und still, Findst du den Weg, wenn du folgst dem Will'. Blick tief hinab, wo die Worte ruh'n, Dort beginnt die Reise, den Schatz zu erspäh'n.",
-                "hint":"Handmade Laden Schild vor Haus 18"
+                "description": "Vor zwei Steinen fängt es an, gehen sie raus aus der 7, und der Kurve entlang.",
+                "hint":"Auf der Wiese zwischen Haus 7 und 18"
             },
-            "description": "Dies ist ein Tutorial cache. Hier kannst du lernen, wie du mit der App umgehst. Viel Spaß beim Suchen!"
+            "description": "Unter der steinernen Faust"
         },
         {
             "id": "rehavision_5fc3d2f1a1e9",
             "coordinate": {
-                "latitude": 50.842663,
-                "longitude": 12.876853
+                "latitude": 50.842743,
+                "longitude": 12.874364
             },
             "radius": 50,
-            "name": "Verschollene Amethyst Glocke",
+            "name": "Alles aus Hand",
             "riddle": {
-                "description": "Am höchsten Punkt ohne Ton, finde dort eine Gold Dublon.",
-                "hint":"Alte Kirche Ost Eingang"
+                "description": "Tassen, Körbe und ein Krug, gibt es hier mehr als ",
+                "hint":"Haus 18"
             },
-            "description": "In einem versteckten Hohlraum einer alten Baumwurzel liegt eine vergessene Amethystglocke, umgeben von glitzernden Moospolstern. Ihr Klang verspricht Wohlstand und Abenteuer."
+            "description": "An einer natürlichen Materialquelle"
         },
         {
             "id": "rehavision_5fc3d2f1a1e10",
             "coordinate": {
-                "latitude": 50.844089,
-                "longitude": 12.877588
+                "latitude": 50.843538,
+                "longitude": 12.872879
             },
             "radius": 50,
-            "name": "Gemeinschaftliche Jade Pfeife",
+            "name": "Turm des Friedens",
             "riddle": {
-                "hint":"Zwischen denn Internats Häuser" ,
-                "description": "In Gemeinschaft beisammen, da lodert es gut, Rauch steigt empor aus der uralten Glut."
+                "hint":"Vor der Schule" ,
+                "description": "Dort wo der Himmel und die Erde sich verbinden, wirst du den Gesang von Vögeln und Ruhe finden."
             },
-            "description": "Versteckt unter einem dichten Blätterdach liegt eine kunstvoll geschnitzte Jade-Pfeife, von der ein sanfter Rauch aufsteigt. Ihr Besitz verspricht Glück und Harmonie."
+            "description": "Unter schlafenden Vögeln"
         },
         {
             "id": "rehavision_5fc3d2f1a1e11",
             "coordinate": {
-                "latitude": 50.845627,
-                "longitude": 12.876622
+                "latitude": 50.843777,
+                "longitude": 12.876218 
             },
             "radius": 50,
-            "name": "Hansi's Handvoll Gold",
+            "name": "Saal der Feste",
             "riddle": {
-                "hint":"Vor dem Altersheim auf der Wiese",
-                "description": "Am Wegesrand, wo das Alter thront, Hinter drei Bänken, wo der Pfad sich lohnt. Zum roten Konstrukt, dem Schatz entgegen, Besonderes Gold, so wertvoll gelegen."
+                "hint":"Das Haus was nach der 3 kommt",
+                "description": "Folgt dem festlichen Klang zum viel genutzten mittleren Gang. "
             },
-            "description": "Vergraben unter einem Teppich aus Wildblumen liegt eine kleine Truhe aus poliertem Eichenholz, gefüllt mit glänzenden Goldmünzen. Ihr Fund verspricht Reichtum und Wohlstand."
+            "description": "Auf dem grünen Teppich"
         },
         {
             "id": "rehavision_5fc3d2f1a1e12",
             "coordinate": {
-                "latitude": 50.843506,
-                "longitude": 12.872880
+                "latitude": 50.8424392,
+                "longitude": 12.8768463
             },
             "radius": 50,
-            "name": "Wiedemann's Rubin Zepter",
+            "name": "Der Pädagoge",
             "riddle": {
-                "hint":"Vor der Schule Richtung Taubenturm",
-                "description": "Wo sie lernen, in der Schule weit und breit, Liegt das Zepter, verloren in Vergangenheit. Im Turm der Festung, wo der Schatten fällt, Verbirgt die Kapitänin, was ihr gefällt."
+                "hint":"Das Haus was vor der 3 kommt",
+                "description": "Weiter geht's die Straße entlang, bis man die Schule finden kann. Als Pädagoge für die Blinden, sollt ihr nun seine Büste finden. "
             },
-            "description": "Versteckt in einer verborgenen Nische eines alten Turms liegt ein kunstvoll gearbeitetes Rubinzepter, umgeben von vergilbten Schriftrollen. Sein Fund verspricht Macht und Erkenntnis."
+            "description": "Unter einem hölzernen Thron "
         }
     ]
 }
