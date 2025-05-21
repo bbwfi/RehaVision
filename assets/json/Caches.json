@@ -23,7 +23,7 @@
             "radius": 50,
             "name": "Alles aus Hand",
             "riddle": {
-                "description": "Tassen, Körbe und ein Krug, gibt es hier mehr als ",
+                "description": "Tassen, Körbe und ein Krug, gibt es hier mehr als genug.",
                 "hint":"Haus 18"
             },
             "description": "An einer natürlichen Materialquelle"
@@ -52,7 +52,7 @@
             "name": "Saal der Feste",
             "riddle": {
                 "hint":"Das Haus was nach der 3 kommt",
-                "description": "Folgt dem festlichen Klang zum viel genutzten mittleren Gang. "
+                "description": "Folgt dem festlichen Klang zum viel genutzten mittleren Gang."
             },
             "description": "Auf dem grünen Teppich"
         },
@@ -66,9 +66,9 @@
             "name": "Der Pädagoge",
             "riddle": {
                 "hint":"Das Haus was vor der 3 kommt",
-                "description": "Weiter geht's die Straße entlang, bis man die Schule finden kann. Als Pädagoge für die Blinden, sollt ihr nun seine Büste finden. "
+                "description": "Weiter geht's die Straße entlang, bis man die Schule finden kann. Als Pädagoge für die Blinden, sollt ihr nun seine Büste finden."
             },
-            "description": "Unter einem hölzernen Thron "
+            "description": "Unter einem hölzernen Thron"
         }
     ]
 }
